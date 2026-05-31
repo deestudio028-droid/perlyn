@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Shop</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+
+
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .price {
+      font-family: 'Gilda Display', serif;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* 🛍️ Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      justify-items: center;
+      margin-top: 30px;
+    }
+
+    /* ✨ Product Card Design */
+    .product-card {
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+      padding: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .product-card h3 {
+      font-size: 17px;
+      margin: 6px 0;
+      font-weight: 600;
+    }
+
+    .product-card .price {
+      font-family: 'Gilda Display', serif;
+      color: #b98474;
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+ /* 🛒 Add to Cart Button — Match "All Categories" Font */
+.btn-secondary {
+  background: #b98474;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 7px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.25s ease;
+  font-family: 'Cormorant Garamond', serif !important;
+  letter-spacing: 0.4px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-secondary:hover {
+  background: #a36c5c;
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+
+    .badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #b98474;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 5;
+    }
+
+    .badge.new {
+      background: #a36c5c;
+      top: 38px;
+      /* 👈 pushes below Bestseller */
+      right: 10px;
+    }
+
+
+    /* 🖥️ Reduce product image size only for desktop screens */
+    @media (min-width: 1025px) {
+      .product-card img {
+        height: 180px;
+        /* reduce from 220px to 180px */
+        object-fit: cover;
+      }
+    }
+
+    /* 🧭 Shop Controls */
+    .shop-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+  .shop-controls input,
+.shop-controls select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  min-width: 220px;
+  color: #3e2c25;
+  background-color: #fff;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23b98474' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Option text styling (works inside dropdown) */
+.shop-controls select option {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 600;
+  color: #3e2c25;
+}
+
+/* Focus and hover polish */
+.shop-controls select:focus {
+  border-color: #b98474;
+  outline: none;
+  box-shadow: 0 0 6px rgba(185, 132, 116, 0.3);
+}
+
+
+/* Focus and hover polish */
+.shop-controls select:focus,
+.shop-controls input:focus {
+  border-color: #b98474;
+  outline: none;
+  box-shadow: 0 0 6px rgba(185, 132, 116, 0.3);
+}
+
+/* Dropdown text alignment fix (mobile + desktop) */
+.shop-controls select option {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  color: #3e2c25;
+}
+
+
+    /* 🍔 Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    /* 📱 Responsive Grid Adjustments */
+    @media (max-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-top: 20px;
+      }
+
+      .product-card img {
+        height: 150px;
+      }
+
+      .product-card h3 {
+        font-size: 14.5px;
+      }
+
+      .product-card .price {
+        font-size: 14px;
+      }
+
+      .btn-secondary {
+        font-size: 12.5px;
+        padding: 5px 10px;
+      }
+
+      .container {
+        padding: 0 12px;
+      }
+
+      .shop-controls {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+/* 🌸 Popular Search Dropdown (like Google) */
+.suggestion-box {
+  position: absolute;
+  background: #fff;
+  border: 1px solid #e0c7bb;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  width: 90%;
+  max-width: 400px;
+  margin-top: 4px;
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.suggestion-item {
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 15px;
+  color: #3e2c25;
+  font-family: 'Cormorant Garamond', serif;
+  transition: all 0.25s ease;
+}
+
+.suggestion-item:hover {
+  background: #f3e4db;
+  color: #b98474;
+}
+
+@media (max-width: 768px) {
+  .suggestion-box {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+      .category-sort-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .category-sort-row {
+        display: flex;
+        width: 100%;
+        gap: 8px;
+        justify-content: space-between;
+      }
+
+      .category-sort-row select {
+        flex: 1;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        font-size: 14px;
+        padding: 8px 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+      }
+
+      #categoryFilter {
+        flex: 2;
+      }
+
+      #priceSort {
+        flex: 1.2;
+      }
+
+    }
+
+    /* 🚫 Out of Stock Text */
+    .stock {
+      font-size: 14px;
+      color: #a52a2a;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .stock.out {
+      color: red;
+      font-weight: bold;
+    }
+
+    /* 🦶 Footer Layout */
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 6px;
+    }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .footer-col ul li a:hover {
+      color: #b98474;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* 🔔 Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f3e4db;
+      color: #5a3e36;
+      border: 1px solid #e0c7bb;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 🖥️ Desktop Optimization — Smaller Card, Perfect Alignment */
+    /* 🖥️ Desktop Layout — Horizontal Rectangle Card Style */
+    @media (min-width: 1025px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 24px;
+        justify-items: center;
+      }
+
+      .product-card {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        width: 450px;
+        /* rectangle shape */
+        min-height: 180px;
+        padding: 16px;
+        text-align: left;
+        border-radius: 14px;
+        background: #fff;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .product-card img {
+        width: 160px;
+        height: 160px;
+        object-fit: contain;
+        border-radius: 12px;
+        flex-shrink: 0;
+        margin-right: 16px;
+      }
+
+      .product-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .product-info .price {
+        font-size: 17px;
+        color: #b98474;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+
+      .product-info h3 {
+        font-size: 16px;
+        margin: 4px 0;
+        font-weight: 600;
+      }
+
+      .product-info p {
+        font-size: 14px;
+        color: #555;
+        line-height: 1.4;
+        margin: 6px 0;
+      }
+
+      .btn-secondary {
+        align-self: flex-start;
+        font-size: 13.5px;
+        padding: 6px 12px;
+        margin-top: 8px;
+      }
+
+      /* Optional hover polish */
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+      }
+
+      .badge {
+        top: 12px;
+        right: 12px;
+      }
+    }
+    /* === Header Styling (from index.html) === */
+.header {
+  background: #f3e4db;
+  padding: 10px 16px;
+  position: relative;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #3e2c25;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #b98474;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cart-icon img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.cart-icon img:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
+/* 🍔 Hamburger */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #3e2c25;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 16px;
+    background: #f3e4db;
+    padding: 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .nav.show {
+    display: flex;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+/* 🎯 Force custom font & style for "All Categories" dropdown */
+#categoryFilter {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 600 !important;
+  font-size: 16px;
+  color: #3e2c25;
+  letter-spacing: 0.3px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23b98474' height='12' viewBox='0 0 24 24' width='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Option styling inside dropdown */
+#categoryFilter option {
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 600 !important;
+  color: #3e2c25;
+  background-color: #fff;
+}
+
+/* Focus + hover look */
+#categoryFilter:focus {
+  border-color: #b98474;
+  outline: none;
+  box-shadow: 0 0 6px rgba(185, 132, 116, 0.3);
+}
+/* 🌸 Popular Search Tags */
+.popular-searches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.popular-searches .label {
+  font-weight: 600;
+  color: #3e2c25;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.3px;
+}
+
+.search-tag {
+  background: #f3e4db;
+  border: 1px solid #e0c7bb;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #b98474;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.search-tag:hover {
+  background: #b98474;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.search-tag:active {
+  transform: scale(0.96);
+}
+@media (max-width: 768px) {
+  .btn-secondary {
+    font-size: 13.5px;
+    padding: 6px 12px;
+  }
+}
+/* 🌸 Trending Search Box (Google-style) */
+.trending-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fff6f0;
+  border: 1.5px solid #e0c7bb;
+  border-radius: 16px;
+  padding: 16px 22px;
+  margin: 10px auto 18px;
+  width: fit-content;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.trending-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.trending-label {
+  font-family: 'Gilda Display', serif;
+  color: #b98474;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  font-weight: 600;
+}
+
+.trending-term {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #3e2c25;
+  margin-top: 4px;
+  text-align: center;
+  transition: opacity 0.5s ease;
+}
+
+@media (max-width: 768px) {
+  .trending-box {
+    padding: 14px 18px;
+  }
+  .trending-term {
+    font-size: 17px;
+  }
+}
+/* 🔒 Out-of-Stock Styles */
+.out-of-stock {
+  opacity: 0.8;
+  filter: grayscale(0.6);
+  pointer-events: none; /* prevents clicks */
+}
+
+.out-btn {
+  background: #d9b8b0;
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  border-radius: 22px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: 'Cormorant Garamond', serif;
+  cursor: not-allowed;
+  opacity: 0.7;
+  box-shadow: none;
+}
+
+.stock.low {
+  color: #b98474;
+  font-style: italic;
+}
+
+
+  </style>
+
+</head>
+
+<body>
+
+
+
+  <!-- SHOP SECTION -->
+  <main class="container">
+    <h2 class="section-title">Our Collection</h2>
+
+    <div class="shop-controls">
+      <input type="text" id="search" placeholder="Search products...">
+<div class="suggestion-box" id="suggestions"></div>
+    
+      
+      <div class="category-sort-row">
+<select id="categoryFilter">
+  <option value="">All Categories</option>
+  <option value="lip gloss">Lip Gloss</option>
+  <option value="lip & cheek tint">Lip & Cheek Tint</option>
+  <option value="lip oils">Lip Oils</option>
+  <option value="combo">Combo</option> <!-- 🆕 Added -->
+  <option value="limited edition">Limited Edition</option>
+  <option value="bestseller">Bestseller</option>
+  <option value="newly launched">Newly Launched</option>
+</select>
+
+
+
+        <select id="priceSort">
+          <option value="">Sort</option>
+          <option value="low">Low → High</option>
+          <option value="high">High → Low</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="product-grid" id="product-list">
+      <!-- Products load here -->
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Brand Info -->
+      <div class="footer-col">
+        <h3>Perlyn</h3>
+        <p>Gloss that loves. Tints that stay. Oils that care.</p>
+        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
+        <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
+        <div class="social-icons" style="margin-top:10px;">
+          <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
+            target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="28" height="28" />
+          </a>
+          <a href="https://wa.me/919176100456" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="28" height="28" />
+          </a>
+          <a href="https://www.youtube.com/@PerlynBeauty" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="28" height="28" />
+          </a>
+        </div>
+      </div>
+
+       <div class="footer-col">
+  <h4>Shop</h4>
+  <ul>
+    <li><a href="shop.html?category=lip%20gloss">Lip Gloss</a></li>
+    <li><a href="shop.html?category=lip%20%26%20cheek%20tint">Lip & Cheek Tint</a></li>
+    <li><a href="shop.html?category=lip%20oils">Lip Oils</a></li>
+  </ul>
+</div>
+
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+       <ul>
+  <li><a href="aboutus.html">About Us</a></li>
+  <li><a href="contactus.html">Contact Us</a></li>
+  <li><a href="faq.html">FAQ</a></li>
+  <li><a href="terms.html">Terms & Conditions</a></li>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="shipping.html">Shipping & Cancellation Policy</a></li>
+  <li><a href="refund.html">Return & Refund Policy</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Perlyn. All Rights Reserved.</p>
+      <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast">Added to Cart</div>
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script src="env.js"></script>
+<script src="supabaseClient.js"></script>
+<script src="components/navbar.js"></script>
+
+<script>
+  // 👉 your entire shop JS (already written)
+</script>
+
+<script>
+/* ================================
+   🧠 SUPABASE HANDLE (GLOBAL)
+================================ */
+function getSupabase() {
+  if (!window.supabaseClient) {
+    console.warn("⏳ Supabase not ready yet, retrying...");
+  }
+  return window.supabaseClient;
+}
+
+/* ================================
+   📦 STATE
+================================ */
+let productsData = [];
+
+/* ================================
+   🛍️ LOAD PRODUCTS
+================================ */
+async function loadProducts() {
+  const supa = getSupabase();
+  if (!supa) return;
+
+  const { data, error } = await supa.from("products").select("*");
+
+  if (error) {
+    document.getElementById("product-list").innerHTML =
+      "<p>⚠️ Error loading products.</p>";
+    return;
+  }
+
+  productsData = data || [];
+  renderProducts();
+}
+
+/* ================================
+   🛒 ADD TO CART
+================================ */
+async function addToCart(productId) {
+  const supa = getSupabase();
+  if (!supa) return;
+
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const userId = session.user.id;
+
+  const { data: existing } = await supa
+    .from("cart")
+    .select("id, quantity")
+    .eq("user_id", userId)
+    .eq("product_id", productId)
+    .maybeSingle();
+
+  if (existing) {
+    await supa
+      .from("cart")
+      .update({ quantity: existing.quantity + 1 })
+      .eq("id", existing.id);
+  } else {
+    await supa.from("cart").insert([
+      { user_id: userId, product_id: productId, quantity: 1 }
+    ]);
+  }
+
+  showToast("Added to Cart");
+  window.updateCartCount?.();
+}
+
+/* ================================
+   🎨 RENDER PRODUCTS
+================================ */
+function renderProducts() {
+  const searchValue = document.getElementById("search").value.toLowerCase();
+  const categoryValue = document.getElementById("categoryFilter").value.toLowerCase();
+  const priceSort = document.getElementById("priceSort").value;
+
+  let filtered = productsData.filter(p => {
+    const matchesSearch = p.name.toLowerCase().includes(searchValue);
+    const matchesCategory =
+      categoryValue === "bestseller"
+        ? p.bestseller === true
+        : categoryValue === "newly launched"
+        ? p.newly_launched === true
+        : categoryValue
+        ? (p.category && p.category.toLowerCase() === categoryValue)
+        : true;
+
+    return matchesSearch && matchesCategory;
+  });
+
+  if (priceSort === "low") filtered.sort((a, b) => a.price - b.price);
+  if (priceSort === "high") filtered.sort((a, b) => b.price - a.price);
+
+  const container = document.getElementById("product-list");
+  container.innerHTML = "";
+
+  if (!filtered.length) {
+    container.innerHTML = "<p>No matching products found.</p>";
+    return;
+  }
+
+  filtered.forEach(product => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    if (product.stock === 0) card.classList.add("out-of-stock");
+
+    let stockText = "";
+    if (product.stock === 0)
+      stockText = `<p class="stock out">Out of Stock</p>`;
+    else if (product.stock <= 3)
+      stockText = `<p class="stock low">Only ${product.stock} left!</p>`;
+
+    card.innerHTML = `
+      ${product.bestseller ? `<span class="badge">Bestseller</span>` : ""}
+      ${product.newly_launched ? `<span class="badge new">New!</span>` : ""}
+      <img src="${(product.image_url && product.image_url !== 'null') ? product.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" class="product-img" />
+      <div class="product-info">
+        <span class="price">₹${product.price}</span>
+        <h3>${product.name}</h3>
+        <p>${product.card_description || ""}</p>
+        ${stockText}
+        <button
+          class="${product.stock === 0 ? "out-btn" : "btn-secondary"}"
+          ${product.stock === 0 ? "disabled" : `onclick="addToCart(${product.id})"`}>
+          ${product.stock === 0 ? "Sold Out" : "Add to Cart"}
+        </button>
+      </div>
+    `;
+
+    if (product.stock > 0) {
+      card.addEventListener("click", e => {
+        if (e.target.closest("button")) return;
+        window.location.href = "product.html?id=" + product.id;
+      });
+    }
+
+    container.appendChild(card);
+  });
+}
+
+/* ================================
+   🔍 SEARCH SUGGESTIONS
+================================ */
+const popularTerms = [
+  "Lip Gloss","Lip Tint","Lip Oil","Limited Edition Shades",
+  "Hydrating Gloss","Nude Lip Tint","Velvet Tint",
+  "Moisture Shine","Bestseller Collection","New Arrivals"
+];
+
+const searchInput = document.getElementById("search");
+const suggestionBox = document.getElementById("suggestions");
+
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.toLowerCase().trim();
+  suggestionBox.innerHTML = "";
+  if (!q) return suggestionBox.style.display = "none";
+
+  popularTerms
+    .filter(t => t.toLowerCase().includes(q))
+    .forEach(term => {
+      const div = document.createElement("div");
+      div.className = "suggestion-item";
+      div.textContent = term;
+      div.onclick = () => {
+        searchInput.value = term;
+        suggestionBox.style.display = "none";
+        renderProducts();
+      };
+      suggestionBox.appendChild(div);
+    });
+
+  suggestionBox.style.display = "flex";
+});
+
+/* ================================
+   🔔 TOAST
+================================ */
+function showToast(msg) {
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* ================================
+   ⚡ REALTIME UPDATES
+================================ */
+function setupRealtime() {
+  const supa = getSupabase();
+  if (!supa) return;
+
+  supa.channel("products-changes")
+    .on("postgres_changes",
+      { event: "*", schema: "public", table: "products" },
+      loadProducts
+    )
+    .subscribe();
+}
+
+/* ================================
+   🚀 INIT (SAFE)
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("search").addEventListener("input", renderProducts);
+  document.getElementById("categoryFilter").addEventListener("change", renderProducts);
+  document.getElementById("priceSort").addEventListener("change", renderProducts);
+
+  const wait = setInterval(() => {
+    if (window.supabaseClient) {
+      clearInterval(wait);
+      loadProducts();
+      setupRealtime();
+      window.updateCartCount?.();
+    }
+  }, 100);
+});
+</script>
+
+</body>
+
+</html>

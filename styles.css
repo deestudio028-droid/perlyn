@@ -1,0 +1,467 @@
+:root {
+  --bg: #f3e4db;
+  --text: #3b2b2b;
+  --muted: #6b4f4f;
+  --white: #ffffff;
+  --accent: #e1bfc0;
+  --radius: 0;
+}
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* 👈 Added line */
+}
+
+
+
+body {
+  background: var(--bg);
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Container */
+.container {
+  width: 95%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* =========================
+   Header & Navbar
+========================= */
+.header {
+  background: rgba(243, 228, 219, 0.9);
+  padding: 12px 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--text);
+}
+.logo img {
+  display: block;
+  max-height: 45px;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  transition: max-height 0.3s ease;
+}
+.nav a {
+  text-decoration: none;
+  font-weight: 500;
+  color: var(--text);
+  position: relative;
+  transition: color 0.3s;
+  font-size: 20px;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--muted);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+  transform-origin: right;
+}
+.nav a:hover {
+  color: var(--muted);
+}
+.nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text);
+}
+
+/* =========================
+   Hero Section
+========================= */
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #f3e4db 0%, #e8d0c7 50%, #f3e4db 100%);
+}
+.hero h1 {
+  font-size: 64px;
+  margin-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.hero p {
+  font-size: 22px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.btn-primary {
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text);
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-weight: 500;
+  text-decoration: none;
+  backdrop-filter: blur(4px);
+  transition: all 0.3s;
+  font-size: 20px;
+}
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* =========================
+   Product Grid (Image Left, Info Right)
+========================= */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 per row on ultrawide (1920px+) */
+  gap: 25px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column; /* Make desktop vertical like mobile */
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f9f2ef 100%);
+  border-radius: 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 15px;
+  gap: 15px;
+  height: 100%; /* Stretch to grid row height */
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-img {
+  width: 100%;
+  height: 280px; /* Large fixed height for huge screens */
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.product-info {
+  flex: 1; /* Pushes content evenly */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.product-info h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.product-info p {
+  font-size: 16px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.price {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: 'Gilda Display', serif;
+  margin-bottom: 12px;
+}
+
+.btn-secondary {
+  background: var(--accent);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+.btn-secondary:hover {
+  background: #d6a6a7;
+}
+
+/* =========================
+   Footer
+========================= */
+.footer {
+  background: #f3e4db;
+  margin-top: 40px;
+  padding: 40px 20px 20px;
+  color: var(--muted);
+  font-size: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+.footer-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.footer-col h3,
+.footer-col h4 {
+  margin-bottom: 12px;
+}
+.footer-col p {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.footer-col ul {
+  list-style: none;
+}
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+.footer-col ul li a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+  font-size: 18px;
+}
+.footer-col ul li a:hover {
+  color: var(--muted);
+}
+.social-icons {
+  display: flex;
+  gap: 14px;
+  margin-top: 12px;
+}
+.social-icons img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.social-icons img:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 8px var(--accent);
+}
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 16px;
+  color: var(--muted);
+}
+.footer-bottom .dee-credit {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 5px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-bottom .dee-credit:hover {
+  color: var(--muted);
+}
+
+/* =========================
+   Responsive
+========================= */
+/* 1440px / 1366px Laptops */
+@media (max-width: 1440px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .product-img {
+    height: 250px;
+  }
+}
+
+/* 1024px Tablets / Small Desktops */
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .product-img {
+    height: 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .nav {
+    display: none;
+    flex-direction: column;
+    background: var(--bg);
+    position: absolute;
+    top: 65px;
+    right: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+  .nav.show {
+    display: flex;
+  }
+  .nav a {
+    font-size: 18px;
+    padding: 8px 0;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr; /* Mobile = 1 per row */
+  }
+
+  /* Keep mobile image height explicitly at 200px as it was perfect */
+  .product-img {
+    height: 200px;
+  }
+}
+.section-title {
+  text-align: center;   /* 👈 Centers text */
+  margin: 40px 0 20px;
+  font-size: 28px;
+  font-weight: 600;
+}
+/* =========================
+   ✅ Navbar Consistency Fix (across all pages)
+========================= */
+.header {
+  line-height: normal;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: rgba(243, 228, 219, 0.95);
+  backdrop-filter: blur(8px);
+}
+
+.nav-container,
+.header .container {
+  align-items: center !important;
+}
+
+.logo img {
+  vertical-align: middle;
+  display: block;
+}
+
+.brand-text {
+  position: relative;
+  top: 1px;
+  font-family: 'Gilda Display', serif;
+  color: #b98474;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* 🧭 Mobile consistency: spacing for hamburger + cart */
+@media (max-width: 768px) {
+  .header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .logo img {
+    max-height: 40px;
+  }
+
+  .hamburger {
+    margin-top: 4px;
+  }
+}
+/* =========================
+   🪄 Navbar Seamless Enhancement — Perfect Perlyn Tone
+========================= */
+
+/* Transparent blend to hero background */
+.header {
+  background: linear-gradient(135deg, #f3e4db 0%, #f7e9e1 100%) !important;
+  box-shadow: none !important;
+  border: none !important;
+  backdrop-filter: blur(6px);
+  transition: background 0.3s ease;
+}
+
+/* Logo text more visible but gentle */
+.brand-text {
+  color: #b07c6b !important;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* 🍔 Hamburger fix — matching tone */
+.hamburger {
+  color: #b07c6b !important;
+  font-size: 28px !important;
+  font-weight: 500;
+  background: none !important;
+  border: none !important;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.hamburger:hover {
+  color: #a36c5c !important;
+  transform: scale(1.1);
+}
+
+/* 🛒 Cart Icon tint tone fix */
+.cart-icon img {
+  filter: brightness(0.85) sepia(0.2) saturate(0.8);
+  opacity: 0.9;
+  transition: all 0.25s ease;
+}
+
+.cart-icon img:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* 📱 On scroll — light subtle fade */
+.header.scrolled {
+  background: rgba(243, 228, 219, 0.95) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* ✨ Mobile menu blend */
+.nav {
+  background: linear-gradient(135deg, #f3e4db 0%, #f7e9e1 100%) !important;
+  border: 1px solid rgba(185, 132, 116, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.nav a {
+  color: #3e2c25 !important;
+}
+
+.nav a:hover {
+  color: #b98474 !important;
+}
+
+
+

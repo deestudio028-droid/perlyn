@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Login</title>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #f3e4db;
+      margin: 0;
+      padding: 0;
+    }
+
+    .account-container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 90%;
+      max-width: 320px;
+      padding: 10px;
+      margin: 8px auto;
+      display: block;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: box-shadow 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #B98474;
+      box-shadow: 0 0 4px #d6a190;
+    }
+
+    button {
+      width: 90%;
+      max-width: 320px;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      border: none;
+      background: #B98474;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background: #a07060;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #444;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      color: #B98474;
+    }
+
+    .link a {
+      text-decoration: none;
+      color: #B98474;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    /* ✅ Success glow animation for OTP auto-fill */
+    @keyframes otpGlow {
+      0% { box-shadow: 0 0 0 #9ad9a2; }
+      50% { box-shadow: 0 0 12px #9ad9a2; }
+      100% { box-shadow: 0 0 0 #9ad9a2; }
+    }
+    .otp-verified {
+      animation: otpGlow 1.5s ease-in-out 2;
+      border-color: #57b56a !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="account-container">
+    <h2>Login</h2>
+
+    <!-- Email Field -->
+    <input type="email" id="email" placeholder="Enter your email" />
+
+    <!-- OTP Input + Buttons -->
+    <button id="sendOtpBtn">Send OTP</button>
+
+    <input
+      type="text"
+      id="otp"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      autocomplete="one-time-code"
+      placeholder="Enter OTP"
+      style="display:none;"
+      maxlength="6"
+    />
+
+    <button id="verifyOtpBtn" style="display:none;">Verify OTP & Login</button>
+
+    <!-- Divider -->
+    <div style="text-align:center; margin:10px 0; color:#777;">or</div>
+
+    <!-- Google Login Button -->
+    <button class="google-btn" id="googleLogin">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo" />
+      Continue with Google
+    </button>
+
+    <!-- Register Link -->
+    <div class="link">
+      <a href="register.html">Don't have an account? Register</a>
+    </div>
+
+    <div id="messageBox" class="message"></div>
+  </div>
+
+<script type = "module">
+  var supabase = window.supabaseClient;
+
+  const emailInput = document.getElementById("email");
+  const otpInput = document.getElementById("otp");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const messageBox = document.getElementById("messageBox");
+
+  // 🌐 Helper to show message
+  function showMessage(msg, type = "success") {
+    messageBox.textContent = msg;
+    messageBox.className = `message ${type}`;
+  }
+
+  // 🧭 Unified redirect target getter (linked with navbar.js)
+  function getRedirectTarget() {
+    const saved = localStorage.getItem("lastVisitedPage");
+    return saved && !saved.includes("login.html") ? saved : "account.html";
+  }
+
+  // ✅ 1. Send OTP
+  sendOtpBtn.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
+    if (!email) return showMessage("Please enter your email.", "error");
+
+   const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true
+    }
+  });
+
+
+    if (error) {
+      showMessage(error.message, "error");
+    } else {
+      showMessage("OTP sent to your email. Please check your inbox.", "success");
+      otpInput.style.display = "block";
+      verifyOtpBtn.style.display = "block";
+      sendOtpBtn.disabled = true;
+      sendOtpBtn.style.opacity = 0.6;
+    }
+  });
+
+  // ✅ 2. Verify OTP & Redirect
+  verifyOtpBtn.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
+    const otp = otpInput.value.trim();
+    if (!email || !otp) return showMessage("Please fill both fields.", "error");
+
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: otp,
+      type: "email"
+    });
+
+    if (error) {
+      showMessage("Invalid or expired OTP. Try again.", "error");
+    } else {
+      otpInput.classList.add("otp-verified");
+      showMessage("Login successful! Redirecting...", "success");
+
+      // 🧠 Redirect to last visited page (from navbar.js)
+      const redirectTarget = getRedirectTarget();
+      localStorage.removeItem("lastVisitedPage");
+      setTimeout(() => (window.location.href = redirectTarget), 1000);
+    }
+  });
+
+  // ✅ 3. Google Login (preserves redirect)
+  document.getElementById("googleLogin").addEventListener("click", async () => {
+    const redirectTarget = getRedirectTarget();
+    const finalRedirectUrl = new URL(redirectTarget, window.location.origin).href;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: finalRedirectUrl
+      }
+    });
+    if (error) showMessage(error.message, "error");
+  });
+
+  // ✅ 4. Auto redirect if already logged in
+  (async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const redirectTarget = getRedirectTarget();
+      localStorage.removeItem("lastVisitedPage");
+      window.location.href = redirectTarget;
+    }
+  })();
+
+  
+</script>
+
+
+</body>
+</html>

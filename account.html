@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — My Account</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+
+  <!-- Supabase -->
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    span,
+    li,
+    button {
+      font-family: 'Cormorant Garamond', serif !important;
+      margin: 0;
+    }
+
+    body {
+      background: #f3e4db;
+      color: #2d2d2d;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .price {
+      font-family: 'Gilda Display', serif !important;
+    }
+
+    /* HEADER */
+    .header {
+      background: #f3e4db;
+      padding: 15px 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    .container.nav-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav a {
+      margin-left: 18px;
+      text-decoration: none;
+      color: #2d2d2d;
+      font-weight: 500;
+      font-size: 16px;
+      transition: color 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: #B98474;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+        flex-direction: column;
+        background: #f3e4db;
+        position: absolute;
+        top: 60px;
+        right: 16px;
+        padding: 10px 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      .nav.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      margin-left: 10px;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .logout-btn:hover {
+      color: #B98474;
+      text-decoration: underline;
+    }
+
+    /* SECTION TITLE (same as index.html) */
+    .section-title {
+      font-size: 24px;
+      font-weight: 600;
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+
+    /* ACCOUNT BOX */
+    .account-box {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      padding: 20px;
+    }
+
+    .account-detail {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .orders h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    /* ORDER CARDS */
+    .order-card {
+      background: #f9f2ef;
+      border-radius: 10px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+      font-size: 16px;
+    }
+
+    /* FOOTER */
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 60px auto 20px;
+      padding: 0 16px;
+      font-size: 16px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-col h3,
+    .footer-col h4 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 6px;
+    }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      color: inherit;
+      font-size: 16px;
+    }
+
+    .footer-col ul li a:hover {
+      color: #B98474;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f3e4db;
+      color: #5a3e36;
+      border: 1px solid #e0c7bb;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="container nav-container">
+      <div class="logo">
+        <img src="assets/logo.png" width="45" height="45" alt="Perlyn Logo" />
+        <span class="brand-text">Perlyn Beauty</span>
+      </div>
+
+      <button class="hamburger" id="hamburger">☰</button>
+
+     <nav class="nav" id="nav-menu">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="cart.html">Cart</a>
+  <a href="account.html" id="accountLink">My Account</a>
+  <a href="faq.html">FAQ</a>
+  <a href="aboutus.html">About Us</a>
+  <a href="menu.html">Menu</a>
+  <button id="logoutBtn" class="logout-btn" style="display:none;">Logout</button>
+</nav>
+
+    </div>
+  </header>
+
+  <!-- ACCOUNT SECTION -->
+  <main class="account-box">
+    <h2 class="section-title">My Account</h2>
+    <div class="account-detail">
+      <strong>Email:</strong> <span id="userEmail">Loading...</span>
+    </div>
+    <hr />
+    <div class="orders">
+      <h3>My Orders</h3>
+      <div id="ordersList">Loading...</div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Brand Info -->
+    <div class="footer-col">
+      <h3>Perlyn</h3>
+      <p>Gloss that loves. Tints that stay. Oils that care.</p>
+      <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
+      <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
+      <div class="social-icons" style="margin-top:10px;">
+        <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
+          target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="28" height="28" />
+        </a>
+        <a href="https://wa.me/919176100456" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="28" height="28" />
+        </a>
+        <a href="https://www.youtube.com/@PerlynBeauty" target="_blank">
+          <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="28" height="28" />
+        </a>
+      </div>
+    </div>
+ <div class="footer-col">
+  <h4>Shop</h4>
+  <ul>
+    <li><a href="shop.html?category=lip%20gloss">Lip Gloss</a></li>
+    <li><a href="shop.html?category=lip%20%26%20cheek%20tint">Lip & Cheek Tint</a></li>
+    <li><a href="shop.html?category=lip%20oils">Lip Oils</a></li>
+  </ul>
+</div>
+
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+     <ul>
+  <li><a href="aboutus.html">About Us</a></li>
+  <li><a href="contactus.html">Contact Us</a></li>
+  <li><a href="faq.html">FAQ</a></li>
+  <li><a href="terms.html">Terms & Conditions</a></li>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="shipping.html">Shipping & Cancellation Policy</a></li>
+  <li><a href="refund.html">Return & Refund Policy</a></li>
+</ul>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Perlyn. All Rights Reserved.</p>
+    <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
+  </div>
+</footer>
+
+
+  <!-- Toast -->
+  <div id="toast" class="toast">Logged out successfully</div>
+
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navMenu = document.getElementById("nav-menu");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userEmail = document.getElementById("userEmail");
+  const ordersList = document.getElementById("ordersList");
+  const toast = document.getElementById("toast");
+
+  // 🍔 Mobile Navbar Toggle
+  hamburger?.addEventListener("click", () => {
+    navMenu.classList.toggle("show");
+  });
+
+  // 🧩 Initialize Supabase Client
+  var supabase = window.supabaseClient;
+
+  // 🧁 Toast Helper
+  function showToast(message) {
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2000);
+  }
+
+  // 🧠 Load Account + Orders
+  async function loadAccount() {
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) {
+        // 🔒 Remember current page (for redirect after login)
+        localStorage.setItem("lastVisitedPage", window.location.href);
+        showToast("Please login to view your account");
+        setTimeout(() => (window.location.href = "login.html"), 1000);
+        return;
+      }
+
+      // ✅ Display Email
+      userEmail.innerText = session.user.email;
+      logoutBtn.style.display = "inline";
+
+      // 🧾 Fetch Orders for this user
+      const { data: orders, error } = await supabase
+        .from("orders")
+        .select("order_id, total, status, created_at")
+        .eq("user_id", session.user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("❌ Error fetching orders:", error.message);
+        ordersList.innerHTML = "<p>Error loading orders. Please try again later.</p>";
+        return;
+      }
+
+      if (!orders || orders.length === 0) {
+        ordersList.innerHTML = "<p>No orders found yet.</p>";
+        return;
+      }
+
+      // 🧩 Render each order card
+      ordersList.innerHTML = orders.map(o => `
+        <div class="order-card">
+          <div><strong>Order ID:</strong> ${o.order_id}</div>
+          <div><strong>Date:</strong> ${new Date(o.created_at).toLocaleString("en-IN")}</div>
+          <div><strong>Amount:</strong> ₹${o.total}</div>
+          <div><strong>Status:</strong> ${o.status}</div>
+        </div>
+      `).join("");
+
+    } catch (err) {
+      console.error("⚠️ Unexpected error:", err);
+      ordersList.innerHTML = "<p>Something went wrong while loading your account.</p>";
+    }
+  }
+
+  // 🚪 Logout Handler
+  logoutBtn?.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Logout failed:", error.message);
+        showToast("Logout failed. Try again.");
+        return;
+      }
+
+      showToast("Logged out successfully");
+
+      // 🧹 Clear redirect and send to login
+      localStorage.setItem("lastVisitedPage", "account.html");
+      setTimeout(() => (window.location.href = "login.html"), 1500);
+    } catch (err) {
+      console.error("Logout crash:", err);
+      showToast("Error signing out");
+    }
+  });
+
+  // 🚀 Auto Load Account Details
+  loadAccount();
+</script>
+
+
+</body>
+
+</html>
+
+

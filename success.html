@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perlyn — Order Placed</title>
+
+  <!-- 🌸 Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Gilda+Display&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+
+  <style>
+    :root {
+      --bg: #f3e4db;
+      --accent: #b98474;
+      --text: #4b3b32;
+      --light: #fff6f0;
+      --success: #3a814e;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0;
+      text-align: center;
+      overflow-x: hidden;
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    .success-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 25px;
+    }
+
+    .success-box {
+      background: var(--light);
+      border-radius: 30px;
+      padding: 60px 45px 70px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+      max-width: 95%;
+      width: 480px;
+      animation: popIn 0.6s ease;
+    }
+
+    .logo {
+      width: 95px;
+      margin-bottom: 18px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: var(--success);
+      font-family: 'Gilda Display', serif;
+      font-size: 38px;
+      margin: 14px 0 20px;
+      letter-spacing: 0.6px;
+    }
+
+    p {
+      font-size: 19px;
+      line-height: 1.8;
+      margin: 8px 0;
+    }
+
+    #order {
+      font-weight: 600;
+      color: var(--accent);
+      font-family: 'Gilda Display', serif;
+      font-size: 20px;
+    }
+
+    .continue-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 35px;
+      font-size: 19px;
+      padding: 13px 36px;
+      font-family: 'Cormorant Garamond', serif;
+      margin-top: 35px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 10px rgba(185, 132, 116, 0.3);
+    }
+
+    .continue-btn:hover {
+      background: #a36c5c;
+      transform: translateY(-2px);
+    }
+
+    .continue-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ✨ Reward Popup */
+    .reward-popup {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #fff6f0;
+      color: var(--success);
+      border: 1.5px solid #d7eedb;
+      border-radius: 18px;
+      padding: 18px 24px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      font-size: 17px;
+      font-weight: 600;
+      font-family: 'Cormorant Garamond', serif;
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      z-index: 999;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.94); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 600px) {
+      .success-box {
+        padding: 55px 25px 60px;
+        width: 92%;
+      }
+      h2 { font-size: 32px; }
+      p { font-size: 17px; line-height: 1.7; }
+      .logo { width: 85px; }
+      .continue-btn { font-size: 17px; padding: 11px 28px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="success-wrapper">
+    <div class="success-box">
+      <img src="assets/logo.png" alt="Perlyn Logo" class="logo">
+      <h2>🎉 Order Placed Successfully!</h2>
+      <p>Thank you for shopping with <strong>Perlyn Beauty</strong>.</p>
+      <p>Your order has been confirmed and will be <b>dispatched within 3 days</b> of confirmation.</p>
+      <p>It will be <b>delivered within 5–7 days</b> after dispatch.</p>
+      <p>Order ID: <span id="order">—</span></p>
+      <button class="continue-btn" onclick="window.location.href='index.html'">Continue Shopping</button>
+    </div>
+  </div>
+
+  <!-- 🎁 Reward Notification -->
+  <div id="reward-popup" class="reward-popup">
+    🎉 You’ve earned reward points! Added to your account 💝
+  </div>
+
+  <script>
+  const supabaseClient = window.supabaseClient;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderId = urlParams.get("orderId") || "N/A";
+  document.getElementById("order").textContent = orderId;
+  const popup = document.getElementById("reward-popup");
+
+  async function showRewardPopup() {
+    try {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) return;
+
+      const userId = session.user.id;
+      const { data: rewardData } = await supabaseClient
+        .from("reward_points")
+        .select("total_points")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      if (rewardData?.total_points) {
+        popup.innerHTML = `✨ Your total reward balance: <b>${rewardData.total_points}</b> points 💝`;
+        setTimeout(() => {
+          popup.style.opacity = "1";
+          popup.style.transform = "translateY(0)";
+        }, 800);
+        setTimeout(() => (popup.style.opacity = "0"), 9000);
+      }
+    } catch (err) {
+      console.error("⚠️ Reward popup error:", err);
+    }
+  }
+
+  window.addEventListener("load", showRewardPopup);
+  </script>
+</body>
+</html>

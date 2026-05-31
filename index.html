@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn-Lipgloss,Liptints & Lipoils</title>
+
+  <!-- Google Font: Cormorant Garamond -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <!-- Google Font: Gilda Display (for price only) -->
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a,
+    span,
+    li,
+    button {
+      font-family: 'Cormorant Garamond', serif !important;
+    }
+
+    .price {
+      font-family: 'Gilda Display', serif !important;
+    }
+
+   
+
+    /* Logout Button Styled like Perlyn Theme */
+    .logout-btn {
+      background: #b98474;
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background: #a36c5c;
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 16px;
+        background: #f3e4db;
+        padding: 14px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav.show {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      /* Move cart near hamburger on mobile */
+      .nav .cart-icon {
+        display: none;
+      }
+    }
+
+    /* Logout button styled same as nav links */
+    .logout-btn {
+      color: inherit;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: color 0.2s ease;
+    }
+
+    .logout-btn:hover {
+      color: #B98474;
+      text-decoration: underline;
+    }
+
+    /* Themed popup message */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f3e4db;
+      color: #5a3e36;
+      border: 1px solid #e0c7bb;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Footer layout fix */
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .footer-col {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .footer-col h3,
+    .footer-col h4 {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 6px;
+    }
+
+    .footer-col ul li a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .footer-col ul li a:hover {
+      color: #B98474;
+    }
+
+    .footer-bottom {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .social-icons a {
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .product-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ✨ Remove blue outline & add smooth blink effect when clicking cards */
+    .product-card {
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      /* Removes mobile blue overlay */
+      outline: none;
+    }
+
+    .product-card:focus,
+    .product-card:active {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .product-card:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+      /* Light blink on tap */
+    }
+
+    /* 🛍️ Product Grid — 3 per row on mobile */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+      justify-items: center;
+      padding: 0 8px;
+    }
+
+    /* ✨ Product Card Responsive Style */
+    .product-card {
+      background: #fff6f0;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+      overflow: hidden;
+      text-align: center;
+      padding: 8px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      width: 100%;
+      max-width: 160px;
+      /* helps keep 3 in a row */
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      margin: 4px 0;
+      font-weight: 600;
+    }
+
+    .product-card .price {
+      display: block;
+      font-family: 'Gilda Display', serif;
+      font-size: 15px;
+      margin: 2px 0;
+      color: #b98474;
+    }
+
+    /* 🧠 Fine-tune on different screen widths */
+    @media (min-width: 768px) {
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    /* === HERO TEXT RESPONSIVE FIX === */
+.hero-content h1 {
+  font-size: 42px; /* Default for large screens */
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  color: #3e2c25;
+  margin-bottom: 12px;
+}
+
+.hero-content p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #5a3e36;
+}
+
+/* 📱 Mobile screens */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 26px; /* Reduced from 42px */
+    line-height: 1.3;
+    margin-bottom: 10px;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+  }
+}
+
+/* 💻 Very large screens (smooth upscale) */
+@media (min-width: 1200px) {
+  .hero-content h1 {
+    font-size: 48px;
+  }
+}/* 🛍️ Cart Icon + Hamburger Group */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cart-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.cart-icon img:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
+/* 🍔 Hamburger */
+.hamburger {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #3e2c25;
+}
+
+@media (max-width: 768px) {
+  .nav-actions {
+    gap: 12px;
+  }
+}
+
+/* ✨ Navbar seamless background blend */
+.header {
+  background: #f3e4db;
+  border: none;
+  box-shadow: none;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+body {
+  background: #f3e4db !important;
+}
+
+  </style>
+</head>
+
+<div class="offer-banner" id="offerBanner">
+  <span>Loading offers...</span>
+</div>
+
+
+<style>
+.offer-banner {
+  background: #b98474;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offer-banner span {
+  display: inline-block;
+  position: absolute;
+  will-change: transform;
+  animation: scrollText 14s linear infinite;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+@keyframes scrollText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* 📱 Mobile smooth animation fix */
+@media (max-width: 768px) {
+  .offer-banner span {
+    animation: scrollText 16s linear infinite;
+    transform: translateZ(0); /* forces GPU render on mobile */
+    font-size: 14px;
+  }
+}
+</style>
+
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script src="env.js"></script>
+<script src="supabaseClient.js"></script>
+<script src="components/navbar.js"></script>
+
+
+
+
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Gloss that loves. Tints that stay. Oils that care.<br />Where the Soul Shows, Perlyn.</h1>
+
+      <p>Luxe Shades • Soft Finish • Everyday Elegance</p>
+      <a href="shop.html" class="btn-primary">Shop Now</a>
+    </div>
+  </section>
+
+ <main class="container" id="shop">
+  <h2 class="section-title" id="sectionTitle">Featured Products</h2>
+  <div class="product-grid" id="product-grid">
+    <p>Loading products...</p>
+  </div>
+</main>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Brand Info -->
+      <div class="footer-col">
+        <h3>Perlyn</h3>
+        <p>Gloss that loves. Tints that stay. Oils that care.</p>
+        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
+        <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
+        <div class="social-icons" style="margin-top:10px;">
+          <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
+            target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="28" height="28" />
+          </a>
+          <a href="https://wa.me/919176100456" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="28" height="28" />
+          </a>
+          <a href="https://www.youtube.com/@PerlynBeauty" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="28" height="28" />
+          </a>
+        </div>
+      </div>
+
+  <div class="footer-col">
+  <h4>Shop</h4>
+  <ul>
+    <li><a href="shop.html?category=lip%20gloss">Lip Gloss</a></li>
+    <li><a href="shop.html?category=lip%20%26%20cheek%20tint">Lip & Cheek Tint</a></li>
+    <li><a href="shop.html?category=lip%20oils">Lip Oils</a></li>
+  </ul>
+</div>
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+       <ul>
+  <li><a href="aboutus.html">About Us</a></li>
+  <li><a href="contactus.html">Contact Us</a></li>
+  <li><a href="faq.html">FAQ</a></li>
+  <li><a href="terms.html">Terms & Conditions</a></li>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="shipping.html">Shipping & Cancellation Policy</a></li>
+  <li><a href="refund.html">Return & Refund Policy</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Perlyn. All Rights Reserved.</p>
+      <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
+    </div>
+  </footer>
+
+
+  <!-- Toast Message -->
+  <div id="toast" class="toast">Logged out successfully</div>
+
+  <!-- JS -->
+  
+
+<!-- 🌸 WELCOME OFFER POPUP (Dynamic From Supabase) -->
+<div id="welcome-offer" class="welcome-offer" style="display:none;">
+  <div class="welcome-box">
+    <h3 id="offer-title">🎁 Welcome to Perlyn Beauty!</h3>
+    <p id="offer-desc">Enjoy <b>10% OFF</b> your first order above ₹599.</p>
+    <p>Use Code: <b id="offer-code">AURA10</b></p>
+
+    <div class="popup-actions">
+      <button class="copy-btn" id="copyOfferBtn">Copy Code</button>
+      <button class="close-btn" onclick="closeOffer()">Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* ✨ Popup Overlay */
+  .welcome-offer {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.45);
+    z-index: 9999;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .welcome-box {
+    background: #fff6f0;
+    border-radius: 18px;
+    padding: 28px;
+    width: 90%;
+    max-width: 330px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    animation: scaleUp 0.4s ease;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .welcome-box h3 {
+    color: #b98474;
+    font-family: 'Gilda Display', serif;
+    margin-bottom: 6px;
+    font-size: 22px;
+  }
+
+  .welcome-box p {
+    margin: 6px 0;
+    font-size: 16px;
+    color: #4b3b32;
+  }
+
+  .popup-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .copy-btn, .close-btn {
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .copy-btn {
+    background: #b98474;
+    color: #fff;
+  }
+  .copy-btn:hover { background: #a36c5c; transform: translateY(-1px); }
+
+  .close-btn {
+    background: #fff;
+    border: 1px solid #b98474;
+    color: #b98474;
+  }
+  .close-btn:hover { background: #f3e4db; }
+
+  @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+  @keyframes scaleUp { from{transform:scale(0.9);opacity:0;} to{transform:scale(1);opacity:1;} }
+</style>
+<script>
+  const supabaseClient = window.supabaseClient;
+
+  // 🛍️ Load Homepage Products
+  async function loadProducts() {
+    try {
+      const { data: displayData } = await supabaseClient
+        .from("home_display")
+        .select("section")
+        .single();
+
+      const section = displayData?.section || "featured";
+      let query = supabaseClient
+        .from("products")
+        .select("id, name, price, image_url, card_description");
+
+      if (section === "featured") query = query.eq("category", "featured");
+      else if (section === "new") query = query.eq("newly_launched", true);
+      else if (section === "bestseller") query = query.eq("bestseller", true);
+
+      const { data, error } = await query.limit(6);
+      const grid = document.getElementById("product-grid");
+      const title = document.getElementById("sectionTitle");
+
+      const titles = {
+        featured: "Featured Products",
+        new: "Newly Launched",
+        bestseller: "Bestsellers",
+        all: "Our Collection",
+      };
+      title.textContent = titles[section];
+
+      if (error || !data?.length) {
+        grid.innerHTML = "<p>No products available for this section.</p>";
+        return;
+      }
+
+      grid.innerHTML = data
+        .map(
+          (p) => `
+          <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
+            <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}" class="product-img" />
+            <h3>${p.name}</h3>
+            <span class="price">₹${p.price}</span>
+            <p>${p.card_description || ""}</p>
+          </div>`
+        )
+        .join("");
+    } catch (err) {
+      console.error("🚨 Product load error:", err);
+    }
+  }
+
+  // 🌟 Load Active Offer (for both Banner + Popup)
+ // 🌟 Load Active Offer (for both Banner + Popup)
+async function loadOfferSystem() {
+  try {
+    const { data, error } = await supabaseClient
+      .from("offers")
+      .select("title, active")
+      .eq("active", true)
+      .maybeSingle();
+
+    const banner = document.getElementById("offerBanner");
+
+    if (error) {
+      console.error("⚠️ Offer fetch error:", error);
+      banner.innerHTML = `<span>Error loading offer.</span>`;
+      return;
+    }
+
+    // ❌ No active offer → hide both banner & popup
+    if (!data || !data.active) {
+      console.log("ℹ️ No active offers — hiding banner and popup.");
+      banner.style.display = "none";
+      document.getElementById("welcome-offer").style.display = "none";
+      return;
+    }
+
+    // ✅ Update banner text from Supabase
+    banner.innerHTML = `<span>✨ ${data.title} ✨</span>`;
+
+    // Extract coupon code dynamically from the title
+    const extractedCode = data.title.match(/code\s+(\w+)/i)?.[1] || "AURA10";
+
+    // ✅ Fill popup dynamically
+    document.getElementById("offer-title").textContent = `🎁 ${data.title}`;
+    document.getElementById("offer-code").textContent = extractedCode;
+    document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer 💖";
+
+    // 🎁 Show popup only once per session
+    if (!sessionStorage.getItem("welcomeShown")) {
+      setTimeout(() => {
+        const popup = document.getElementById("welcome-offer");
+        popup.style.display = "flex";
+
+        // Auto close after 7 seconds if ignored
+        setTimeout(() => popup.style.display = "none", 7000);
+
+        sessionStorage.setItem("welcomeShown", "true");
+      }, 1500);
+    }
+
+    // 📋 Copy button logic
+    document.getElementById("copyOfferBtn").onclick = () => {
+      navigator.clipboard.writeText(extractedCode);
+      showToast(`✨ Code ${extractedCode} copied! Use it at checkout 💖`);
+      closeOffer();
+    };
+  } catch (err) {
+    console.error("🚨 Offer system error:", err);
+  }
+}
+
+
+  // ✨ Popup Close + Toast Message
+  function closeOffer() {
+    const popup = document.getElementById("welcome-offer");
+    popup.style.display = "none";
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2500);
+  }
+
+  // 🚀 Run when page fully loads
+  window.addEventListener("load", async () => {
+    await loadProducts();
+    await loadOfferSystem();
+  });
+</script>
+
+</body>
+</html>
+

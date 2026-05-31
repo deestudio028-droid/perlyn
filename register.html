@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Register</title>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+  <style>
+    body { font-family: 'Cormorant Garamond', serif; background:#f3e4db; margin:0; padding:0; }
+    .account-container { max-width: 400px; margin: 60px auto; background:#fff; padding:20px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
+    h2 { text-align:center; margin-bottom:20px; font-weight:500; }
+    input {
+      width: 90%; max-width: 320px; padding: 10px; margin: 8px auto;
+      display: block; border: 1px solid #ddd; border-radius: 6px;
+    }
+    button {
+      width: 90%; max-width: 320px; margin: 10px auto; display: block;
+      padding: 10px; border: none; background: #B98474; color: #fff;
+      font-size: 16px; border-radius: 6px; cursor: pointer;
+    }
+    button:hover { background:#a07060; }
+    .google-btn {
+      background: #fff; color:#444; border: 1px solid #ddd;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; font-size: 15px;
+    }
+    .google-btn img { width: 20px; height: 20px; }
+    .link { text-align:center; margin-top:10px; cursor:pointer; color:#B98474; }
+    .link a { text-decoration:none; color:#B98474; }
+    .link a:hover { text-decoration:underline; }
+    .message { text-align:center; margin-top:15px; color:green; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="account-container">
+    <h2>Register</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="registerBtn">Sign Up</button>
+
+    <!-- Google Signup Button -->
+    <button class="google-btn" id="googleSignup">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo"/>
+      Sign Up with Google
+    </button>
+
+    <div class="link"><a href="login.html">Already have an account? Login</a></div>
+    <div id="messageBox" class="message"></div>
+  </div>
+
+  <script>
+    var supabase = window.supabaseClient;
+
+    // Email/Password Signup (no confirmation required)
+    document.getElementById("registerBtn").addEventListener("click", async () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      if (!email || !password) return alert("Please fill all fields!");
+
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) return alert(error.message);
+
+      // Directly redirect to index after signup
+      window.location.href = "index.html";
+    });
+
+    // Google Signup
+    document.getElementById("googleSignup").addEventListener("click", async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: "index.html" }
+      });
+      if (error) return alert(error.message);
+    });
+
+    // Auto redirect if already logged in
+    (async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) window.location.href = "index.html";
+    })();
+  </script>
+</body>
+</html>
