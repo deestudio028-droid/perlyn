@@ -128,12 +128,42 @@
       animation: otpGlow 1.5s ease-in-out 2;
       border-color: #57b56a !important;
     }
+
+    /* Saved Accounts UI */
+    .saved-accounts {
+      margin-bottom: 15px;
+    }
+    .saved-account-btn {
+      background: #fdf5f1;
+      color: #B98474;
+      border: 1px solid #e0c7bb;
+      padding: 10px;
+      margin: 5px auto;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 320px;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .saved-account-btn:hover {
+      background: #faebe2;
+      border-color: #B98474;
+    }
   </style>
 </head>
 
 <body>
-  <div class="account-container">
+  <!-- Global Loader to prevent flash -->
+  <div id="pageLoader" style="position:fixed; top:0; left:0; right:0; bottom:0; background:#f3e4db; z-index:9999; display:flex; justify-content:center; align-items:center;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:#B98474;">Loading...</div>
+  </div>
+
+  <div class="account-container" id="accountContainer" style="display: none;">
     <h2>Login</h2>
+
+    <!-- Saved Accounts Section -->
+    <div id="savedAccountsContainer" class="saved-accounts"></div>
 
     <!-- Email Field -->
     <input type="email" id="email" placeholder="Enter your email" />
@@ -197,22 +227,29 @@
     const email = emailInput.value.trim();
     if (!email) return showMessage("Please enter your email.", "error");
 
-   const { error } = await supabase.auth.signInWithOtp({
+    // Loading state
+    sendOtpBtn.disabled = true;
+    const originalText = sendOtpBtn.textContent;
+    sendOtpBtn.textContent = "Sending...";
+    sendOtpBtn.style.opacity = 0.6;
+
+    const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         shouldCreateUser: true
-    }
-  });
-
+      }
+    });
 
     if (error) {
       showMessage(error.message, "error");
+      sendOtpBtn.disabled = false;
+      sendOtpBtn.textContent = originalText;
+      sendOtpBtn.style.opacity = 1;
     } else {
       showMessage("OTP sent to your email. Please check your inbox.", "success");
       otpInput.style.display = "block";
       verifyOtpBtn.style.display = "block";
-      sendOtpBtn.disabled = true;
-      sendOtpBtn.style.opacity = 0.6;
+      sendOtpBtn.textContent = "OTP Sent";
     }
   });
 
@@ -222,6 +259,12 @@
     const otp = otpInput.value.trim();
     if (!email || !otp) return showMessage("Please fill both fields.", "error");
 
+    // Loading state
+    verifyOtpBtn.disabled = true;
+    const originalText = verifyOtpBtn.textContent;
+    verifyOtpBtn.textContent = "Verifying...";
+    verifyOtpBtn.style.opacity = 0.6;
+
     const { error } = await supabase.auth.verifyOtp({
       email,
       token: otp,
@@ -230,7 +273,17 @@
 
     if (error) {
       showMessage("Invalid or expired OTP. Try again.", "error");
+      verifyOtpBtn.disabled = false;
+      verifyOtpBtn.textContent = originalText;
+      verifyOtpBtn.style.opacity = 1;
     } else {
+      // Save email to saved accounts
+      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
+      if (!saved.includes(email)) {
+        saved.push(email);
+        localStorage.setItem("savedAccounts", JSON.stringify(saved));
+      }
+
       otpInput.classList.add("otp-verified");
       showMessage("Login successful! Redirecting...", "success");
 
@@ -255,13 +308,35 @@
     if (error) showMessage(error.message, "error");
   });
 
-  // ✅ 4. Auto redirect if already logged in
+  // ✅ 4. Auto redirect if already logged in & Load Saved Accounts
   (async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
       const redirectTarget = getRedirectTarget();
       localStorage.removeItem("lastVisitedPage");
       window.location.href = redirectTarget;
+    } else {
+      // Hide global loader, show container
+      document.getElementById("pageLoader").style.display = "none";
+      document.getElementById("accountContainer").style.display = "block";
+
+      // Render saved accounts
+      const savedAccountsContainer = document.getElementById("savedAccountsContainer");
+      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
+      if (saved.length > 0) {
+        savedAccountsContainer.innerHTML = '<div style="font-size: 14px; margin-bottom: 5px; color: #555;">Select an account to login:</div>';
+        saved.forEach(email => {
+          const btn = document.createElement("div");
+          btn.className = "saved-account-btn";
+          btn.textContent = email;
+          btn.onclick = () => {
+            emailInput.value = email;
+            sendOtpBtn.click(); // Auto-trigger OTP send
+          };
+          savedAccountsContainer.appendChild(btn);
+        });
+        savedAccountsContainer.innerHTML += '<div style="text-align:center; margin:10px 0; color:#777;">or use another email</div>';
+      }
     }
   })();
 

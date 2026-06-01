@@ -853,20 +853,29 @@ let productsData = [];
    🛍️ LOAD PRODUCTS
 ================================ */
 async function loadProducts() {
-  const supa = getSupabase();
-  if (!supa) return;
+    // 🧠 Check Session Storage Cache
+    const cached = sessionStorage.getItem("perlyn_products");
+    if (cached) {
+      productsData = JSON.parse(cached);
+      renderProducts();
+      return;
+    }
 
-  const { data, error } = await supa.from("products").select("*");
-
-  if (error) {
-    document.getElementById("product-list").innerHTML =
-      "<p>⚠️ Error loading products.</p>";
-    return;
+    const supa = getSupabase();
+    if (!supa) return;
+  
+    const { data, error } = await supa.from("products").select("*");
+  
+    if (error) {
+      document.getElementById("product-list").innerHTML =
+        "<p>❌ Error loading products.</p>";
+      return;
+    }
+  
+    productsData = data || [];
+    sessionStorage.setItem("perlyn_products", JSON.stringify(productsData));
+    renderProducts();
   }
-
-  productsData = data || [];
-  renderProducts();
-}
 
 /* ================================
    🛒 ADD TO CART
@@ -952,7 +961,7 @@ function renderProducts() {
     card.innerHTML = `
       ${product.bestseller ? `<span class="badge">Bestseller</span>` : ""}
       ${product.newly_launched ? `<span class="badge new">New!</span>` : ""}
-      <img src="${(product.image_url && product.image_url !== 'null') ? product.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" class="product-img" />
+      <img src="${(product.image_url && product.image_url !== 'null') ? product.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" class="product-img" loading="lazy" />
       <div class="product-info">
         <span class="price">₹${product.price}</span>
         <h3>${product.name}</h3>

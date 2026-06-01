@@ -602,7 +602,7 @@ body {
         .map(
           (p) => `
           <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
-            <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}" class="product-img" />
+            <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}" class="product-img" loading="lazy" />
             <h3>${p.name}</h3>
             <span class="price">₹${p.price}</span>
             <p>${p.card_description || ""}</p>

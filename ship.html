@@ -741,9 +741,15 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     }
 
    // ✅ Step 4: Confirm & Pay — full safe payment + redirect logic (Updated & Fixed)
-document.getElementById("confirmPayBtn").addEventListener("click", async () => {
-  try {
-    console.log("💰 Confirm & Pay clicked!");
+  document.getElementById("confirmPayBtn").addEventListener("click", async () => {
+    const btn = document.getElementById("confirmPayBtn");
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = "Processing...";
+    btn.style.opacity = "0.7";
+
+    try {
+      console.log("💰 Confirm & Pay clicked!");
 
     // ✅ Capture current form values BEFORE async ops
     const customerPayload = {
@@ -838,16 +844,20 @@ console.log("🔁 Redirecting to PhonePe...");
 window.location.href = data.redirectUrl;
 
 
-    } else {
-      console.error("❌ Payment initialization failed:", data);
-      alert("Payment could not be started. Please try again.");
+        } else {
+          alert("Payment initiation failed: " + data.message);
+          btn.disabled = false;
+          btn.textContent = originalText;
+          btn.style.opacity = "1";
+        }
+      } catch (err) {
+      console.error("🚨 Confirm & Pay Error:", err);
+      alert("Unexpected error during payment. Please retry.");
+      btn.disabled = false;
+      btn.textContent = originalText;
+      btn.style.opacity = "1";
     }
-
-  } catch (err) {
-    console.error("💥 Confirm & Pay Error:", err);
-    alert("Unexpected error during payment. Please retry.");
-  }
-});
+  });
 
 
      
