@@ -325,7 +325,7 @@
       let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
       if (saved.length > 0) {
         savedAccountsContainer.innerHTML = '<div style="font-size: 14px; margin-bottom: 5px; color: #555;">Select an account to login:</div>';
-        saved.forEach(email => {
+          saved.forEach(email => {
           const btn = document.createElement("div");
           btn.className = "saved-account-btn";
           btn.textContent = email;
@@ -335,7 +335,7 @@
           };
           savedAccountsContainer.appendChild(btn);
         });
-        savedAccountsContainer.innerHTML += '<div style="text-align:center; margin:10px 0; color:#777;">or use another email</div>';
+        savedAccountsContainer.insertAdjacentHTML('beforeend', '<div style="text-align:center; margin:10px 0; color:#777;">or use another email</div>');
       }
     }
   })();
