@@ -1,0 +1,1558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Cart</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+
+  <style>
+    :root {
+      --bg: #f3e4db;
+      --accent: #b98474;
+      --text: #4b3b32;
+      --light: #fff6f0;
+    }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--bg);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-size: 17px;
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav {
+        display: none;
+        flex-direction: column;
+        background: var(--light);
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        padding: 16px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        gap: 12px;
+      }
+
+      .nav.active {
+        display: flex;
+      }
+
+      .nav a {
+        font-size: 16px;
+      }
+    }
+
+    /* ===== CART ITEMS ===== */
+    .cart-container {
+      max-width: 1000px;
+      margin: 30px auto 110px;
+      padding: 0 16px;
+    }
+
+
+
+    .cart-item:hover {
+      transform: scale(1.01);
+    }
+
+    .cart-item img {
+      width: 85px;
+      height: 85px;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+      margin-top: -16px;
+      /* 🔼 lifted more upward */
+    }
+
+    .item-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      margin-top: -14px;
+      /* 🔼 lifted text block more */
+      padding-right: 100px;
+    }
+
+
+    .item-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 2px;
+    }
+
+    .category {
+      font-size: 13px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .shade {
+      font-size: 15px;
+      color: #7b5b4a;
+      font-style: italic;
+      margin: 2px 0 6px;
+    }
+
+    .item-price {
+      font-family: 'Gilda Display', serif;
+      font-size: 18px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+
+    .qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 4px 0;
+    }
+
+    .qty-btn {
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      outline: none;
+    }
+
+    .qty-btn:active {
+      transform: scale(0.9);
+      opacity: 0.8;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #a04c4c;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 6px;
+      transition: color 0.3s ease;
+    }
+
+    .remove-btn:hover {
+      color: var(--accent);
+    }
+
+    .subtotal {
+      font-family: 'Gilda Display', serif;
+      font-weight: 600;
+      font-size: 18px;
+      color: var(--text);
+      text-align: right;
+      min-width: 80px;
+    }
+
+    /* ===== COUPON SYSTEM ===== */
+  .coupon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 24px auto;
+  padding: 18px;
+  width: 90%;
+  max-width: 600px;
+  background: #fff6f0;
+  border: 1px solid #e3cabc;
+  border-radius: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  text-align: center;
+  position: relative;
+}
+
+.coupon-input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #e3cabc;
+  width: 80%;
+  background: #fff;
+  font-size: 17px;
+  font-family: 'Cormorant Garamond', serif;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.apply-coupon, .remove-coupon {
+  background: #b98474;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 7px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.apply-coupon:hover, .remove-coupon:hover {
+  background: #a36c5c;
+  transform: translateY(-1px);
+}
+
+
+    .apply-coupon:active,
+    .remove-coupon:active {
+      transform: scale(0.95);
+      opacity: 0.9;
+    }
+
+    .coupon-msg {
+      font-size: 15px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-top: 4px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    /* ===== STICKY FOOTER ===== */
+    .cart-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: var(--light);
+      border-top: 1px solid #e3cabc;
+      padding: 12px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      z-index: 99;
+    }
+
+.free-ship {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: #b98474;
+  letter-spacing: 0.3px;
+  transition: color 0.3s ease;
+}
+
+
+    .free-ship.unlocked {
+      color: #3a814e;
+    }
+
+    .cart-total {
+      font-size: 20px;
+      font-weight: 700;
+      font-family: 'Gilda Display', serif;
+    }
+
+.buy-now {
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 18px;
+  font-family: 'Cormorant Garamond', serif; /* 🔥 same as product title */
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 10px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(185, 132, 116, 0.3);
+}
+
+.buy-now:hover {
+  background: #a36c5c;
+  transform: translateY(-2px);
+}
+
+.buy-now:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+
+
+    .subtotal {
+      text-align: right;
+      font-size: 18px;
+      min-width: 70px;
+      align-self: center;
+    }
+
+    .item-price {
+      margin-bottom: 2px;
+    }
+
+    .qty-controls {
+      margin-top: 4px;
+      margin-bottom: 6px;
+    }
+
+
+    .cart-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--light);
+      border-radius: 14px;
+      padding: 12px 18px 18px;
+      /* 🔼 top padding reduced to bring everything up */
+      margin-bottom: 18px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    /* 📱 FINAL PERFECT ALIGNMENT FIX */
+@media (max-width: 768px) {
+  .cart-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .cart-item img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+
+  .item-info {
+    flex: 1;
+    padding-right: 100px;
+    margin-top: 0;
+  }
+
+  .item-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+
+  .category {
+    font-size: 13px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+  }
+
+  .shade {
+    font-size: 15px;
+    color: #7b5b4a;
+    font-style: italic;
+    margin: 2px 0 6px;
+  }
+
+  .item-price {
+    font-family: 'Gilda Display', serif;
+    font-size: 17px;
+    color: var(--accent);
+    margin-top: 4px;
+  }
+
+  /* ➕➖ aligned with "Lip Gloss" */
+  .qty-top {
+    position: absolute;
+    top: 44px; /* 🔥 perfectly level with "Lip Gloss" */
+    right: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff6f0;
+    border-radius: 18px;
+    padding: 4px 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    z-index: 3;
+  }
+
+  .qty-top button {
+    padding: 4px 8px;
+    font-size: 15px;
+  }
+.qty-top {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 🔹 tighter spacing */
+}
+
+.qty-top button {
+  width: 24px;
+  height: 26px;
+  font-size: 15px;
+  border-radius: 6px;
+  padding: 0;
+  line-height: 1;
+}
+
+  /* ❌ "Remove" aligned with description */
+  .remove-btn {
+    position: absolute;
+    top: 80px; /* 🔥 inline with "A juicy rose-plum…" */
+    right: 26px;
+    font-size: 15px;
+    color: #a04c4c;
+  }
+
+  /* 💰 Subtotal */
+  .subtotal {
+    position: absolute;
+    bottom: 14px;
+    right: 20px;
+    font-family: 'Gilda Display', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+}
+
+
+    /* Hover float effect */
+    .cart-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .item-info {
+      width: 100%;
+    }
+
+    .item-name {
+      font-size: 17px;
+    }
+
+    .shade {
+      font-size: 14px;
+    }
+
+    .item-price {
+      font-size: 17px;
+    }
+
+    .subtotal {
+      text-align: right;
+      font-size: 18px;
+      min-width: 80px;
+      align-self: center;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .qty-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      margin-top: -8px;
+      /* 👈 lifts quantity up a little */
+    }
+
+    .subtotal div:last-child {
+      margin-top: 10px;
+      /* 👌 adds soft space between qty and ₹total */
+    }
+    .coupon-summary {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+}
+
+.reward-msg {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: #7b5b4a;
+  text-align: center;
+}
+
+.offers-btn {
+  background: #fff6f0;
+  color: #b98474;
+  border: 1px solid #e3cabc;
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.25s ease;
+}
+.offers-btn:hover {
+  background: #f1dad0;
+  transform: translateY(-1px);
+}
+/* 🎀 Offers & Discounts Section — Refined Perlyn Style */
+.offers-box {
+  background: #fff6f0;
+  border-radius: 16px;
+  padding: 16px 18px 20px;
+  margin: 18px auto;
+  max-width: 800px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  border: 1px solid #e5cfc3;
+  font-family: 'Cormorant Garamond', serif;
+  color: #4b3b32;
+}
+.view-all {
+  cursor: pointer;
+}
+
+/* Header row */
+.offers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #b98474;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+/* “View All →” */
+.offers-header .view-all {
+  color: #b98474;
+  font-weight: 500;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.offers-header .view-all:hover {
+  color: #a36c5c;
+}
+
+/* Unlock line (Add ₹___ more...) */
+.unlock-msg {
+  font-style: italic;
+  color: #7b5b4a;
+  font-size: 16px;
+  margin: 2px 0 10px;
+  text-align: left;
+}
+
+/* Offer item cards */
+.offer-item {
+  background: #fff;
+  border: 1px solid #e8d3c6;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-top: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.offer-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.offer-item p {
+  margin: 0;
+  font-size: 15.5px;
+  color: #4b3b32;
+}
+
+  </style>
+
+</head>
+
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="nav-container">
+      <div class="logo">
+        <img src="assets/logo.png" width="40" height="40" alt="Perlyn Logo">
+        <span class="brand-text">Perlyn Beauty</span>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav class="nav" id="nav-menu">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="cart.html" id="cartLink">Cart</a>
+        <a href="account.html" id="accountLink">My Account</a>
+        <a href="faq.html">FAQ</a>
+        <a href="aboutus.html">About Us</a>
+        <button id="logoutBtn" class="logout-btn" style="display:none;">Logout</button>
+      </nav>
+
+    </div>
+  </header>
+
+ <!-- ===== CART ===== -->
+<main class="cart-container" id="cart-container">
+  <p>Loading your cart...</p>
+</main>
+
+<div class="offers-box" id="offers-box">
+  <div class="offers-header">
+    <span>Offers & Discounts</span>
+    <a href="#" id="view-all-offers" class="view-all" style="display:none;">View All →</a>
+  </div>
+
+  <p id="unlock-msg" class="unlock-msg">Add ₹599 more to unlock coupons</p>
+
+  <!-- Hidden list (no visible offers) -->
+  <div id="offers-list" style="display:none;"></div>
+</div>
+
+<!-- 💌 Coupon Section — moved above footer -->
+<div class="coupon-box" style="position: sticky; bottom: 100px; background: #fff6f0; z-index: 90; padding: 8px 0; box-shadow: 0 -1px 6px rgba(0,0,0,0.05);">
+  <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
+
+  <div style="margin-top: 6px; display: flex; gap: 10px; justify-content: center;">
+    <button class="apply-coupon" onclick="applyCoupon()">Apply</button>
+    <button class="remove-coupon" onclick="removeCoupon()" style="display:none;">Remove</button>
+  </div>
+
+  <p id="coupon-msg" class="coupon-msg"></p>
+</div> <!-- ✅ Correctly closed here -->
+
+<!-- 🛒 FIXED CART ACTION BAR -->
+<div class="fixed-cart-bar">
+  <div class="cart-bar-content">
+    <div class="cart-summary">
+      <div id="free-ship-msg" class="free-ship">Loading offer...</div>
+      <div id="cart-total" class="cart-total">Total: ₹0</div>
+    </div>
+    <button id="buyNowBtn" class="btn-buy-now">Buy Now</button>
+  </div>
+</div>
+
+<style>
+    /* 🩵 Fixed Cart Action Bar — Centered + Floating Refined Look */
+.fixed-cart-bar {
+  position: fixed;
+  bottom: 10px; /* 🔹 lifted slightly for floating feel */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 94%;
+  background: rgba(243, 228, 219, 0.96);
+  backdrop-filter: blur(10px);
+  border: 1px solid #e5cfc3;
+  border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  z-index: 999;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+/* Center alignment for everything */
+.cart-bar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 6px;
+}
+
+/* Free shipping + total info */
+.cart-summary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  gap: 3px;
+}
+
+.free-ship {
+  font-size: 15.5px;
+  font-style: italic;
+  color: #b98474;
+  letter-spacing: 0.3px;
+  transition: color 0.3s ease;
+}
+
+.free-ship.unlocked {
+  color: #3a814e;
+}
+
+.cart-total {
+  font-size: 18.5px;
+  font-weight: 700;
+  font-family: 'Gilda Display', serif;
+  color: #4b3b32;
+}
+
+/* ✨ Slim & Elegant Buy Now Button */
+.btn-buy-now {
+  border: none;
+  background: #b98474;
+  color: #fff;
+  font-size: 15.5px;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 7px 0;
+  width: 92%;
+  max-width: 340px;
+  border-radius: 22px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(185, 132, 116, 0.25);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  outline: none;
+}
+
+.btn-buy-now:hover {
+  background: #a36c5c;
+  transform: translateY(-2px);
+}
+
+.btn-buy-now:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+/* 📱 Mobile optimization — balanced & full width */
+@media (max-width: 768px) {
+  .fixed-cart-bar {
+    bottom: 6px;
+    width: 94%;
+    border-radius: 14px;
+    padding: 10px 14px;
+  }
+
+  .btn-buy-now {
+    width: 100%;
+    padding: 8px 0;
+    font-size: 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(185, 132, 116, 0.25);
+  }
+
+  .cart-summary {
+    align-items: center;
+  }
+}
+
+/* 🧭 Prevent overlap with the floating footer */
+body {
+  padding-bottom: 115px; /* slightly more for spacing above bottom navs */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ✨ Offer item hover smoothness */
+.offer-item {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.offer-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+</style>
+
+<script>
+    var supabase = window.supabaseClient;
+    
+const buyNowBtn = document.getElementById("buyNowBtn");
+function loginNow() {
+  window.location.href = "login.html"; // redirect to your login page
+}
+
+function shopNow() {
+  window.location.href = "shop.html"; // redirect to your shopping page
+}
+
+    async function loadCart() {
+        const { data: { session } } = await supabase.auth.getSession();
+        const cartBox = document.getElementById("cart-container");
+        const totalEl = document.getElementById("cart-total");
+        const freeMsg = document.getElementById("free-ship-msg");
+        
+        let cartItems = [];
+
+        if (!session) {
+          // GUEST CART LOGIC
+          const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+          if (guestCart.length === 0) {
+            cartBox.innerHTML = "<p>Your cart is empty.</p>";
+            totalEl.textContent = "Total: ₹0";
+            return;
+          }
+          
+          const productIds = guestCart.map(i => i.product_id);
+          const { data: products } = await supabase.from("products").select("*").in("id", productIds);
+          
+          if (products) {
+            cartItems = guestCart.map(item => {
+              const p = products.find(prod => prod.id === item.product_id);
+              if (!p) return null;
+              return { 
+                id: 'guest_' + item.product_id, 
+                quantity: item.quantity, 
+                products: p 
+              };
+            }).filter(i => i !== null);
+          }
+        } else {
+          const userId = session.user.id;
+          const { data, error } = await supabase
+            .from("cart")
+            .select(`
+        id,
+        quantity,
+    products (
+      id,
+      name,
+      price,
+      image_url,
+      shade,
+      category,
+      stock
+    )
+      `)
+            .eq("user_id", userId);
+          if (data) cartItems = data;
+        }
+
+        if (!cartItems || !cartItems.length) {
+          cartBox.innerHTML = "<p>Your cart is empty.</p>";
+          totalEl.textContent = "Total: ₹0";
+          freeMsg.innerHTML = `Add items worth <span>₹999</span> for free shipping.`;
+          freeMsg.classList.remove("unlocked");
+          return;
+        }
+
+        let total = 0;
+        cartBox.innerHTML = "";
+        cartItems.forEach(item => {
+        const p = item.products;
+        const subtotal = p.price * item.quantity;
+        total += subtotal;
+
+        const div = document.createElement("div");
+div.className = "cart-item";
+div.innerHTML = `
+  <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}">
+ <div class="qty-top">
+  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">−</button>
+  <input 
+    type="number" 
+    id="qty-input-${item.id}" 
+    value="${item.quantity}" 
+    min="1" 
+    max="${p.stock}" 
+    onchange="manualQtyChange(${item.id}, this.value, ${p.stock})"
+    style="
+      width:28px;
+      height:26px;
+      text-align:center;
+      font-size:13px;
+      font-family:'Gilda Display',serif;
+      border:1px solid #d8bfae;
+      border-radius:6px;
+      background:#fffaf7;
+      padding:2px;
+      outline:none;
+      color:#4b3b32;
+    "
+  />
+  <button class="qty-btn" onclick="changeQty(${item.id}, 1, ${p.stock})">+</button>
+</div>
+
+
+  <div class="item-info">
+    <span class="item-name">${p.name}</span>
+    <p class="category">${p.category || "Lip Tint"}</p>
+    <p class="shade">${p.shade || "—"}</p>
+    <span class="item-price">₹${p.price}</span>
+    <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+  </div>
+
+  <div class="subtotal">₹${subtotal}</div>
+`;
+
+// 🛍️ Make entire product card clickable (except buttons)
+div.addEventListener("click", (e) => {
+  // avoid redirect if buttons or inputs were clicked
+  if (e.target.closest("button") || e.target.tagName === "INPUT") return;
+  window.location.href = "product.html?id=" + p.id;
+});
+cartBox.appendChild(div);
+
+      });
+
+      totalEl.innerHTML = "Total: ₹" + total.toLocaleString("en-IN");
+      const diff = 999 - total;
+      if (diff > 0) {
+        freeMsg.innerHTML = `<span>₹${diff}</span> away from free shipping (<span>₹999+</span>)`;
+        freeMsg.classList.remove("unlocked");
+      } else {
+        freeMsg.innerHTML = "✅ Free shipping unlocked!";
+        freeMsg.classList.add("unlocked");
+      }
+
+      updateCartCount();
+    }
+
+
+
+  // 👆 Handle +/- Button Changes
+  async function changeQty(cartId, delta, stock) {
+    const qtyInput = document.getElementById(`qty-input-${cartId}`);
+    let newQty = parseInt(qtyInput.value) + delta;
+
+    if (newQty < 1) newQty = 1;
+    if (newQty > stock) {
+      vibrateError();
+      alert(`Only ${stock} left in stock.`);
+      newQty = stock;
+    }
+
+    qtyInput.value = newQty;
+    
+    if (typeof cartId === 'string' && cartId.startsWith('guest_')) {
+      const productId = parseInt(cartId.split('_')[1]);
+      let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+      const item = guestCart.find(i => i.product_id === productId);
+      if (item) {
+        item.quantity = newQty;
+        localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      }
+    } else {
+      await supabase.from("cart").update({ quantity: newQty }).eq("id", cartId);
+    }
+
+    // ✨ Update subtotal of this item directly
+    const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
+    const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
+    const price = parseFloat(priceEl.textContent.replace(/[₹,]/g, ""));
+    subtotalEl.textContent = "₹" + (price * newQty).toLocaleString("en-IN");
+
+    vibrate(); // feedback
+    await updateCartTotal(); // ✨ only recalc totals, not reload full cart
+  }
+
+  // ✍️ Handle Manual Typing
+  async function manualQtyChange(cartId, newValue, stock) {
+    let qty = parseInt(newValue);
+    if (isNaN(qty) || qty < 1) qty = 1;
+    if (qty > stock) {
+      vibrateError();
+      alert(`Only ${stock} units available.`);
+      qty = stock;
+    }
+
+    document.getElementById(`qty-input-${cartId}`).value = qty;
+    
+    if (typeof cartId === 'string' && cartId.startsWith('guest_')) {
+      const productId = parseInt(cartId.split('_')[1]);
+      let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+      const item = guestCart.find(i => i.product_id === productId);
+      if (item) {
+        item.quantity = qty;
+        localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      }
+    } else {
+      await supabase.from("cart").update({ quantity: qty }).eq("id", cartId);
+    }
+
+    // ✨ Update subtotal instantly
+    const qtyInput = document.getElementById(`qty-input-${cartId}`);
+    const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
+    const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
+    const price = parseFloat(priceEl.textContent.replace(/[₹,]/g, ""));
+    subtotalEl.textContent = "₹" + (price * qty).toLocaleString("en-IN");
+
+    vibrate();
+    await updateCartTotal(); // ✨ recalc bottom summary only
+  }
+
+// 📳 Vibration Feedback
+function vibrate(ms = 50) {
+  if (navigator.vibrate) navigator.vibrate(ms);
+}
+
+function vibrateError() {
+  if (navigator.vibrate) navigator.vibrate([60, 40, 60]); // error pulse
+}
+
+    async function updateCartCount() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+
+      const { count } = await supabase
+        .from("cart")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", session.user.id);
+
+      document.getElementById("cartLink").innerHTML = `Cart (<span style="font-family:'Gilda Display',serif;">${count}</span>)`;
+    }
+
+
+    document.getElementById("buyNowBtn").addEventListener("click", () => {
+      window.location.href = "ship.html"
+    });
+
+    // Hamburger toggle
+    const hamburger = document.getElementById("hamburger");
+    const mobileNav = document.getElementById("nav-menu");
+
+    hamburger.addEventListener("click", e => {
+      e.stopPropagation();
+      mobileNav.classList.toggle("active");
+    });
+    document.addEventListener("click", e => {
+      if (mobileNav.classList.contains("active") && !mobileNav.contains(e.target) && !hamburger.contains(e.target)) {
+        mobileNav.classList.remove("active");
+      }
+    });
+
+ 
+// ===============================
+// 🛒 INITIAL LOAD (Cart + Offers + Rewards)
+// ===============================
+async function initCartSystem() {
+  await loadCart();         // Load cart items first
+  await updateCartTotal();  // Recalculate totals and free shipping
+  refreshOffersBox();       // Show or hide offer section based on subtotal
+}
+
+
+// 🎁 Refresh offers visibility based on subtotal
+async function refreshOffersBox() {
+  const subtotal = await getCartSubtotal();
+  const unlockMsg = document.getElementById("unlock-msg");
+
+  // 🛡️ Prevent null errors
+  if (!unlockMsg) {
+    console.warn("⚠️ unlock-msg element not found yet, skipping refreshOffersBox()");
+    return;
+  }
+
+  if (subtotal < 599) {
+    unlockMsg.innerHTML = `Add ₹${599 - subtotal} more to unlock coupons`;
+  } else if (subtotal < 999) {
+    unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>AURA10</b> for 10% off`;
+  } else {
+    unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
+  }
+}
+
+
+
+  // 🗑️ Fix - re-run offers after remove
+  async function removeItem(cartId) {
+    if (typeof cartId === 'string' && cartId.startsWith('guest_')) {
+      const productId = parseInt(cartId.split('_')[1]);
+      let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+      guestCart = guestCart.filter(item => item.product_id !== productId);
+      localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      if (typeof updateCartCount === 'function') updateCartCount();
+    } else {
+      await supabase.from("cart").delete().eq("id", cartId);
+    }
+    await initCartSystem();
+  }
+
+    // =======================================
+    // 💸 COUPON SYSTEM FOR PERLYN CART
+    // =======================================
+
+    let appliedCoupon = null;
+    let discountAmount = 0;
+
+    // 🧾 Apply Coupon
+    async function applyCoupon() {
+      const input = document.getElementById("couponCode");
+      const msg = document.getElementById("coupon-msg");
+      const removeBtn = document.querySelector(".remove-coupon");
+      const code = input.value.trim().toUpperCase();
+
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        msg.innerText = "Please login to apply a coupon.";
+        return;
+      }
+
+      if (!code) {
+        msg.innerText = "Enter a coupon code.";
+        return;
+      }
+
+      // 🔹 Check if coupon exists
+      const { data: coupon, error } = await supabase
+        .from("coupons")
+        .select("*")
+        .eq("code", code)
+        .maybeSingle();
+
+      if (error || !coupon) {
+        msg.innerText = "Invalid coupon code.";
+        return;
+      }
+
+ // 🔹 Check expiry
+const now = new Date();
+if (coupon.expires_at && new Date(coupon.expires_at) < now) {
+  msg.innerText = "This coupon has expired.";
+  return;
+}
+
+// 🔹 Check if user already used it
+const { data: used } = await supabase
+  .from("coupon_usage")
+  .select("id")
+  .eq("user_id", session.user.id)
+  .eq("coupon_code", code)
+  .maybeSingle();
+
+if (used) {
+  msg.innerText = "This coupon has already been used.";
+  msg.style.color = "#a04c4c"; // 🔸 red tone for clarity
+  return;
+}
+
+
+      // 🔹 Check minimum purchase
+      const subtotal = await getCartSubtotal();
+      if (subtotal < coupon.min_purchase) {
+        msg.innerText = `Add ₹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
+        return;
+      }
+
+// ✅ Apply coupon
+appliedCoupon = coupon;
+
+// 🧮 Calculate rounded discount
+discountAmount = Math.round(subtotal * (coupon.discount_percent / 100));
+
+// 💬 Show success message
+msg.innerText = `Coupon ${code} applied! You saved ₹${discountAmount.toFixed(0)}.`;
+removeBtn.style.display = "inline-block";
+
+// 🔁 Update totals and UI immediately
+updateCartTotal();
+
+// 🧠 Save locally — usage will be recorded after payment success
+saveCoupon();
+
+
+    }
+
+
+    // ❌ Remove Coupon
+    function removeCoupon() {
+      appliedCoupon = null;
+      discountAmount = 0;
+      document.getElementById("couponCode").value = "";
+      document.getElementById("coupon-msg").innerText = "Coupon removed.";
+      document.querySelector(".remove-coupon").style.display = "none";
+      updateCartTotal();
+      saveCoupon();
+    }
+
+    // 📦 Calculate Subtotal from DOM
+    async function getCartSubtotal() {
+      const container = document.querySelectorAll(".cart-item .subtotal");
+
+      let subtotal = 0;
+      container.forEach(el => {
+        const val = parseFloat(el.textContent.replace(/[₹,]/g, ""));
+        if (!isNaN(val)) subtotal += val;
+      });
+      return subtotal;
+    }
+// 🧮 Update Total + Free Shipping + Offers UI
+// 🧮 Update Total + Free Shipping + Offers UI
+async function updateCartTotal() {
+  const totalEl = document.getElementById("cart-total");
+  const freeMsg = document.getElementById("free-ship-msg");
+  const unlockMsg = document.getElementById("unlock-msg");
+  const subtotal = await getCartSubtotal();
+
+let shipping = 0;
+if (subtotal > 0 && subtotal < 999) {
+  // 🌍 Fetch region-based shipping rates
+  let southRate = 40, restRate = 70;
+  try {
+    const { data: rates } = await supabase.from("shipping_rates").select("*");
+    if (rates && rates.length) {
+      const south = rates.find(r => r.region === "South India");
+      const rest = rates.find(r => r.region === "Rest of India");
+      southRate = south?.price || 40;
+      restRate = rest?.price || 70;
+    }
+  } catch (err) {
+    console.warn("⚠️ Failed to fetch rates, using fallback 40/70:", err.message);
+  }
+
+  // 📍 Try to detect user's saved shipping state (if logged in)
+  let userState = "";
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const { data: saved } = await supabase
+        .from("customer_details")
+        .select("state")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
+      if (saved && saved.state) userState = saved.state.trim();
+    }
+  } catch (err) {}
+
+  const southStates = ["Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"];
+  shipping = southStates.includes(userState) ? southRate : restRate;
+}
+
+const total = subtotal > 0 ? subtotal - discountAmount + shipping : 0;
+// ✅ Store totals for next page (checkout)
+sessionStorage.setItem("cartSubtotal", subtotal);
+sessionStorage.setItem("cartDiscount", discountAmount);
+sessionStorage.setItem("cartShipping", shipping);
+sessionStorage.setItem("finalTotal", total);
+
+
+
+  // 💸 Show total + applied coupon details
+  if (discountAmount > 0 && appliedCoupon) {
+    totalEl.innerHTML = `
+      Total: ₹${total.toLocaleString("en-IN")}
+      <br><span style="font-size:15px;color:#3a814e;">
+        (Saved ₹${discountAmount.toFixed(0)} using ${appliedCoupon.code})
+      </span>`;
+  } else {
+    totalEl.innerHTML = `Total: ₹${total.toLocaleString("en-IN")}`;
+  }
+
+  // 🩷 Free shipping message — Lip Gloss font style
+  const diff = 999 - subtotal;
+  freeMsg.style.fontFamily = "'Cormorant Garamond', serif";
+  freeMsg.style.fontStyle = "italic";
+  freeMsg.style.fontSize = "16px";
+  freeMsg.style.letterSpacing = "0.3px";
+  freeMsg.style.color = "#b98474";
+
+  if (diff > 0) {
+    freeMsg.innerHTML = `₹${diff} away from free shipping (₹999+)`;
+    freeMsg.classList.remove("unlocked");
+  } else {
+    freeMsg.innerHTML = "🎉 Free shipping unlocked!";
+    freeMsg.classList.add("unlocked");
+  }
+
+// 🎁 Dynamic Offers Unlock Message (linked to live coupon min_purchase)
+if (unlockMsg) {
+  if (subtotal < minCouponPurchase) {
+    unlockMsg.innerHTML = `Add ₹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+  } else if (subtotal < 999) {
+    unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
+  } else {
+    unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
+  }
+}
+
+
+  // 💝 Reward Points Update
+  updateRewardPoints(total);
+
+  // 💚 Show Total Savings (Coupons + Free Shipping)
+// 💚 Show Total Savings (Coupons + Free Shipping)
+const savings = discountAmount + (shipping === 0 ? 99 : 0);
+
+// Only show savings if total > 0
+if (total > 0 && savings > 0) {
+  totalEl.innerHTML += `
+    <div style="font-size:16px;color:#3a814e;font-weight:600;margin-top:4px;">
+      💝 You’ve saved ₹${savings.toFixed(0)} on this order!
+    </div>`;
+}
+
+loadOffers(); // 🔄 Refresh offers when subtotal changes
+
+}
+
+async function updateRewardPoints(total) {
+  const rewardMsg = document.getElementById("reward-msg");
+  if (!rewardMsg) return;
+  const points = Math.floor(total / 10);
+  rewardMsg.textContent = `You’ll earn 🎁 ${points} reward points on this order!`;
+}
+// =================================================
+// 🌟 PERLYN — LIVE REWARD POINTS SYSTEM (Supabase)
+// =================================================
+async function loadRewardPoints() {
+  const { data: { session } } = await supabase.auth.getSession();
+  const rewardMsg = document.getElementById("reward-msg");
+
+  if (!session) {
+    rewardMsg.textContent = "Login to view your reward points.";
+    return;
+  }
+
+  const userId = session.user.id;
+
+  // 🧾 Fetch or initialize points record
+  let { data: reward, error } = await supabase
+    .from("reward_points")
+    .select("total_points")
+    .eq("user_id", userId)
+
+    .maybeSingle();
+
+  if (error) {
+    console.error("⚠️ Reward fetch failed:", error);
+    rewardMsg.textContent = "Unable to load rewards.";
+    return;
+  }
+
+  if (!reward) {
+    // create empty record if not exists
+    await supabase.from("reward_points").insert([{ id: userId, total_points: 0 }]);
+    reward = { total_points: 0 };
+  }
+
+  const currentPoints = reward.total_points;
+  rewardMsg.innerHTML = `🌟 You currently have <b>${currentPoints}</b> reward points!`;
+
+  // 🎯 Progress message
+  const nextMilestone = 100;
+  if (currentPoints < nextMilestone) {
+    const needed = nextMilestone - currentPoints;
+    rewardMsg.innerHTML += ` — Collect <b>${needed}</b> more for a surprise free gift 🎁`;
+  } else {
+    rewardMsg.innerHTML += ` — 🎉 <b>You’ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
+  }
+}
+
+// 🎁 Check for Free Gift Unlock
+async function checkRewardGift() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) return;
+
+  const { data: reward } = await supabase
+    .from("reward_points")
+    .select("total_points")
+    .eq("user_id", session.user.id)
+
+    .maybeSingle();
+
+  if (reward && reward.total_points >= 100) {
+    const msg = document.getElementById("coupon-msg");
+    msg.innerHTML = `🎉 You’ve unlocked a <b>surprise free gift!</b> Use code <b>GIFT100</b>`;
+    msg.style.color = "#3a814e";
+  }
+}
+
+
+
+    // 💾 Save coupon after applying
+    function saveCoupon() {
+      if (appliedCoupon) {
+        localStorage.setItem("appliedCoupon", JSON.stringify(appliedCoupon));
+      } else {
+        localStorage.removeItem("appliedCoupon");
+      }
+    }
+
+
+let minCouponPurchase = 599; // default fallback
+
+async function loadOffers() {
+  const offersBox = document.getElementById("offers-list");
+  const viewAllBtn = document.getElementById("view-all-offers");
+  const unlockMsg = document.getElementById("unlock-msg");
+
+  try {
+    // 🧾 Fetch active offers
+    const { data: offers, error } = await supabase
+      .from("offers")
+      .select("*")
+      .eq("active", true)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const now = new Date();
+    const validOffers = (offers || []).filter(o => {
+      const end = o.expires_on ? new Date(o.expires_on) : null;
+      return !end || end >= now;
+    });
+
+    // 🎁 Show only the unlock message, hide the offers list
+    offersBox.innerHTML = "";
+
+    // 🎉 “View All” button toggle
+    if (validOffers.length > 0) {
+      viewAllBtn.style.display = "inline";
+      viewAllBtn.onclick = () => showAllOffers(validOffers);
+    } else {
+      viewAllBtn.style.display = "none";
+    }
+
+    // 💸 Fetch coupon threshold dynamically
+    const { data: coupons, error: couponError } = await supabase
+      .from("coupons")
+      .select("min_purchase, active")
+      .eq("active", true);
+
+   let minCouponPurchase = 599;
+if (!couponError && coupons && coupons.length > 0) {
+  const activeCoupons = coupons.filter(c => c.active === true || c.active === 'true');
+  if (activeCoupons.length > 0) {
+    minCouponPurchase = Math.min(...activeCoupons.map(c => c.min_purchase));
+  }
+}
+
+
+    // 🧮 Update Unlock Message dynamically
+    const subtotal = await getCartSubtotal();
+    if (subtotal < minCouponPurchase) {
+      unlockMsg.innerHTML = `Add ₹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+    } else if (subtotal < 999) {
+      unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
+    } else {
+      unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
+    }
+
+  } catch (err) {
+    console.error("❌ Offers fetch failed:", err);
+    offersBox.innerHTML = `<p style="color:#a04c4c;">Couldn't load offers. Please refresh.</p>`;
+  }
+}
+
+// ✨ View All Offers Popup
+function showAllOffers(offers) {
+  const text = offers
+    .map(o => `• ${o.title}${o.description ? " — " + o.description : ""}`)
+    .join("\n");
+  alert("Available Offers:\n\n" + text);
+}
+
+// ================================
+// 🎁 OFFERS BUTTON FUNCTION
+// ================================
+function showOffers() {
+  alert("Available Offers:\n• AURA10 – 10% off above ₹599\n• FREESHIP – Free shipping above ₹999");
+}
+window.addEventListener("load", async () => {
+  await initCartSystem();  // 🛒 Loads cart + totals + offers
+  await loadOffers();      // 🎁 Refreshes offers dynamically
+
+  // ♻️ Restore saved coupon if any
+  const saved = localStorage.getItem("appliedCoupon");
+  if (saved) {
+    appliedCoupon = JSON.parse(saved);
+    document.getElementById("couponCode").value = appliedCoupon.code;
+    const subtotal = await getCartSubtotal();
+    discountAmount = subtotal * (appliedCoupon.discount_percent / 100);
+    document.querySelector(".remove-coupon").style.display = "inline-block";
+    document.getElementById("coupon-msg").innerText = `Restored ${appliedCoupon.code} coupon.`;
+    updateCartTotal();
+  }
+});
+
+  </script>
+
+</body>
+
+</html>
+

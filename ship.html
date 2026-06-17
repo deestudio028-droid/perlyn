@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Checkout & Shipping</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    /* 🩶 Disable blue highlight glow on tap (Android browsers) */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  outline: none;
+}
+
+/* Optional: smooth pressed effect for buttons */
+button {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+button:active {
+  transform: scale(0.97);
+  opacity: 0.85;
+}
+
+    :root {
+      --bg: #f3e4db;
+      --accent: #b98474;
+      --text: #4b3b32;
+      --light: #fff6f0;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--light);
+      border-radius: 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+    }
+
+    h1 {
+      font-family: 'Gilda Display', serif;
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 25px;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 14px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #d5bfb2;
+      font-size: 16px;
+      background: #fff;
+      font-family: 'Cormorant Garamond', serif;
+      box-sizing: border-box;
+    }
+
+    textarea { resize: none; }
+
+    .btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 18px;
+      font-family: 'Cormorant Garamond', serif;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: block;
+      margin: 30px auto 10px;
+    }
+
+    .btn:hover { background: #a36c5c; transform: translateY(-2px); }
+
+    .use-location {
+      background: #fff6f0;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 15px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .use-location:hover { background: var(--accent); color: white; }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center; align-items: center;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--light);
+      max-width: 800px;
+      width: 95%;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 14px; right: 18px;
+      font-size: 22px;
+      color: var(--accent);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .summary-section { margin-top: 15px; }
+    .summary-section h3 {
+      font-family: 'Gilda Display', serif;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .order-item {
+      display: flex; justify-content: space-between;
+      padding: 4px 0;
+      border-bottom: 1px solid #f1dcd1;
+      font-size: 16px;
+    }
+
+    .final-btns { display: flex; justify-content: space-between; margin-top: 25px; }
+
+    .success-message {
+      text-align: center;
+      padding: 40px;
+      font-size: 20px;
+      color: #3a814e;
+      display: none;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+   /* 💌 Saved Customer Details Box — Refined Perlyn Theme */
+.saved-details-box {
+  background: #fff6f0;
+  border: 1px solid #e8d3c6;
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  transition: all 0.25s ease;
+}
+
+.saved-details-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+}
+
+/* ✨ Summary text (left section) */
+.saved-summary {
+  font-size: 15.5px;
+  color: #4b3b32;
+  line-height: 1.55;
+  max-width: 76%;
+  word-wrap: break-word;
+  letter-spacing: 0.2px;
+}
+
+.saved-summary strong {
+  color: #b98474;
+  font-weight: 600;
+}
+
+/* 🎀 Action buttons (right section) */
+.saved-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.saved-actions button {
+  background: #b98474;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 6px 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+  box-shadow: 0 3px 8px rgba(185, 132, 116, 0.25);
+}
+
+.saved-actions button:hover {
+  background: #a36c5c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(163, 108, 92, 0.3);
+}
+
+.saved-actions button:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+/* 📱 Mobile view — stacks neatly */
+@media (max-width: 600px) {
+  .saved-details-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .saved-summary {
+    max-width: 100%;
+    font-size: 15px;
+  }
+
+  .saved-actions {
+    align-self: flex-end;
+  }
+}
+/* 🌸 Themed Checkbox (Perlyn Style) */
+.save-details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--text);
+  gap: 8px;
+}
+
+.save-details input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.8px solid #b98474;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  background: #fff6f0;
+}
+
+.save-details input[type="checkbox"]:checked {
+  background-color: #b98474;
+  border-color: #b98474;
+}
+
+.save-details input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 12px;
+  position: absolute;
+  top: 0.5px;
+  left: 3.5px;
+}
+/* 🌸 Centered Save Details Section (Perlyn Style) */
+.save-details {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-size: 16px;
+  color: var(--text);
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Checkbox — Perlyn accent tone */
+.save-details input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1.8px solid #b98474;
+  border-radius: 5px;
+  background: #fff6f0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.save-details input[type="checkbox"]:checked {
+  background-color: #b98474;
+  border-color: #b98474;
+}
+
+.save-details input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: #fff;
+  font-size: 12px;
+  position: absolute;
+  top: -1px;
+  left: 3.5px;
+}
+
+.save-details label {
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.save-details label {
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: 0.3px;
+  color: #4b3b32;
+}
+
+.personal-msg-box {
+  background: #fff6f0;
+  border: 1px solid #e8d3c6;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 15px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.personal-msg-box textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  resize: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.personal-msg-box .char-count {
+  text-align: right;
+  font-size: 14px;
+  color: #7b5b4a;
+}
+#message {
+  background: #fff;
+  border: 1.5px solid #e8d3c6;
+  border-radius: 10px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  padding: 10px 14px;
+  transition: all 0.25s ease;
+}
+
+#message:focus {
+  border-color: #b98474;
+  box-shadow: 0 0 6px rgba(185,132,116,0.2);
+}
+
+#msgActions button:hover {
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Shipping Details</h1>
+    <form id="shippingForm">
+      
+      <label>Email *</label>
+      <input type="email" id="guestEmail" required>
+
+      <label>Full Name *</label>
+      <input type="text" id="name" required>
+
+      <label>Phone Number *</label>
+      <input type="text" id="phone" maxlength="10" required>
+
+      <label>Pincode *</label>
+      <input type="text" id="pincode" maxlength="6" required>
+<p id="pincodeStatus" style="font-size:14px;color:#7b5b4a;margin-top:4px;"></p>
+
+<label>State *</label>
+<input type="text" id="state" required readonly style="background:#fdf7f3;">
+
+<label>City *</label>
+<input type="text" id="city" required readonly style="background:#fdf7f3;">
+
+
+ <label>Full Address *</label>
+      <textarea id="address" rows="3" required></textarea>
+
+      <label>Personalized Message (optional)</label>
+      <textarea id="message" rows="2" maxlength="150" placeholder="Eg: Happy Birthday! Have a great year ahead."></textarea>
+<div id="msgActions" style="display:none; text-align:right; margin-top:6px;">
+  <button type="button" id="changeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">✏️ Change</button>
+  <button type="button" id="removeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">❌ Remove</button>
+</div>
+
+      <div style="text-align:right;font-size:14px;color:#7b5b4a;">
+        <span id="charCount">0</span>/150
+      </div>
+
+      <button type="submit" class="btn">Review Your Order</button>
+<div class="save-details">
+  <input type="checkbox" id="saveDetails">
+  <label for="saveDetails">Save details for next time</label>
+</div>
+<!-- 🎁 Personalized Message Box -->
+
+
+<script>
+
+
+// 📬 Auto-detect City & State from Pincode (India)
+document.getElementById("pincode").addEventListener("input", async (e) => {
+  const pincode = e.target.value.trim();
+  const status = document.getElementById("pincodeStatus");
+  const stateEl = document.getElementById("state");
+  const cityEl = document.getElementById("city");
+
+  if (pincode.length !== 6) {
+    status.textContent = "";
+    stateEl.value = "";
+    cityEl.value = "";
+    return;
+  }
+
+  status.textContent = "Detecting city & state...";
+  status.style.color = "#b98474";
+
+  try {
+    const res = await fetch(
+      `https://nominatim.openstreetmap.org/search?postalcode=${pincode}&country=India&format=json&addressdetails=1`,
+      { headers: { "User-Agent": "PerlynBeauty/1.0 (contact@perlynbeauty.co)" } }
+    );
+
+    if (!res.ok) throw new Error("Fetch failed");
+    const data = await res.json();
+
+    if (data && data.length > 0) {
+      const addr = data[0].address || {};
+      const detectedState = addr.state || "";
+      const detectedCity =
+        addr.city ||
+        addr.town ||
+        addr.village ||
+        addr.suburb ||
+        addr.county ||
+        addr.state_district ||
+        "";
+
+      if (detectedState) stateEl.value = detectedState;
+      if (detectedCity) cityEl.value = detectedCity;
+
+      status.textContent = "✅ Location auto-filled successfully!";
+      status.style.color = "#3a814e";
+    } else {
+      status.textContent = "⚠️ Could not detect location for this pincode.";
+      status.style.color = "#b84c4c";
+    }
+  } catch (err) {
+    console.error("📦 Pincode lookup failed:", err);
+    status.textContent = "❌ Unable to detect location. Please type manually.";
+    status.style.color = "#b84c4c";
+    stateEl.removeAttribute("readonly");
+    cityEl.removeAttribute("readonly");
+  }
+});
+
+
+</script>
+
+
+    </form>
+  </div>
+
+  <div id="confirmationModal" class="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">×</button>
+      <h2 style="text-align:center;color:var(--accent);font-family:'Gilda Display',serif;">Order Confirmation</h2>
+      <div id="orderSummary"></div>
+      <div class="final-btns">
+        <button class="btn" style="background:none;color:var(--accent);border:1px solid var(--accent);" onclick="closeModal()">Back</button>
+        <button id="confirmPayBtn" class="btn">Confirm & Pay</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="successMsg" class="success-message">
+    ✅ ORDER PLACED SUCCESSFULLY!<br><br>
+    Will dispatch within 3 days and deliver within 5–7 days.<br><br>
+    <button class="btn" onclick="window.location.href='index.html'">Continue Shopping</button>
+  </div>
+
+  <script>
+const supabaseClient = window.supabaseClient;
+
+
+document.getElementById("changeMsgBtn").addEventListener("click", () => {
+  messageEl.focus();
+});
+
+document.getElementById("removeMsgBtn").addEventListener("click", () => {
+  messageEl.value = "";
+  localStorage.removeItem("personalMessage");
+  document.getElementById("charCount").textContent = "0";
+  document.getElementById("msgActions").style.display = "none";
+});
+
+// 🧠 Ensure session restored before any queries
+async function getActiveSession() {
+  for (let i = 0; i < 8; i++) {
+    const { data } = await supabaseClient.auth.getSession();
+    if (data.session) return data.session;
+    await new Promise(r => setTimeout(r, 300)); // wait and retry
+  }
+  return null;
+}
+
+    let cartItems = [];
+    let subtotal = 0, discount = 0, shipping = 0, total = 0;
+    const orderId = "PERLYN" + Date.now();
+// 🌍 Define South Indian states globally (used for shipping logic)
+const southStates = [
+  "Tamil Nadu",
+  "Kerala",
+  "Karnataka",
+  "Telangana",
+  "Andhra Pradesh"
+];
+// 🧾 Default fallback rates (in case Supabase fetch fails)
+let southRate = 40;
+let restRate = 70;
+
+    const nameEl = document.getElementById("name");
+    const phoneEl = document.getElementById("phone");
+    const pincodeEl = document.getElementById("pincode");
+    const cityEl = document.getElementById("city");
+    const stateEl = document.getElementById("state");
+    const addressEl = document.getElementById("address");
+    const messageEl = document.getElementById("message");
+    const emailEl = document.getElementById("guestEmail");
+
+// 🪄 Restore message from localStorage (if typed in cart)
+window.addEventListener("load", () => {
+  const savedMsg = localStorage.getItem("personalMessage");
+  if (savedMsg) {
+    messageEl.value = savedMsg;
+    document.getElementById("charCount").textContent = savedMsg.length;
+    document.getElementById("msgActions").style.display = "block";
+  }
+
+  messageEl.addEventListener("input", () => {
+    localStorage.setItem("personalMessage", messageEl.value);
+  });
+});
+
+    messageEl.addEventListener("input", e => {
+      document.getElementById("charCount").textContent = e.target.value.length;
+    });
+
+
+// 🟢 Improved loadCart() — handles auth restoration + guest cart
+async function loadCart() {
+  console.log("🛒 Fetching cart...");
+
+  // Try to get session
+  const { data } = await supabaseClient.auth.getSession();
+  const session = data?.session;
+  
+  // Auto-fill email if logged in
+  const emailField = document.getElementById("guestEmail");
+  if (session && emailField) {
+    emailField.value = session.user.email;
+    emailField.readOnly = true;
+    emailField.style.background = "#fdf7f3";
+  }
+
+  if (!session) {
+    // 🧠 GUEST CART LOGIC
+    const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+    if (guestCart.length === 0) {
+      alert("Your cart is empty. Please add items first.");
+      window.location.href = "shop.html";
+      return;
+    }
+    
+    const productIds = guestCart.map(i => i.product_id);
+    const { data: products } = await supabaseClient.from("products").select("*").in("id", productIds);
+    
+    if (products) {
+      cartItems = guestCart.map(item => {
+        const p = products.find(prod => prod.id === item.product_id);
+        if (!p) return null;
+        return { name: p.name, shade: p.shade, qty: item.quantity, price: p.price };
+      }).filter(i => i !== null);
+    }
+  } else {
+    // 🛒 Fetch cart with product details for logged in user
+    const { data: userCart, error } = await supabaseClient
+      .from("cart")
+      .select(`quantity, products(name, price, shade)`)
+      .eq("user_id", session.user.id);
+  
+    if (error || !userCart || !userCart.length) {
+      alert("Your cart is empty. Please add items first.");
+      window.location.href = "shop.html";
+      return;
+    }
+  
+    // Process data
+    cartItems = userCart.map(i => ({
+      name: i.products.name,
+      shade: i.products.shade,
+      qty: i.quantity,
+      price: i.products.price
+    }));
+  }
+
+  subtotal = cartItems.reduce((sum, p) => sum + p.price * p.qty, 0);
+
+// 🧠 Load stored discount + shipping from cart page if available
+const storedDiscount = parseFloat(sessionStorage.getItem("cartDiscount")) || 0;
+const storedShipping = parseFloat(sessionStorage.getItem("cartShipping")) || 0;
+const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
+
+discount = storedDiscount > 0 ? storedDiscount : (subtotal >= 1499 ? 150 : 0);
+shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
+
+// 💰 fallback calculation only if session data missing
+total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
+
+// 💌 Add ₹30 message charge (if personalized message exists)
+if (messageEl.value && messageEl.value.trim() !== "") {
+  total += 30;
+}
+
+// 🧠 Dynamic shipping logic from Supabase
+const southStates = [
+  "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
+];
+
+let southRate = 40, restRate = 70; // fallback defaults
+
+const { data: rates } = await supabaseClient.from("shipping_rates").select("*");
+if (rates && rates.length) {
+  const south = rates.find(r => r.region === "South India");
+  const rest = rates.find(r => r.region === "Rest of India");
+  southRate = south?.price || 40;
+  restRate = rest?.price || 70;
+}
+
+if (subtotal >= 999) {
+  shipping = 0;
+} else if (southStates.includes(stateEl.value.trim())) {
+  shipping = southRate;
+} else {
+  shipping = restRate;
+}
+
+
+  total = subtotal - discount + shipping;
+  // 💌 Add ₹30 personalized message charge if message exists
+if (messageEl.value && messageEl.value.trim() !== "") {
+  total += 30;
+}
+
+  console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ₹${total}`);
+}
+
+// ✅ Attach to form submit — with safe fallback if loadCart fails
+document.getElementById("shippingForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  try {
+    await loadCart();
+    if (cartItems.length > 0) {
+      buildConfirmation();
+      document.getElementById("confirmationModal").style.display = "flex";
+    }
+  } catch (err) {
+    console.error("🚨 Unexpected error during checkout:", err);
+    alert("Something went wrong. Please refresh the page and try again.");
+  }
+});
+
+
+    function closeModal() {
+      document.getElementById("confirmationModal").style.display = "none";
+    }
+
+    function buildConfirmation() {
+      const name = nameEl.value, phone = phoneEl.value, address = addressEl.value,
+            city = cityEl.value, state = stateEl.value, pin = pincodeEl.value,
+            message = messageEl.value, guestEmail = emailEl.value;
+
+      const itemsHTML = cartItems.map(p => `
+        <div class="order-item">
+          <div>${p.name} (${p.shade || "—"}) × ${p.qty}</div>
+          <div>₹${p.price * p.qty}</div>
+        </div>`).join("");
+
+      document.getElementById("orderSummary").innerHTML = `
+        <div class="summary-section"><h3>Products</h3>${itemsHTML}</div>
+        <div class="summary-section"><h3>Order Summary</h3>
+          <p>Subtotal: ₹${subtotal}</p>
+          <p>Discount: ₹${discount}</p>
+          ${sessionStorage.getItem("cartDiscount") > 0 && localStorage.getItem("appliedCoupon")
+  ? `<p style="color:#3a814e;">Coupon applied: <b>${JSON.parse(localStorage.getItem("appliedCoupon")).code}</b></p>`
+  : ""}
+
+          <p>Shipping: ₹${shipping}</p>
+
+
+<p>Personalized Message Fee: ₹${message ? 30 : 0}</p>
+
+          <p><b>Total: ₹${total}</b></p>
+          <p style="color:#7b5b4a;">Prepaid (via PhonePe / GPay)</p>
+        </div>
+        <div class="summary-section"><h3>Customer Details</h3>
+          <p>Email: ${guestEmail}</p>
+          <p>${name}</p><p>${address}</p><p>${city}, ${state} - ${pin}</p><p>📞 ${phone}</p>
+${message ? `<p><strong>Personalized Message:</strong> "${message}" <button onclick="copyMessage('${message}')">Copy</button></p>` : ""}
+
+        </div>`;
+    }
+
+   // ✅ Step 4: Confirm & Pay — full safe payment + redirect logic (Updated & Fixed)
+  document.getElementById("confirmPayBtn").addEventListener("click", async () => {
+    const btn = document.getElementById("confirmPayBtn");
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = `<span class="loader"></span> Processing...`;
+    
+    // Add loader style
+    const style = document.createElement('style');
+    style.innerHTML = `.loader { border: 2px solid #f3f3f3; border-top: 2px solid #b98474; border-radius: 50%; width: 12px; height: 12px; animation: spin 1s linear infinite; display: inline-block; margin-right: 5px; } @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`;
+    document.head.appendChild(style);
+
+    try {
+      console.log("💰 Confirm & Pay clicked!");
+
+    // ✅ Capture current form values
+    const customerPayload = {
+      name: nameEl.value.trim(),
+      phone: phoneEl.value.trim(),
+      address: addressEl.value.trim(),
+      city: cityEl.value.trim(),
+      state: stateEl.value.trim(),
+      pincode: pincodeEl.value.trim(),
+      message: messageEl.value.trim() || null,
+      email: emailEl.value.trim()
+    };
+
+    console.log("📦 Customer Payload:", customerPayload);
+
+    // 💾 Save customer info if checkbox checked
+    await saveCustomerDetailsIfChecked();
+
+    // 🚀 Start backend phonepe gateway session
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const appliedCoupon = localStorage.getItem("appliedCoupon") ? JSON.parse(localStorage.getItem("appliedCoupon")).code : null;
+
+    const orderPayload = [{
+      order_id: orderId,
+      user_id: session?.user?.id || null,
+      email: customerPayload.email,
+      name: customerPayload.name,
+      phone: customerPayload.phone,
+      address: customerPayload.address,
+      city: customerPayload.city,
+      state: customerPayload.state,
+      pincode: customerPayload.pincode,
+      personalized_message: customerPayload.message,
+      products: JSON.stringify(cartItems),
+      subtotal: subtotal,
+      total: total,
+      status: "Pending",
+      discount: discount,
+      shipping: shipping,
+      coupon_code: appliedCoupon,
+      created_at: new Date().toISOString()
+    }];
+
+    const res = await fetch(`${window.APP_CONFIG.API_URL}/create-payment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ 
+        amount: total, 
+        orderId, 
+        email: customerPayload.email,
+        uid: session?.user?.id || null,
+        orderPayload: orderPayload 
+      })
+    });
+
+    const data = await res.json();
+    console.log("💳 Payment Response:", data);
+
+    if (data.success && data.redirectUrl) {
+      console.log("🧾 Order processed successfully via backend:", orderId);
+
+// ✅ Generate PDF first, then redirect
+console.log("🧾 Generating invoice PDF...");
+await new Promise((resolve) => {
+  try {
+    generatePDFs();
+    setTimeout(resolve, 1800);
+  } catch (pdfErr) {
+    console.warn("⚠️ PDF generation skipped:", pdfErr.message);
+    resolve();
+  }
+});
+
+window.location.href = data.redirectUrl;
+
+      } else {
+        throw new Error(data.message || "Failed to initialize payment");
+      }
+    } catch (err) {
+      console.error("🚨 Confirm & Pay Error:", err);
+      alert("Payment Error: " + err.message);
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }
+  });
+
+
+     
+function copyMessage(msg) {
+  navigator.clipboard.writeText(msg);
+  alert("Message copied!");
+}
+
+    async function incrementRewardPoints() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) return;
+      const pointsToAdd = Math.floor(total / 10);
+      await supabaseClient.rpc("increment_reward_points", { uid: session.user.id, points_to_add: pointsToAdd });
+    }
+
+function generatePDFs() {
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  // 🎨 THEME COLORS (Perlyn)
+  const accent = [185, 132, 116]; // Rose coffee
+  const text = [75, 59, 50]; // Deep mocha
+  const softBlush = [243, 225, 218]; // Light beige-pink background tone
+
+  // --- HEADER ---
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(16);
+  pdf.setTextColor(...accent);
+  pdf.text("PERLYN BEAUTY", 15, 18);
+
+  // 🕒 Proper formatted date and time (12-hour)
+  const now = new Date();
+  const formattedDate = now.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  const formattedTime = now
+    .toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: true })
+    .toLowerCase();
+
+  // Align Invoice No., Date, and Time top-right
+  pdf.setFont("helvetica", "normal");
+  pdf.setFontSize(11);
+  pdf.setTextColor(...text);
+  pdf.text(`Invoice No: ${orderId}`, 195, 17, { align: "right" });
+  pdf.text(`Date: ${formattedDate}`, 195, 23, { align: "right" });
+  pdf.text(`Time: ${formattedTime}`, 195, 29, { align: "right" });
+
+  // --- COMPANY CONTACT ---
+  pdf.text("Email: perlynbeauty@gmail.com", 15, 26);
+  pdf.text("Place: Chennai, India", 15, 32);
+
+  // --- TITLE ---
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(13);
+  pdf.setTextColor(...text);
+  pdf.text("INVOICE", 105, 45, { align: "center" });
+
+  // --- BILL TO ---
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(11);
+  pdf.text("Bill To:", 15, 58);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${nameEl.value}`, 30, 58);
+  pdf.text(`${addressEl.value}`, 30, 63);
+  pdf.text(`${cityEl.value}, ${stateEl.value} - ${pincodeEl.value}`, 30, 68);
+  pdf.text(`Contact: ${phoneEl.value}`, 30, 73);
+
+  // --- TABLE HEADER ---
+  let y = 95;
+  pdf.setFillColor(...accent);
+  pdf.setTextColor(255, 255, 255);
+  pdf.rect(15, y, 180, 8, "F");
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setFontSize(11);
+  pdf.text("Sl.No", 20, y + 5);
+  pdf.text("Product Name", 55, y + 5);
+  pdf.text("Qty", 130, y + 5, { align: "right" });
+  pdf.text("Price", 160, y + 5, { align: "right" });
+  pdf.text("Amount", 190, y + 5, { align: "right" });
+
+  // --- TABLE CONTENT ---
+  y += 10; // Below header spacing
+  pdf.setFont("helvetica", "normal");
+  pdf.setTextColor(...text);
+
+  cartItems.forEach((item, i) => {
+    const amt = item.price * item.qty;
+
+    // 🩰 Soft blush background (shifted down slightly to avoid cutting)
+    pdf.setFillColor(...softBlush);
+    pdf.rect(15, y - 4.2, 180, 9.2, "F");
+
+    // Row text
+    pdf.text(`${i + 1}`, 20, y + 1);
+    pdf.text(`${item.name.split(".")[0].trim()}`, 35, y + 1);
+    pdf.text(`${item.qty}`, 130, y + 1, { align: "right" });
+    pdf.text(`${item.price}`, 160, y + 1, { align: "right" });
+    pdf.text(`${amt}`, 190, y + 1, { align: "right" });
+    y += 9.5;
+  });
+
+  // separator line
+  pdf.setDrawColor(...accent);
+  pdf.line(15, y + 2, 195, y + 2);
+
+  // --- TOTALS SECTION ---
+  y += 14;
+  const xLeft = 145;
+  const xRight = 190;
+
+  pdf.setFont("helvetica", "bold");
+  pdf.setTextColor(...text);
+  pdf.text("Subtotal:", xLeft, y);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${subtotal}`, xRight, y, { align: "right" });
+
+  y += 6;
+  pdf.setFont("helvetica", "bold");
+  pdf.text("Discount:", xLeft, y);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${discount}`, xRight, y, { align: "right" });
+
+// 💚 Show Coupon Code (if applied)
+if (discount > 0 && localStorage.getItem("appliedCoupon")) {
+  const coupon = JSON.parse(localStorage.getItem("appliedCoupon"));
+  y += 6;
+  pdf.setFont("helvetica", "bold");
+  pdf.text("Coupon Used:", xLeft, y);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${coupon.code}`, xRight, y, { align: "right" });
+}
+
+
+  y += 6;
+  pdf.setFont("helvetica", "bold");
+  pdf.text("Shipping:", xLeft, y);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${shipping}`, xRight, y, { align: "right" });
+
+  y += 6;
+  pdf.setFont("helvetica", "bold");
+  pdf.text("Personalized Msg:", xLeft, y);
+  pdf.setFont("helvetica", "normal");
+  pdf.text(`${messageEl.value ? 30 : 0}`, xRight, y, { align: "right" });
+
+  // --- Including all charges + Prepaid ---
+  y += 8;
+  pdf.setFont("helvetica", "bold");
+  pdf.setTextColor(...accent);
+  pdf.text(`Including all charges : ${total} (Prepaid)`, xLeft, y, { maxWidth: 60 });
+
+ // --- INVOICE AMOUNT IN WORDS + PERSONAL MESSAGE ---
+y += 12;
+pdf.setFont("helvetica", "bolditalic");
+pdf.setTextColor(...text);
+const amountWords = convertToWords(total);
+pdf.text(`INVOICE AMOUNT IN WORDS : ${amountWords} only`, 15, y);
+
+// 💌 Personalized Message (only if exists)
+if (messageEl.value && messageEl.value.trim() !== "") {
+  y += 10;
+  pdf.setFont("helvetica", "bold");
+  pdf.setTextColor(...accent);
+  pdf.text("Personalized Message:", 15, y);
+
+  y += 6;
+  pdf.setFont("helvetica", "normal");
+  pdf.setTextColor(...text);
+
+  // ✨ Wrap long message neatly across lines (max width 170mm)
+  const wrappedMsg = pdf.splitTextToSize(`"${messageEl.value.trim()}"`, 170);
+  pdf.text(wrappedMsg, 15, y);
+  y += wrappedMsg.length * 6; // adjust vertical space based on line count
+}
+
+
+  // --- FOOTER ---
+  y += 25;
+  pdf.setDrawColor(...accent);
+  pdf.line(145, y + 10, 190, y + 10);
+  pdf.setFontSize(10);
+  pdf.text("Seal & Signature", 148, y + 15);
+
+  pdf.save(`Perlyn_Invoice_${orderId}.pdf`);
+}
+
+
+// ✅ Helper to convert number to words (basic)
+function convertToWords(num) {
+  const a = [
+    "", "One", "Two", "Three", "Four", "Five", "Six",
+    "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve",
+    "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+    "Seventeen", "Eighteen", "Nineteen"
+  ];
+  const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+  if ((num = num.toString()).length > 9) return "Overflow";
+  const n = ("000000000" + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+  if (!n) return;
+  let str = "";
+  str += (n[1] != 0) ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + " Crore " : "";
+  str += (n[2] != 0) ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + " Lakh " : "";
+  str += (n[3] != 0) ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + " Thousand " : "";
+  str += (n[4] != 0) ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + " Hundred " : "";
+  str += (n[5] != 0) ? ((str != "") ? "and " : "") + (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) : "";
+  return str.trim();
+}
+
+// 🧩 Prevent accidental double-login mismatch
+window.addEventListener("load", async () => {
+  const session = await getActiveSession();
+  if (!session) {
+    console.warn("⚠️ No Supabase session found, redirecting...");
+    window.location.href = "login.html";
+  }
+});
+// ===========================================================
+// 🧠 PERLYN — CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
+// ===========================================================
+// ===========================================================
+// 🧠 PERLYN — CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
+// ===========================================================
+
+// ✅ Step 1: Check for saved customer details when page loads
+window.addEventListener("load", async () => {
+  const session = await getActiveSession();
+  if (!session) return;
+  await showSavedCustomerDetails(session.user.id);
+});
+
+// ✅ Step 2: Fetch & display saved customer details box
+async function showSavedCustomerDetails(userId) {
+  const { data, error } = await supabaseClient
+    .from("customer_details")
+    .select("*")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("⚠️ Fetch saved customer details failed:", error);
+    return;
+  }
+
+  if (data) {
+    const container = document.querySelector(".container");
+    const box = document.createElement("div");
+    box.className = "saved-details-box";
+    box.innerHTML = `
+      <div class="saved-summary">
+        <b>${data.name}</b> (${data.phone})<br>
+        ${data.address}, ${data.city}, ${data.state} - ${data.pincode}
+      </div>
+      <div class="saved-actions">
+        <button class="apply-btn">Apply</button>
+        <button class="change-btn">Change</button>
+      </div>
+    `;
+    container.insertBefore(box, document.getElementById("shippingForm"));
+
+    // ✅ Apply → auto-fill inputs
+    box.querySelector(".apply-btn").addEventListener("click", () => {
+      nameEl.value = data.name || "";
+      phoneEl.value = data.phone || "";
+      addressEl.value = data.address || "";
+      cityEl.value = data.city || "";
+      stateEl.value = data.state || "";
+      pincodeEl.value = data.pincode || "";
+
+      box.querySelector(".apply-btn").textContent = "Applied ✅";
+      box.querySelector(".apply-btn").disabled = true;
+    });
+
+    // 🧹 Change → remove box & allow editing
+    box.querySelector(".change-btn").addEventListener("click", () => {
+      box.remove();
+      alert("You can now edit your address details.");
+    });
+  }
+}
+
+// ✅ Step 3: Save details if checkbox is checked
+async function saveCustomerDetailsIfChecked() {
+  const { data: { session } } = await supabaseClient.auth.getSession();
+  if (!session) return;
+
+  const saveChecked = document.getElementById("saveDetails").checked;
+  if (!saveChecked) return;
+
+  const payload = {
+    user_id: session.user.id,
+    name: nameEl.value,
+    phone: phoneEl.value,
+    address: addressEl.value,
+    city: cityEl.value,
+    state: stateEl.value,
+    pincode: pincodeEl.value,
+  };
+
+  const { error } = await supabaseClient
+    .from("customer_details")
+    .upsert(payload, { onConflict: "user_id" });
+
+  if (error) console.error("⚠️ Save customer details failed:", error);
+  else console.log("✅ Customer details saved/updated successfully");
+}
+
+
+    
+
+// 🏙️ City/State input restriction (alphabets & spaces only)
+document.getElementById("city").addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+});
+
+document.getElementById("state").addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+});
+
+// 📋 Valid Indian cities/states for light validation
+const validCities = [
+  "Chennai", "Coimbatore", "Madurai", "Salem", "Erode", "Tiruchirappalli",
+  "Bengaluru", "Mysuru", "Kochi", "Hyderabad", "Vijayawada", "Visakhapatnam",
+  "Mumbai", "Pune", "Nagpur", "Kolkata", "Delhi", "Lucknow", "Noida"
+];
+
+const validStates = [
+  "Tamil Nadu", "Karnataka", "Kerala", "Telangana", "Andhra Pradesh",
+  "Maharashtra", "Delhi", "West Bengal", "Uttar Pradesh"
+];
+
+// ✅ Validate on blur (after typing)
+document.getElementById("city").addEventListener("blur", (e) => {
+  const val = e.target.value.trim();
+  if (val && !validCities.some(c => c.toLowerCase() === val.toLowerCase())) {
+    alert("❌ Please enter a valid Indian city name.");
+    e.target.focus();
+  }
+});
+
+document.getElementById("state").addEventListener("blur", (e) => {
+  const val = e.target.value.trim();
+  if (val && !validStates.some(s => s.toLowerCase() === val.toLowerCase())) {
+    alert("❌ Please enter a valid Indian state name.");
+    e.target.focus();
+  }
+});
+
+</script>
+
+</body>
+</html>

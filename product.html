@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Product Details</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Gilda+Display&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      background: #f3e4db;
+    }
+
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    p,
+    a,
+    span,
+    li,
+    button {
+      font-family: 'Cormorant Garamond', serif !important;
+    }
+
+    /* ✅ Price - Global (for desktop) */
+    .price {
+      font-family: 'Gilda Display', serif !important;
+      font-size: 26px;
+      font-weight: 700;
+      color: #b98474;
+      text-align: center;
+      display: block;
+      margin: 10px auto 10px auto;
+    }
+
+    /* Product Layout */
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin: 60px auto;
+      max-width: 1100px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Gallery */
+    .product-gallery {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+/* 🌸 Floating Share Button (Perfect Size + Inner Zoomed Icon) */
+.share-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px; /* bubble stays same */
+  height: 36px;
+  background: #fff6f0;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+  border: none;
+  outline: none;
+}
+
+/* 🧠 The inner image (icon inside the bubble) */
+.share-btn img {
+  width: 18px; /* zoom icon slightly */
+  height: 18px;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(39%) sepia(26%) saturate(600%) hue-rotate(343deg) brightness(92%) contrast(92%);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* 🔍 Hover / tap animation */
+.share-btn:hover img {
+  transform: scale(1.15);
+  opacity: 0.95;
+}
+
+.share-btn:active img {
+  transform: scale(0.9);
+  opacity: 0.85;
+}
+
+
+    .gallery-images {
+      display: flex;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-images img {
+      width: 100%;
+      flex-shrink: 0;
+      height: auto;
+      border-radius: var(--radius);
+      display: block;
+    }
+    .gallery-media img,
+.gallery-media video {
+  transition: opacity 0.3s ease;
+}
+/* ✨ Slight Zoom-In for Main Product Image */
+.gallery-media img {
+  transform: scale(1.08); /* zoom in ~8% */
+  transform-origin: center center;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover effect (optional for desktop only) */
+@media (min-width: 768px) {
+  .gallery-media img:hover {
+    transform: scale(1.12);
+  }
+}
+
+
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 8px;
+    }
+
+    .gallery-dots .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d3b7a6;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .gallery-dots .dot.active {
+      background: #b98474;
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    .product-info h1 {
+      font-size: 42px;
+      margin-bottom: 8px;
+      text-align: center;
+      word-wrap: break-word;
+    }
+
+    .product-shade {
+      font-size: 18px;
+      color: #7b5b4a;
+      text-align: center;
+      margin-top: -4px;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    /* ✅ Price Row - Clean Center Alignment */
+/* ✅ Price Row */
+.price-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 10px 0 25px 0;
+  text-align: center;
+}
+
+/* 🩶 Flat Share Icon — Perlyn Theme */
+/* 🩶 Flat Share Icon — Perlyn Theme (Visible Fix) */
+.flat-share {
+  width: 28px;
+  height: 28px;
+  margin-top: 4px;
+  cursor: pointer;
+  opacity: 0.95;
+  filter: brightness(0) saturate(100%) invert(38%) sepia(25%) saturate(800%) hue-rotate(343deg) brightness(90%) contrast(92%);
+  transition: all 0.25s ease;
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+/* ✅ Ensure Flat Share Icon Always Visible */
+.price-row {
+  position: relative;
+  z-index: 20; /* stays above other UI layers */
+}
+
+    /* ✨ Buttons - Unified Perlyn Theme */
+    .btn-add-cart,
+    .btn-buy-now {
+      border: none;
+      padding: 12px 0;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      flex: 1;
+      max-width: 160px;
+      outline: none;
+      background: #b98474;
+      /* unified tone */
+      transition: background 0.3s ease, transform 0.15s ease, opacity 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      /* removes blue overlay */
+    }
+
+    /* Hover - darker tone for depth */
+    .btn-add-cart:hover,
+    .btn-buy-now:hover {
+      background: #a56d5c;
+    }
+
+    /* Tap/Click - blink effect */
+    .btn-add-cart:active,
+    .btn-buy-now:active {
+      transform: scale(0.97);
+      opacity: 0.85;
+    }
+
+    /* Remove focus outline completely */
+    .btn-add-cart:focus,
+    .btn-buy-now:focus {
+      outline: none;
+      box-shadow: none;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    /* Info boxes */
+    .info-box {
+      background: #fff6f0;
+      border: 1px solid #e5cfc3;
+      padding: 15px 18px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-box h3 {
+      font-weight: 700;
+      font-size: 20px;
+      color: #b98474;
+      margin-bottom: 6px;
+    }
+
+    .info-box p {
+      margin: 0;
+      font-size: 17px;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    /* Related Products */
+    .related {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 20px;
+    }
+
+    .related h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .related-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f9f2ef 100%);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+/* 🌸 Floating Share Icon for Related Products */
+.related-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.related-card .share-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  background: #fff6f0;
+  border-radius: 50%;
+  padding: 5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: all 0.25s ease;
+  z-index: 5;
+}
+
+.related-card .share-btn:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+  background: #fff;
+}
+
+/* 🌸 Floating Share Icon — For Product Cards & Related Cards */
+.related-card {
+  position: relative; /* ensure the share icon sits inside */
+  overflow: hidden;
+}
+
+
+
+    .related-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .related-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #f3e4db;
+      color: #5a3e36;
+      border: 1px solid #e0c7bb;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ✅ Responsive Mobile Fix */
+    @media (max-width: 768px) {
+      .product-detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin: 0 auto;
+        padding: 16px;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .product-info h1 {
+        font-size: 28px;
+        margin: 10px 0 6px 0;
+      }
+
+      .price {
+        font-size: 22px;
+        font-weight: 600;
+        color: #b98474;
+        margin: 0 auto 10px auto;
+        text-align: center;
+        display: block;
+      }
+
+      .btn-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        margin-bottom: 25px;
+      }
+
+      .btn-add-cart,
+      .btn-buy-now {
+        flex: 1;
+        max-width: 160px;
+        padding: 12px 0;
+        border-radius: 30px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .info-box {
+        text-align: left;
+        width: 100%;
+        background: #fff6f0;
+        padding: 14px 16px;
+        margin-bottom: 12px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+
+      .info-box h3 {
+        font-size: 18px;
+        color: #b98474;
+        margin-bottom: 4px;
+      }
+
+      .info-box p {
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      .footer {
+        margin-top: 40px;
+        text-align: center;
+        padding: 30px 15px;
+        background: #f3e4db;
+      }
+
+      .footer-col {
+        margin-bottom: 20px;
+      }
+
+      .footer-bottom {
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .dee-credit {
+        color: #b98474;
+        text-decoration: none;
+      }
+    }
+
+    /* 🛒 Cart link emoji style */
+    #cartLink {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ✅ Add this below it */
+    #cartLink:hover {
+      color: #b98474;
+      transform: scale(1.05);
+      transition: all 0.2s ease;
+    }
+
+    /* =========================
+   Reviews Section — Perlyn Theme
+========================= */
+    .review-section {
+      background: #fff;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+      margin: 50px auto;
+      max-width: 1000px;
+    }
+
+    .reviews-list .review-box {
+      border-bottom: 1px solid #f0d9cd;
+      padding: 15px 0;
+    }
+
+    .review-box strong {
+      color: #3b2b2b;
+      font-size: 18px;
+    }
+
+    .review-box p {
+      color: #6b4f4f;
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .review-box button {
+      background: #B98474;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .review-box button:hover {
+      opacity: 0.85;
+    }
+
+    .add-review {
+      margin-top: 25px;
+    }
+
+    .review-input,
+    .review-text {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 10px;
+      border: 1px solid #e0c7bb;
+      border-radius: 6px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      background: #fdf9f7;
+    }
+
+    .review-input:focus,
+    .review-text:focus {
+      outline: none;
+      border-color: #B98474;
+      box-shadow: 0 0 5px rgba(185, 132, 116, 0.4);
+    }
+
+    .review-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .review-actions .btn-secondary {
+      background: #B98474;
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .review-actions .btn-secondary:hover {
+      background: #a56d5c;
+      opacity: 0.9;
+    }
+/* 🩵 Verified Buyer Badge (Perlyn Theme) */
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff6f0;
+  color: #b98474;
+  border: 1px solid #e3cabc;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px 8px 2px 6px;
+  margin-left: 8px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.verified-badge img {
+  width: 14px;
+  height: 14px;
+  filter: invert(40%) sepia(20%) saturate(500%) hue-rotate(340deg);
+}
+
+/* 💅 Fix: Remove mobile blue tap / selection highlight from stars */
+.star-rating {
+  -webkit-tap-highlight-color: transparent; /* removes tap highlight */
+  -webkit-user-select: none; /* stops blue selection flash */
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.star-rating span {
+  -webkit-tap-highlight-color: transparent; /* removes blue box on tap */
+  background: none !important;
+  outline: none !important;
+  border: none !important;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* also ensure focus styles don’t flash */
+.star-rating span:focus,
+.star-rating span:active {
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+    /* 🌟 Star Rating (Perlyn Theme) */
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-start;
+      margin-bottom: 15px;
+      font-size: 28px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .star-rating span {
+      color: #ddd;
+      transition: color 0.2s ease, transform 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      /* 🔥 Removes blue flash */
+      outline: none;
+      border: none;
+    }
+
+    .star-rating span:focus,
+    .star-rating span:active {
+      outline: none;
+      border: none;
+      background: transparent;
+    }
+
+    .star-rating span:hover,
+    .star-rating span:hover~span {
+      color: #ddd;
+      /* keeps hover isolated */
+    }
+
+    .star-rating span.active {
+      color: #B98474;
+      /* filled theme color */
+    }
+
+    .star-rating span:hover {
+      transform: scale(1.1);
+    }
+
+
+  .cart-icon img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.cart-icon img:hover {
+  transform: scale(1.1);
+  opacity: 0.85;
+}
+
+  .hamburger span {
+    width: 22px;
+    height: 2.5px;
+  }
+
+
+#header-wrapper .nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+}
+@media (max-width: 768px) {
+  .nav-actions {
+    gap: 12px;
+  }
+}
+
+/* 🧭 Always Visible Navbar (Fixed like Action Bar) */
+#navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(243, 228, 219, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5cfc3;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🩷 Adjust page layout so content doesn’t hide behind navbar */
+body {
+  padding-top: 70px; /* matches navbar height */
+  padding-bottom: 90px; /* already there for fixed bottom bar */
+}
+
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  max-height: 42px;
+}
+
+.brand-text {
+  color: #b98474;
+  font-weight: 600;
+  font-family: 'Gilda Display', serif;
+  font-size: 20px;
+}
+.product-gallery video {
+  display: block;
+  border-radius: 10px;
+  max-height: 450px;
+  width: 100%;
+  background: #000;
+}
+/* ✨ Share Button (matches theme) */
+#shareBtn {
+  background: #fff6f0;
+  border: 1px solid #e5cfc3;
+  color: #b98474;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+#shareBtn:hover {
+  background: #f3e4db;
+  transform: scale(1.03);
+}
+#shareBtn:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+
+.product-gallery {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🩵 Sticky Action Bar (works on all screens) */
+.fixed-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(243, 228, 219, 0.95); /* Perlyn beige tone */
+  backdrop-filter: blur(8px);
+  border-top: 1px solid #e5cfc3;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.08);
+  padding: 10px 16px;
+  z-index: 999;
+}
+
+.fixed-action-bar .btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.fixed-action-bar button {
+  flex: 1;
+  max-width: 180px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 📱 Mobile optimization */
+@media (max-width: 768px) {
+  .fixed-action-bar {
+    padding: 10px;
+    bottom: 0;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .fixed-action-bar .btn-row {
+    gap: 10px;
+  }
+
+  .fixed-action-bar button {
+    max-width: none;
+    font-size: 15px;
+    padding: 12px 0;
+  }
+}
+/* 🧠 Container holds both gallery and share icon */
+.product-gallery-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Ensure the gallery fits nicely */
+.product-gallery {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* 🧭 Prevent overlap with footer on small screens */
+body {
+  padding-bottom: 90px; /* space for fixed bar */
+}
+/* 🔒 Out-of-stock Button Style */
+.out-of-stock-btn {
+  background: #d8c1b9 !important;
+  color: #fff !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.out-of-stock-btn:hover,
+.out-of-stock-btn:active {
+  background: #d8c1b9 !important;
+  opacity: 0.7 !important;
+  transform: none !important;
+}
+
+
+.sticky-mini-bar.show {
+  transform: translateY(0);
+}
+
+.sticky-mini-bar .mini-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sticky-mini-bar .mini-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #4b3b32;
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sticky-mini-bar .mini-price {
+  font-family: 'Gilda Display', serif;
+  font-size: 17px;
+  color: #b98474;
+}
+
+.sticky-mini-bar .mini-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.sticky-mini-bar button {
+  background: #b98474;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 15px;
+  font-family: 'Cormorant Garamond', serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sticky-mini-bar button:hover {
+  background: #a56d5c;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .sticky-mini-bar .mini-name {
+    font-size: 16px;
+    max-width: 150px;
+  }
+  .sticky-mini-bar .mini-price {
+    font-size: 15px;
+  }
+  .sticky-mini-bar button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+.unmute-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.unmute-btn:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+.unmute-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 14px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+.unmute-btn:hover {
+  transform: scale(1.1);
+  opacity: 0.9;
+}
+.unmute-btn.fade-out {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+  </style>
+
+
+</head>
+
+<body>
+
+  <div id="navbar"></div>
+</header>
+<script>
+  // 🧩 Proper Navbar + Supabase Loader (with hamburger fix)
+  async function loadNavbarAndSupabase() {
+    try {
+      // 1️⃣ Load navbar.html dynamically
+      const res = await fetch("components/navbar.html");
+      const html = await res.text();
+      document.getElementById("navbar").innerHTML = html;
+
+      // 2️⃣ Inject navbar.js and wait till it fully runs
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "components/navbar.js";
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.appendChild(script);
+      });
+
+      console.log("🟢 Navbar + Supabase client initialized successfully");
+
+      // 3️⃣ Force re-attach hamburger toggle AFTER navbar is in DOM
+      setTimeout(() => {
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("nav-menu");
+
+        if (hamburger && navMenu) {
+          // prevent duplicate listener
+          hamburger.onclick = null;
+
+          hamburger.addEventListener("click", () => {
+            navMenu.classList.toggle("show");
+            hamburger.textContent = navMenu.classList.contains("show") ? "✕" : "☰";
+          });
+
+          // close menu when a link is clicked (mobile UX)
+          navMenu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", () => {
+              navMenu.classList.remove("show");
+              hamburger.textContent = "☰";
+            });
+          });
+
+          console.log("🍔 Hamburger menu reattached and active!");
+        } else {
+          console.warn("⚠️ Hamburger elements not found in DOM yet!");
+        }
+      }, 300);
+
+      // 4️⃣ Supabase client is centralized
+      if (!window.supabaseClient) {
+        console.error("🔴 Supabase client missing! Ensure env.js and supabaseClient.js are loaded.");
+      }
+
+      window.supabaseReady = true;
+    } catch (err) {
+      console.error("❌ Navbar/Supabase failed to load:", err);
+    }
+  }
+
+  loadNavbarAndSupabase();
+</script>
+
+
+
+<script src="https://unpkg.com/@supabase/supabase-js"></script>
+<script src="env.js"></script>
+<script src="supabaseClient.js"></script>
+
+ 
+ <section class="product-detail" id="product-detail">
+    <div class="product-left">
+<div class="product-gallery-container">
+  <div class="product-gallery">
+   
+    <!-- 🌸 Share Icon (Top-right of image card) -->
+<img src="assets/share.png" alt="Share" class="share-btn" id="shareIcon" title="Share Product">
+
+    <div class="gallery-media" id="gallery-media"></div>
+    <div class="gallery-dots" id="gallery-dots"></div>
+  </div>
+</div>
+
+   <div class="product-info">
+      <h1 id="product-name">Loading...</h1>
+      <p id="product-shade" class="product-shade"></p>
+
+     <div class="price-row">
+  <span class="price" id="product-price">₹0</span>
+
+
+</div>
+
+<div class="fixed-action-bar">
+  <div class="btn-row">
+    <button class="btn-add-cart" id="addToCartBtn">Add to Cart</button>
+    <button class="btn-buy-now" id="buyNowBtn">Buy Now</button>
+  </div>
+</div>
+
+
+      </div>
+
+
+
+      <div class="info-box">
+        <h3>Description</h3>
+        <p id="product-description">Loading...</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Key Ingredients</h3>
+        <p id="product-ingredients"></p>
+      </div>
+
+      <div class="info-box">
+        <h3>Key Features</h3>
+        <p id="product-features"></p>
+      </div>
+
+      <div class="info-box">
+        <h3>Crucial Note</h3>
+        <p id="product-note"></p>
+      </div>
+
+      <div class="info-box">
+        <h3>Disclaimer</h3>
+        <p id="product-disclaimer"></p>
+      </div>
+    </div>
+  </section>
+  <!-- ✨ Customer Reviews Section -->
+  <section class="review-section">
+    <h2 class="section-title">Customer Reviews</h2>
+    <div id="reviews-container" class="reviews-list">
+      <p>Loading reviews...</p>
+    </div>
+
+    <div class="add-review">
+      <h3>Write a Review</h3>
+      <input type="text" id="reviewerName" placeholder="Your name" class="review-input">
+      <div class="star-rating" id="starRating">
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
+      </div>
+
+      <textarea id="reviewText" placeholder="Write your review..." class="review-text"></textarea>
+      <button class="btn-secondary" onclick="submitReview()">Post Review</button>
+    </div>
+  </section>
+
+  <section class="related">
+    <h2>Related Products</h2>
+    <div class="related-grid" id="related-products">
+      <p>Loading related products...</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Brand Info -->
+      <div class="footer-col">
+        <h3>Perlyn</h3>
+        <p>Gloss that loves. Tints that stay. Oils that care.</p>
+        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
+        <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
+        <div class="social-icons" style="margin-top:10px;">
+          <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
+            target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="28" height="28" />
+          </a>
+          <a href="https://wa.me/919176100456" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="28" height="28" />
+          </a>
+          <a href="https://www.youtube.com/@PerlynBeauty" target="_blank">
+            <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" width="28" height="28" />
+          </a>
+        </div>
+      </div>
+
+     <div class="footer-col">
+  <h4>Shop</h4>
+  <ul>
+    <li><a href="shop.html?category=lip%20gloss">Lip Gloss</a></li>
+    <li><a href="shop.html?category=lip%20%26%20cheek%20tint">Lip & Cheek Tint</a></li>
+    <li><a href="shop.html?category=lip%20oils">Lip Oils</a></li>
+  </ul>
+</div>
+
+
+      <!-- Quick Links -->
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+       <ul>
+  <li><a href="aboutus.html">About Us</a></li>
+  <li><a href="contactus.html">Contact Us</a></li>
+  <li><a href="faq.html">FAQ</a></li>
+  <li><a href="terms.html">Terms & Conditions</a></li>
+  <li><a href="privacy.html">Privacy Policy</a></li>
+  <li><a href="shipping.html">Shipping & Cancellation Policy</a></li>
+  <li><a href="refund.html">Return & Refund Policy</a></li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Perlyn. All Rights Reserved.</p>
+      <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast">Added to Cart</div>
+
+  
+  <script>
+  // ✅ Wait for Supabase client from navbar.js — guaranteed ready
+(async () => {
+  let supabase;
+
+  console.warn("⏳ Waiting for Supabase client to initialize...");
+
+ while (!window.supabaseReady || !window.supabaseClient) {
+  console.warn("⏳ Waiting for Supabase to be ready...");
+  await new Promise(resolve => setTimeout(resolve, 200));
+}
+
+  supabase = window.supabaseClient;
+  console.log("🟢 Supabase client ready in product.html");
+
+
+
+    // URL param
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+
+    // 🌸 Load page sections
+    await loadProduct(supabase);
+    await updateCartCount(supabase);
+    await loadReviews(supabase);
+
+
+
+    // ===============================
+    // 🌸 PERLYN BEAUTY REVIEW SYSTEM
+    // ===============================
+    async function loadReviews(supabase) {
+      const container = document.getElementById("reviews-container");
+      container.innerHTML = "<p>Loading reviews...</p>";
+
+      const { data: { session } } = await supabase.auth.getSession();
+      const userId = session ? session.user.id : null;
+
+      const { data, error } = await supabase
+        .from("reviews")
+        .select("*")
+        .eq("product_id", productId)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+        container.innerHTML = "<p>Error loading reviews.</p>";
+        return;
+      }
+
+      if (!data.length) {
+        container.innerHTML = "<p>No reviews yet. Be the first to review this product!</p>";
+        return;
+      }
+
+     container.innerHTML = await Promise.all(
+  data.map(async r => {
+    // 🧩 Check if the reviewer purchased the product
+    const { data: orderCheck } = await supabase
+      .from("orders")
+      .select("id")
+      .eq("user_id", r.user_id)
+      .ilike("order_items", `%${productId}%`)
+      .limit(1);
+
+    const isVerified = orderCheck && orderCheck.length > 0;
+
+    return `
+      <div class="review-box" id="review-${r.id}">
+        <strong>${r.user_name}</strong>
+        ${isVerified ? `
+          <span class="verified-badge">
+            <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="verified"> 
+            Verified Buyer
+          </span>` : ""}
+        <div style="margin-top:5px;">⭐${r.rating}</div>
+        <p id="comment-${r.id}">${r.comment}</p>
+        ${r.user_id === userId ? `
+          <div class="review-actions">
+            <button class="btn-secondary" onclick="editReview(${r.id}, '${r.comment.replace(/'/g, "\\'")}')">Edit</button>
+            <button class="btn-secondary" onclick="deleteReview(${r.id})">Delete</button>
+          </div>` : ""}
+      </div>
+    `;
+  })
+).then(htmls => htmls.join(""));
+
+    }
+
+    // ⭐ Star rating
+    let selectedRating = 0;
+    document.querySelectorAll("#starRating span").forEach(star => {
+      star.addEventListener("click", () => {
+        selectedRating = parseInt(star.dataset.value);
+        updateStarDisplay(selectedRating);
+      });
+    });
+    function updateStarDisplay(rating) {
+      document.querySelectorAll("#starRating span").forEach(s => {
+        s.classList.toggle("active", parseInt(s.dataset.value) <= rating);
+      });
+    }
+
+    // ✏️ Add Review
+    window.submitReview = async function () {
+      const name = document.getElementById("reviewerName").value.trim();
+      const comment = document.getElementById("reviewText").value.trim();
+      const rating = selectedRating || 5;
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session) return alert("Please login to post a review.");
+      if (!name || !comment) return alert("Please fill all fields.");
+
+      const { error } = await supabase.from("reviews").insert([
+        { product_id: productId, user_name: name, rating, comment, user_id: session.user.id }
+      ]);
+      if (error) return alert("Error adding review.");
+
+      showToast("Review added!");
+      loadReviews(supabase);
+    };
+
+    // 🗑️ Delete Review
+    window.deleteReview = async function (id) {
+      if (!confirm("Are you sure you want to delete this review?")) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return alert("Please login first.");
+      const { error } = await supabase.from("reviews").delete().eq("id", id);
+      if (error) return alert("Error deleting review.");
+      showToast("Review deleted!");
+      loadReviews(supabase);
+    };
+
+    // 🖊️ Edit Review
+    window.editReview = async function (id, oldComment) {
+      const newComment = prompt("Edit your review:", oldComment);
+      if (!newComment) return;
+      const { error } = await supabase.from("reviews").update({ comment: newComment }).eq("id", id);
+      if (error) return alert("Error updating review.");
+      showToast("Review updated!");
+      loadReviews(supabase);
+    };
+
+    // ===============================
+    // 🛍️ Product Loader
+    // ===============================
+  async function loadProduct(supabase) {
+  const { data: product, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", productId)
+    .single();
+
+  if (error || !product) {
+    document.getElementById("product-detail").innerHTML = "<p>Error loading product.</p>";
+    return;
+  }
+
+// 🧠 Filter out null or "null" entries
+const validImages = (product.image_urls || [])
+  .filter(url => url && url !== "null" && url.trim() !== "");
+
+const validVideos = (product.video_urls || [])
+  .filter(url => url && url !== "null" && url.trim() !== "");
+
+initGallery(validImages.length ? validImages : [product.image_url].filter(Boolean), validVideos);
+
+  // 🧠 Update Product Info
+  document.getElementById("product-name").innerText = product.name;
+  document.getElementById("product-shade").innerText = product.shade || "";
+  document.getElementById("product-price").innerText = "₹" + product.price;
+  document.getElementById("product-description").innerText = product.description || "No description available.";
+  document.getElementById("product-ingredients").innerText = product.key_ingredients || "—";
+  document.getElementById("product-features").innerText = product.key_features || "—";
+  document.getElementById("product-note").innerText = product.crucial_note || "—";
+  document.getElementById("product-disclaimer").innerText = product.disclaimer || "—";
+
+  const addBtn = document.getElementById("addToCartBtn");
+  const buyBtn = document.getElementById("buyNowBtn");
+
+  // 🧩 Stock Logic — Disable buttons if out of stock
+  if (product.stock === 0) {
+    addBtn.disabled = true;
+    buyBtn.disabled = true;
+    addBtn.innerText = "Out of Stock";
+    buyBtn.innerText = "Unavailable";
+    addBtn.classList.add("out-of-stock-btn");
+    buyBtn.classList.add("out-of-stock-btn");
+  } else {
+    addBtn.onclick = () => addToCart(supabase, product.id);
+    buyBtn.onclick = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return (window.location.href = "account.html");
+      await addToCart(supabase, product.id);
+      window.location.href = "cart.html";
+    };
+  }
+
+  loadRelated(supabase, product.id);
+
+
+}
+
+// ✅ Optimized & Safe Add-to-Cart Function (Perlyn Final)
+async function addToCart(supabase, productId) {
+  try {
+    // ✨ Ensure Supabase client and session exist
+    if (!supabase || !window.supabaseReady) {
+      alert("System not ready yet. Please wait a moment and try again.");
+      return;
+    }
+
+    const { data: { session } } = await supabase.auth.getSession();
+    const pid = parseInt(productId, 10); // ✨ convert to integer for Supabase
+    
+    // 🧠 GUEST CART LOGIC
+    if (!session) {
+      let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+      const existingItem = guestCart.find(item => item.product_id === pid);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        guestCart.push({ product_id: pid, quantity: 1 });
+      }
+      localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      
+      if (typeof updateCartCount === 'function') updateCartCount();
+      
+      const toast = document.getElementById("toast");
+      toast.className = "toast show";
+      setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
+      return;
+    }
+
+    const userId = session.user.id;
+    const pid = parseInt(productId, 10); // ✅ convert to integer for Supabase
+
+    // 🧩 Try to find existing cart item for this user & product
+    let { data: existing, error: existingError } = await supabase
+      .from("cart")
+      .select("id, quantity")
+      .eq("user_id", userId)
+      .eq("product_id", pid)
+      .maybeSingle();
+
+    if (existingError && existingError.code !== "PGRST116") {
+      console.warn("⚠️ Cart lookup error:", existingError.message);
+    }
+
+    // 🛒 Update or Insert logic
+    if (existing) {
+      const { error: updateError } = await supabase
+        .from("cart")
+        .update({ quantity: existing.quantity + 1 })
+        .eq("id", existing.id);
+
+      if (updateError) {
+        console.error("❌ Cart update failed:", updateError.message);
+        showToast("Error updating cart");
+        return;
+      }
+      console.log(`🟢 Cart updated: ${existing.quantity + 1} items`);
+    } else {
+      const { error: insertError } = await supabase
+        .from("cart")
+        .insert([{ user_id: userId, product_id: pid, quantity: 1 }]);
+
+      if (insertError) {
+        console.error("❌ Cart insert failed:", insertError.message);
+        showToast("Error adding item to cart");
+        return;
+      }
+      console.log("🟢 New product added to cart");
+    }
+
+    // ✅ Refresh UI count and toast
+    showToast("Added to Cart");
+    updateCartCount(supabase);
+
+  } catch (err) {
+    console.error("❌ addToCart crashed:", err);
+    showToast("Something went wrong. Try again.");
+  }
+}
+
+
+    async function loadRelated(supabase, currentId) {
+  const { data: products } = await supabase
+    .from("products")
+    .select("*")
+    .neq("id", currentId)
+    .limit(10);
+
+  const container = document.getElementById("related-products");
+  container.innerHTML = "";
+
+  if (!products?.length) {
+    container.innerHTML = "<p>No related products found.</p>";
+    return;
+  }
+
+  products.slice(0, 3).forEach(prod => {
+    const card = document.createElement("div");
+    card.classList.add("related-card");
+
+    // 🩵 Build the product card with share icon
+    card.innerHTML = `
+      <img src="assets/share.png" alt="Share" class="share-btn" 
+        onclick="shareProduct('${prod.name}', '${window.location.origin}/product.html?id=${prod.id}')">
+      <img src="${(prod.image_url && prod.image_url !== 'null') ? prod.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${prod.name}" class="product-img">
+      <h3>${prod.name}</h3>
+      <span class="price">₹${prod.price}</span>
+    `;
+
+    // Clicking anywhere else on the card (not the share icon) opens product
+    card.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("share-btn")) {
+        window.location.href = "product.html?id=" + prod.id;
+      }
+    });
+
+    container.appendChild(card);
+  });
+}
+
+
+function initGallery(images = [], videoUrls = []) {
+  const gallery = document.getElementById("gallery-media");
+  const dots = document.getElementById("gallery-dots");
+
+  // 🧠 Clean + merge all valid media URLs
+  const allImages = Array.isArray(images) ? images.filter(Boolean) : images ? [images] : [];
+  const allVideos = Array.isArray(videoUrls) ? videoUrls.filter(Boolean) : videoUrls ? [videoUrls] : [];
+  const media = [...allImages, ...allVideos];
+
+  if (!media.length) {
+    gallery.innerHTML = "<p>No media available.</p>";
+    return;
+  }
+
+  let currentIndex = 0; // ✅ declare only once
+
+  // 🎞️ Render each media item (image/video)
+  gallery.innerHTML = media
+    .map((url, i) => {
+      const isVideo = typeof url === "string" && url.match(/\.(mp4|webm|mov)$/i);
+      return isVideo
+        ? `<video 
+            src="${url}" 
+            muted
+            autoplay 
+            loop 
+            playsinline 
+            preload="auto"
+            style="width:100%;height:auto;border-radius:12px;display:${i === 0 ? 'block' : 'none'};background:#000;">
+          </video>`
+        : `<img src="${url}" loading="lazy"
+            style="width:100%;height:auto;border-radius:12px;display:${i === 0 ? 'block' : 'none'};">`;
+    })
+    .join("");
+
+  // ⬤ Dots navigation
+  dots.innerHTML = media
+    .map((_, i) => `<div class="dot ${i === 0 ? "active" : ""}"></div>`)
+    .join("");
+
+  // ✅ Select all media
+  const allMedia = gallery.querySelectorAll("img, video");
+  const allDots = dots.querySelectorAll(".dot");
+
+  // 🎬 Polished autoplay logic with sound toggle (cross-browser)
+  allMedia.forEach((m, index) => {
+    if (m.tagName === "VIDEO") {
+      // 🧠 Chrome-safe autoplay setup
+      m.muted = true;
+      m.controls = false;
+      m.autoplay = true;
+      m.loop = true;
+      m.playsInline = true;
+      m.preload = "auto";
+
+      // 🚀 Try to play immediately (handles Chrome/Safari autoplay rules)
+      const playVideo = async () => {
+        try {
+          await m.play();
+        } catch (err) {
+          console.warn("⚠️ Autoplay blocked, retrying muted...", err);
+          m.muted = true;
+          await m.play().catch(e => console.error("❌ Still blocked:", e));
+        }
+      };
+      playVideo();
+
+      // 🎧 Create unmute button overlay
+      const unmuteBtn = document.createElement("button");
+      unmuteBtn.innerHTML = "🔊";
+      unmuteBtn.className = "unmute-btn";
+      unmuteBtn.title = "Tap to enable sound";
+
+      unmuteBtn.onclick = () => {
+        m.muted = false;
+        m.volume = 1;
+        m.play();
+        // 🔄 Fade out & remove after click
+        unmuteBtn.classList.add("fade-out");
+        setTimeout(() => unmuteBtn.remove(), 600);
+      };
+
+      // Show only on first visible video
+      if (index === 0) {
+        gallery.appendChild(unmuteBtn);
+        // 🕒 Auto-hide after 3s if user doesn’t click
+        setTimeout(() => {
+          if (document.body.contains(unmuteBtn)) {
+            unmuteBtn.classList.add("fade-out");
+            setTimeout(() => unmuteBtn.remove(), 500);
+          }
+        }, 3000);
+      }
+    }
+  });
+
+  // 🎨 Add swipe + dot navigation
+  function showSlide(index) {
+    currentIndex = (index + media.length) % media.length;
+
+    allMedia.forEach((m, i) => {
+      const isActive = i === currentIndex;
+      m.style.display = isActive ? "block" : "none";
+
+      if (m.tagName === "VIDEO") {
+        if (isActive) {
+          m.play().catch(() => {});
+        } else {
+          m.pause();
+        }
+      }
+    });
+
+    allDots.forEach((d, i) => d.classList.toggle("active", i === currentIndex));
+  }
+
+  // 🔘 Dot click navigation
+  allDots.forEach((dot, i) => {
+    dot.addEventListener("click", () => showSlide(i));
+  });
+
+  // 👆 Swipe navigation
+  let startX = 0, endX = 0;
+  const handleSwipe = () => {
+    const diff = startX - endX;
+    if (Math.abs(diff) < 40) return;
+    showSlide(currentIndex + (diff > 0 ? 1 : -1));
+  };
+
+  gallery.addEventListener("touchstart", e => (startX = e.touches[0].clientX));
+  gallery.addEventListener("touchend", e => {
+    endX = e.changedTouches[0].clientX;
+    handleSwipe();
+  });
+  gallery.addEventListener("mousedown", e => (startX = e.clientX));
+  gallery.addEventListener("mouseup", e => {
+    endX = e.clientX;
+    handleSwipe();
+  });
+
+  console.log("🎬 Multi-video gallery initialized safely with autoplay + fade-out sound toggle!");
+}
+
+
+    async function updateCartCount(supabase) {
+      const countEl = document.querySelector(".cart-count");
+      if (!countEl) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) return;
+      const { count } = await supabase
+        .from("cart")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", session.user.id);
+      countEl.textContent = count > 0 ? count : "";
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2000);
+    }
+  })();
+
+// 🌸 SHARE FEATURE — Works for all products dynamically
+document.addEventListener("DOMContentLoaded", () => {
+  const shareIcon = document.getElementById("shareIcon");
+  if (!shareIcon) return;
+
+  shareIcon.addEventListener("click", async () => {
+    const currentUrl = window.location.href;
+    const productName = document.getElementById("product-name")?.innerText || "Perlyn Beauty";
+    const shareData = {
+      title: productName,
+      text: "Check out this product from Perlyn Beauty 💄✨",
+      url: currentUrl
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        console.log("✅ Shared successfully!");
+      } else {
+        // fallback for desktop
+        navigator.clipboard.writeText(currentUrl);
+        alert("🔗 Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+    }
+  });
+});
+
+// 🔗 Universal Share Function (used by both main product + related cards)
+function shareProduct(productName, productUrl) {
+  const shareData = {
+    title: productName,
+    text: `Check out "${productName}" from Perlyn Beauty 💋✨`,
+    url: productUrl
+  };
+
+  if (navigator.share) {
+    navigator.share(shareData).catch(err => console.error("Share cancelled:", err));
+  } else {
+    navigator.clipboard.writeText(productUrl);
+    alert("🔗 Product link copied to clipboard!");
+  }
+}
+
+</script>
+
+</body>
+
+</html>

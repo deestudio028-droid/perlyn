@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perlyn — Login</title>
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script src="env.js"></script>
+  <script src="supabaseClient.js"></script>
+
+  <style>
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #f3e4db;
+      margin: 0;
+      padding: 0;
+    }
+
+    .account-container {
+      max-width: 400px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 25px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    input {
+      width: 90%;
+      max-width: 320px;
+      padding: 10px;
+      margin: 8px auto;
+      display: block;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 15px;
+      transition: box-shadow 0.3s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #B98474;
+      box-shadow: 0 0 4px #d6a190;
+    }
+
+    button {
+      width: 90%;
+      max-width: 320px;
+      margin: 10px auto;
+      display: block;
+      padding: 10px;
+      border: none;
+      background: #B98474;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background: #a07060;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+
+    .google-btn {
+      background: #fff;
+      color: #444;
+      border: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .google-btn img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      color: #B98474;
+    }
+
+    .link a {
+      text-decoration: none;
+      color: #B98474;
+    }
+
+    .google-btn-primary {
+      width: 90%;
+      max-width: 320px;
+      margin: 10px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #333;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+    .google-btn-primary:hover {
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      transform: translateY(-1px);
+    }
+    .google-btn-primary img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+
+    /* ✅ Success glow animation for OTP auto-fill */
+    @keyframes otpGlow {
+      0% { box-shadow: 0 0 0 #9ad9a2; }
+      50% { box-shadow: 0 0 12px #9ad9a2; }
+      100% { box-shadow: 0 0 0 #9ad9a2; }
+    }
+    .otp-verified {
+      animation: otpGlow 1.5s ease-in-out 2;
+      border-color: #57b56a !important;
+    }
+
+    /* Saved Accounts UI */
+    .saved-accounts {
+      margin-bottom: 15px;
+    }
+    .saved-account-btn {
+      background: #fdf5f1;
+      color: #B98474;
+      border: 1px solid #e0c7bb;
+      padding: 10px;
+      margin: 5px auto;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 320px;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .saved-account-btn:hover {
+      background: #faebe2;
+      border-color: #B98474;
+    }
+
+    /* In-App Browser Banner */
+    .inapp-banner {
+      display: none;
+      background: #fff3cd;
+      color: #856404;
+      border: 1px solid #ffeeba;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      text-align: left;
+    }
+    .inapp-banner strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .inapp-banner .open-browser-btn {
+      display: inline-block;
+      margin-top: 10px;
+      background: #856404;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Global Loader to prevent flash -->
+  <div id="pageLoader" style="position:fixed; top:0; left:0; right:0; bottom:0; background:#f3e4db; z-index:9999; display:flex; justify-content:center; align-items:center;">
+    <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:#B98474;">Loading...</div>
+  </div>
+
+  <div class="account-container" id="accountContainer" style="display: none;">
+    <h2>Login</h2>
+
+    <!-- In-App Browser Warning -->
+    <div id="inAppBanner" class="inapp-banner">
+      <strong>⚠️ In-App Browser Detected</strong>
+      Google Login works best in a standard browser. Please tap the menu (⋮ or ⋯) and select <b>Open in System Browser</b>, or click the button below.
+      <a href="#" id="openSystemBrowserBtn" class="open-browser-btn" target="_blank">Open in Chrome / Safari</a>
+    </div>
+
+    <!-- Google Login Button (PRIMARY) -->
+    <button class="google-btn-primary" id="googleLogin">
+      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo" />
+      Continue with Google
+    </button>
+    <div style="font-size: 13px; color: #777; margin-bottom: 25px;">Secure 1-click login</div>
+
+    <div style="text-align:center; margin:15px 0; color:#aaa; display:flex; align-items:center;">
+      <hr style="flex:1; border:none; border-top:1px solid #eee;">
+      <span style="padding:0 10px; font-size: 14px;">or use email</span>
+      <hr style="flex:1; border:none; border-top:1px solid #eee;">
+    </div>
+
+    <!-- Saved Accounts Section -->
+    <div id="savedAccountsContainer" class="saved-accounts"></div>
+
+    <!-- Email Field -->
+    <input type="email" id="email" placeholder="Enter your email" />
+
+    <!-- OTP Input + Buttons -->
+    <button id="sendOtpBtn">Send OTP</button>
+
+    <input
+      type="text"
+      id="otp"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      autocomplete="one-time-code"
+      placeholder="Enter OTP"
+      style="display:none;"
+      maxlength="6"
+    />
+
+    <button id="verifyOtpBtn" style="display:none;">Verify OTP & Login</button>
+
+    <!-- Register Link -->
+    <div class="link">
+      <a href="register.html">Don't have an account? Register</a>
+    </div>
+
+    <div id="messageBox" class="message"></div>
+  </div>
+
+<script type = "module">
+  var supabase = window.supabaseClient;
+
+  const emailInput = document.getElementById("email");
+  const otpInput = document.getElementById("otp");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const messageBox = document.getElementById("messageBox");
+
+  // 🌐 Helper to show message
+  function showMessage(msg, type = "success") {
+    messageBox.textContent = msg;
+    messageBox.className = `message ${type}`;
+  }
+
+  // 🧭 Unified redirect target getter (linked with navbar.js)
+  function getRedirectTarget() {
+    const saved = localStorage.getItem("lastVisitedPage");
+    return saved && !saved.includes("login.html") ? saved : "account.html";
+  }
+
+  // 📱 Detect In-App Browser
+  (function detectInAppBrowser() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    const isInstagram = (ua.indexOf('Instagram') > -1);
+    const isFacebook = (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
+
+    if (isInstagram || isFacebook) {
+      console.log("📊 Analytics: In-App Browser Detected", { ua, isInstagram, isFacebook });
+      const banner = document.getElementById("inAppBanner");
+      const btn = document.getElementById("openSystemBrowserBtn");
+      
+      banner.style.display = "block";
+      
+      const currentUrl = window.location.href;
+      
+      if (/android/i.test(ua)) {
+        const intentUrl = `intent://${currentUrl.replace(/^https?:\/\//i, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+        btn.href = intentUrl;
+      } else {
+        btn.href = currentUrl;
+      }
+    }
+  })();
+
+  // ✅ 1. Send OTP
+  sendOtpBtn.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
+    if (!email) return showMessage("Please enter your email.", "error");
+
+    // Loading state
+    sendOtpBtn.disabled = true;
+    const originalText = sendOtpBtn.textContent;
+    sendOtpBtn.textContent = "Sending...";
+    sendOtpBtn.style.opacity = 0.6;
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true
+      }
+    });
+
+    if (error) {
+      showMessage(error.message, "error");
+      sendOtpBtn.disabled = false;
+      sendOtpBtn.textContent = originalText;
+      sendOtpBtn.style.opacity = 1;
+    } else {
+      showMessage("OTP sent to your email. Please check your inbox.", "success");
+      otpInput.style.display = "block";
+      verifyOtpBtn.style.display = "block";
+      sendOtpBtn.textContent = "OTP Sent";
+    }
+  });
+
+  // ✅ 2. Verify OTP & Redirect
+  verifyOtpBtn.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
+    const otp = otpInput.value.trim();
+    if (!email || !otp) return showMessage("Please fill both fields.", "error");
+
+    // Loading state
+    verifyOtpBtn.disabled = true;
+    const originalText = verifyOtpBtn.textContent;
+    verifyOtpBtn.textContent = "Verifying...";
+    verifyOtpBtn.style.opacity = 0.6;
+
+    const { error } = await supabase.auth.verifyOtp({
+      email,
+      token: otp,
+      type: "email"
+    });
+
+    if (error) {
+      showMessage("Invalid or expired OTP. Try again.", "error");
+      verifyOtpBtn.disabled = false;
+      verifyOtpBtn.textContent = originalText;
+      verifyOtpBtn.style.opacity = 1;
+    } else {
+      // Save email to saved accounts
+      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
+      if (!saved.includes(email)) {
+        saved.push(email);
+        localStorage.setItem("savedAccounts", JSON.stringify(saved));
+      }
+
+      otpInput.classList.add("otp-verified");
+      showMessage("Login successful! Redirecting...", "success");
+
+      // 🧠 Redirect to last visited page (from navbar.js)
+      const redirectTarget = getRedirectTarget();
+      localStorage.removeItem("lastVisitedPage");
+      setTimeout(() => (window.location.href = redirectTarget), 1000);
+    }
+  });
+
+  // ✅ 3. Google Login (preserves redirect)
+  document.getElementById("googleLogin").addEventListener("click", async () => {
+    const redirectTarget = getRedirectTarget();
+    const finalRedirectUrl = new URL(redirectTarget, window.location.origin).href;
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: finalRedirectUrl,
+        queryParams: {
+          prompt: 'select_account'
+        }
+      }
+    });
+    if (error) showMessage(error.message, "error");
+  });
+
+  // ✅ 4. Auto redirect if already logged in & Load Saved Accounts
+  (async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      const redirectTarget = getRedirectTarget();
+      localStorage.removeItem("lastVisitedPage");
+      window.location.href = redirectTarget;
+    } else {
+      // Hide global loader, show container
+      document.getElementById("pageLoader").style.display = "none";
+      document.getElementById("accountContainer").style.display = "block";
+
+      // Render saved accounts
+      const savedAccountsContainer = document.getElementById("savedAccountsContainer");
+      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
+      if (saved.length > 0) {
+        savedAccountsContainer.innerHTML = '<div style="font-size: 14px; margin-bottom: 5px; color: #555;">Select an account to login:</div>';
+          saved.forEach(email => {
+          const btn = document.createElement("div");
+          btn.className = "saved-account-btn";
+          btn.textContent = email;
+          btn.onclick = () => {
+            emailInput.value = email;
+            sendOtpBtn.click(); // Auto-trigger OTP send
+          };
+          savedAccountsContainer.appendChild(btn);
+        });
+        savedAccountsContainer.insertAdjacentHTML('beforeend', '<div style="text-align:center; margin:10px 0; color:#777;">or use another email</div>');
+      }
+    }
+  })();
+
+  
+</script>
+
+
+</body>
+</html>
