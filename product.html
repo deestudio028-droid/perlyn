@@ -1384,10 +1384,8 @@ initGallery(validImages.length ? validImages : [product.image_url].filter(Boolea
   } else {
     addBtn.onclick = () => addToCart(supabase, product.id);
     buyBtn.onclick = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return (window.location.href = "account.html");
       await addToCart(supabase, product.id);
-      window.location.href = "cart.html";
+      window.location.href = "ship.html";
     };
   }
 
