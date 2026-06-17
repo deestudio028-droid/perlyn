@@ -1,3 +1,3 @@
 window.APP_CONFIG = {
-  API_URL: "https://perlyn.onrender.com"
+  API_URL: "https://perlyn-production.up.railway.app"
 }
