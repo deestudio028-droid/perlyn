@@ -1065,13 +1065,6 @@ function convertToWords(num) {
 }
 
 // 🧩 Prevent accidental double-login mismatch
-window.addEventListener("load", async () => {
-  const session = await getActiveSession();
-  if (!session) {
-    console.warn("⚠️ No Supabase session found, redirecting...");
-    window.location.href = "login.html";
-  }
-});
 // ===========================================================
 // 🧠 PERLYN — CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
 // ===========================================================
