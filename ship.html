@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn — Checkout & Shipping</title>
+  <title>Perlyn â€” Checkout & Shipping</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
@@ -14,7 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    /* 🩶 Disable blue highlight glow on tap (Android browsers) */
+    /* ðŸ©¶ Disable blue highlight glow on tap (Android browsers) */
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -172,7 +172,7 @@ button:active {
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-   /* 💌 Saved Customer Details Box — Refined Perlyn Theme */
+   /* ðŸ’Œ Saved Customer Details Box â€” Refined Perlyn Theme */
 .saved-details-box {
   background: #fff6f0;
   border: 1px solid #e8d3c6;
@@ -192,7 +192,7 @@ button:active {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
 }
 
-/* ✨ Summary text (left section) */
+/* âœ¨ Summary text (left section) */
 .saved-summary {
   font-size: 15.5px;
   color: #4b3b32;
@@ -207,7 +207,7 @@ button:active {
   font-weight: 600;
 }
 
-/* 🎀 Action buttons (right section) */
+/* ðŸŽ€ Action buttons (right section) */
 .saved-actions {
   display: flex;
   align-items: center;
@@ -240,7 +240,7 @@ button:active {
   opacity: 0.9;
 }
 
-/* 📱 Mobile view — stacks neatly */
+/* ðŸ“± Mobile view â€” stacks neatly */
 @media (max-width: 600px) {
   .saved-details-box {
     flex-direction: column;
@@ -257,7 +257,7 @@ button:active {
     align-self: flex-end;
   }
 }
-/* 🌸 Themed Checkbox (Perlyn Style) */
+/* ðŸŒ¸ Themed Checkbox (Perlyn Style) */
 .save-details {
   display: flex;
   align-items: center;
@@ -287,14 +287,14 @@ button:active {
 }
 
 .save-details input[type="checkbox"]:checked::after {
-  content: "✔";
+  content: "âœ”";
   color: #fff;
   font-size: 12px;
   position: absolute;
   top: 0.5px;
   left: 3.5px;
 }
-/* 🌸 Centered Save Details Section (Perlyn Style) */
+/* ðŸŒ¸ Centered Save Details Section (Perlyn Style) */
 .save-details {
   display: flex;
   align-items: center;
@@ -306,7 +306,7 @@ button:active {
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Checkbox — Perlyn accent tone */
+/* Checkbox â€” Perlyn accent tone */
 .save-details input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -326,7 +326,7 @@ button:active {
 }
 
 .save-details input[type="checkbox"]:checked::after {
-  content: "✔";
+  content: "âœ”";
   color: #fff;
   font-size: 12px;
   position: absolute;
@@ -388,6 +388,9 @@ button:active {
 }
 
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 
 <body>
@@ -421,8 +424,8 @@ button:active {
       <label>Personalized Message (optional)</label>
       <textarea id="message" rows="2" maxlength="150" placeholder="Eg: Happy Birthday! Have a great year ahead."></textarea>
 <div id="msgActions" style="display:none; text-align:right; margin-top:6px;">
-  <button type="button" id="changeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">✏️ Change</button>
-  <button type="button" id="removeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">❌ Remove</button>
+  <button type="button" id="changeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">âœï¸ Change</button>
+  <button type="button" id="removeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">âŒ Remove</button>
 </div>
 
       <div style="text-align:right;font-size:14px;color:#7b5b4a;">
@@ -434,13 +437,13 @@ button:active {
   <input type="checkbox" id="saveDetails">
   <label for="saveDetails">Save details for next time</label>
 </div>
-<!-- 🎁 Personalized Message Box -->
+<!-- ðŸŽ Personalized Message Box -->
 
 
 <script>
 
 
-// 📬 Auto-detect City & State from Pincode (India)
+// ðŸ“¬ Auto-detect City & State from Pincode (India)
 document.getElementById("pincode").addEventListener("input", async (e) => {
   const pincode = e.target.value.trim();
   const status = document.getElementById("pincodeStatus");
@@ -481,15 +484,15 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
       if (detectedState) stateEl.value = detectedState;
       if (detectedCity) cityEl.value = detectedCity;
 
-      status.textContent = "✅ Location auto-filled successfully!";
+      status.textContent = "âœ… Location auto-filled successfully!";
       status.style.color = "#3a814e";
     } else {
-      status.textContent = "⚠️ Could not detect location for this pincode.";
+      status.textContent = "âš ï¸ Could not detect location for this pincode.";
       status.style.color = "#b84c4c";
     }
   } catch (err) {
-    console.error("📦 Pincode lookup failed:", err);
-    status.textContent = "❌ Unable to detect location. Please type manually.";
+    console.error("ðŸ“¦ Pincode lookup failed:", err);
+    status.textContent = "âŒ Unable to detect location. Please type manually.";
     status.style.color = "#b84c4c";
     stateEl.removeAttribute("readonly");
     cityEl.removeAttribute("readonly");
@@ -505,7 +508,7 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
 
   <div id="confirmationModal" class="modal">
     <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">×</button>
+      <button class="close-btn" onclick="closeModal()">Ã—</button>
       <h2 style="text-align:center;color:var(--accent);font-family:'Gilda Display',serif;">Order Confirmation</h2>
       <div id="orderSummary"></div>
       <div class="final-btns">
@@ -516,8 +519,8 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
   </div>
 
   <div id="successMsg" class="success-message">
-    ✅ ORDER PLACED SUCCESSFULLY!<br><br>
-    Will dispatch within 3 days and deliver within 5–7 days.<br><br>
+    âœ… ORDER PLACED SUCCESSFULLY!<br><br>
+    Will dispatch within 3 days and deliver within 5â€“7 days.<br><br>
     <button class="btn" onclick="window.location.href='index.html'">Continue Shopping</button>
   </div>
 
@@ -536,7 +539,7 @@ document.getElementById("removeMsgBtn").addEventListener("click", () => {
   document.getElementById("msgActions").style.display = "none";
 });
 
-// 🧠 Ensure session restored before any queries
+// ðŸ§  Ensure session restored before any queries
 async function getActiveSession() {
   for (let i = 0; i < 8; i++) {
     const { data } = await supabaseClient.auth.getSession();
@@ -549,7 +552,7 @@ async function getActiveSession() {
     let cartItems = [];
     let subtotal = 0, discount = 0, shipping = 0, total = 0;
     const orderId = "PERLYN" + Date.now();
-// 🌍 Define South Indian states globally (used for shipping logic)
+// ðŸŒ Define South Indian states globally (used for shipping logic)
 const southStates = [
   "Tamil Nadu",
   "Kerala",
@@ -557,7 +560,7 @@ const southStates = [
   "Telangana",
   "Andhra Pradesh"
 ];
-// 🧾 Default fallback rates (in case Supabase fetch fails)
+// ðŸ§¾ Default fallback rates (in case Supabase fetch fails)
 let southRate = 40;
 let restRate = 70;
 
@@ -570,7 +573,7 @@ let restRate = 70;
     const messageEl = document.getElementById("message");
     const emailEl = document.getElementById("guestEmail");
 
-// 🪄 Restore message from localStorage (if typed in cart)
+// ðŸª„ Restore message from localStorage (if typed in cart)
 window.addEventListener("load", () => {
   const savedMsg = localStorage.getItem("personalMessage");
   if (savedMsg) {
@@ -589,9 +592,9 @@ window.addEventListener("load", () => {
     });
 
 
-// 🟢 Improved loadCart() — handles auth restoration + guest cart
+// ðŸŸ¢ Improved loadCart() â€” handles auth restoration + guest cart
 async function loadCart() {
-  console.log("🛒 Fetching cart...");
+  console.log("ðŸ›’ Fetching cart...");
 
   // Try to get session
   const { data } = await supabaseClient.auth.getSession();
@@ -606,7 +609,7 @@ async function loadCart() {
   }
 
   if (!session) {
-    // 🧠 GUEST CART LOGIC
+    // ðŸ§  GUEST CART LOGIC
     const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
     if (guestCart.length === 0) {
       alert("Your cart is empty. Please add items first.");
@@ -625,7 +628,7 @@ async function loadCart() {
       }).filter(i => i !== null);
     }
   } else {
-    // 🛒 Fetch cart with product details for logged in user
+    // ðŸ›’ Fetch cart with product details for logged in user
     const { data: userCart, error } = await supabaseClient
       .from("cart")
       .select(`quantity, products(name, price, shade)`)
@@ -648,7 +651,7 @@ async function loadCart() {
 
   subtotal = cartItems.reduce((sum, p) => sum + p.price * p.qty, 0);
 
-// 🧠 Load stored discount + shipping from cart page if available
+// ðŸ§  Load stored discount + shipping from cart page if available
 const storedDiscount = parseFloat(sessionStorage.getItem("cartDiscount")) || 0;
 const storedShipping = parseFloat(sessionStorage.getItem("cartShipping")) || 0;
 const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
@@ -656,15 +659,15 @@ const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
 discount = storedDiscount > 0 ? storedDiscount : (subtotal >= 1499 ? 150 : 0);
 shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
 
-// 💰 fallback calculation only if session data missing
+// ðŸ’° fallback calculation only if session data missing
 total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
 
-// 💌 Add ₹30 message charge (if personalized message exists)
+// ðŸ’Œ Add â‚¹30 message charge (if personalized message exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-// 🧠 Dynamic shipping logic from Supabase
+// ðŸ§  Dynamic shipping logic from Supabase
 const southStates = [
   "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
 ];
@@ -689,15 +692,15 @@ if (subtotal >= 999) {
 
 
   total = subtotal - discount + shipping;
-  // 💌 Add ₹30 personalized message charge if message exists
+  // ðŸ’Œ Add â‚¹30 personalized message charge if message exists
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-  console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ₹${total}`);
+  console.log(`ðŸ§¾ Cart Loaded: ${cartItems.length} items, Total â‚¹${total}`);
 }
 
-// ✅ Attach to form submit — with safe fallback if loadCart fails
+// âœ… Attach to form submit â€” with safe fallback if loadCart fails
 document.getElementById("shippingForm").addEventListener("submit", async e => {
   e.preventDefault();
   try {
@@ -707,7 +710,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
       document.getElementById("confirmationModal").style.display = "flex";
     }
   } catch (err) {
-    console.error("🚨 Unexpected error during checkout:", err);
+    console.error("ðŸš¨ Unexpected error during checkout:", err);
     alert("Something went wrong. Please refresh the page and try again.");
   }
 });
@@ -724,36 +727,36 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
 
       const itemsHTML = cartItems.map(p => `
         <div class="order-item">
-          <div>${p.name} (${p.shade || "—"}) × ${p.qty}</div>
-          <div>₹${p.price * p.qty}</div>
+          <div>${p.name} (${p.shade || "â€”"}) Ã— ${p.qty}</div>
+          <div>â‚¹${p.price * p.qty}</div>
         </div>`).join("");
 
       document.getElementById("orderSummary").innerHTML = `
         <div class="summary-section"><h3>Products</h3>${itemsHTML}</div>
         <div class="summary-section"><h3>Order Summary</h3>
-          <p>Subtotal: ₹${subtotal}</p>
-          <p>Discount: ₹${discount}</p>
+          <p>Subtotal: â‚¹${subtotal}</p>
+          <p>Discount: â‚¹${discount}</p>
           ${sessionStorage.getItem("cartDiscount") > 0 && localStorage.getItem("appliedCoupon")
   ? `<p style="color:#3a814e;">Coupon applied: <b>${JSON.parse(localStorage.getItem("appliedCoupon")).code}</b></p>`
   : ""}
 
-          <p>Shipping: ₹${shipping}</p>
+          <p>Shipping: â‚¹${shipping}</p>
 
 
-<p>Personalized Message Fee: ₹${message ? 30 : 0}</p>
+<p>Personalized Message Fee: â‚¹${message ? 30 : 0}</p>
 
-          <p><b>Total: ₹${total}</b></p>
+          <p><b>Total: â‚¹${total}</b></p>
           <p style="color:#7b5b4a;">Prepaid (via PhonePe / GPay)</p>
         </div>
         <div class="summary-section"><h3>Customer Details</h3>
           <p>Email: ${guestEmail}</p>
-          <p>${name}</p><p>${address}</p><p>${city}, ${state} - ${pin}</p><p>📞 ${phone}</p>
+          <p>${name}</p><p>${address}</p><p>${city}, ${state} - ${pin}</p><p>ðŸ“ž ${phone}</p>
 ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button onclick="copyMessage('${message}')">Copy</button></p>` : ""}
 
         </div>`;
     }
 
-   // ✅ Step 4: Confirm & Pay — full safe payment + redirect logic (Updated & Fixed)
+   // âœ… Step 4: Confirm & Pay â€” full safe payment + redirect logic (Updated & Fixed)
   document.getElementById("confirmPayBtn").addEventListener("click", async () => {
     const btn = document.getElementById("confirmPayBtn");
     const originalText = btn.textContent;
@@ -766,9 +769,9 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     document.head.appendChild(style);
 
     try {
-      console.log("💰 Confirm & Pay clicked!");
+      console.log("ðŸ’° Confirm & Pay clicked!");
 
-    // ✅ Capture current form values
+    // âœ… Capture current form values
     const customerPayload = {
       name: nameEl.value.trim(),
       phone: phoneEl.value.trim(),
@@ -780,12 +783,12 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
       email: emailEl.value.trim()
     };
 
-    console.log("📦 Customer Payload:", customerPayload);
+    console.log("ðŸ“¦ Customer Payload:", customerPayload);
 
-    // 💾 Save customer info if checkbox checked
+    // ðŸ’¾ Save customer info if checkbox checked
     await saveCustomerDetailsIfChecked();
 
-    // 🚀 Start backend phonepe gateway session
+    // ðŸš€ Start backend phonepe gateway session
     const { data: { session } } = await supabaseClient.auth.getSession();
     const appliedCoupon = localStorage.getItem("appliedCoupon") ? JSON.parse(localStorage.getItem("appliedCoupon")).code : null;
 
@@ -823,19 +826,19 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     });
 
     const data = await res.json();
-    console.log("💳 Payment Response:", data);
+    console.log("ðŸ’³ Payment Response:", data);
 
     if (data.success && data.redirectUrl) {
-      console.log("🧾 Order processed successfully via backend:", orderId);
+      console.log("ðŸ§¾ Order processed successfully via backend:", orderId);
 
-// ✅ Generate PDF first, then redirect
-console.log("🧾 Generating invoice PDF...");
+// âœ… Generate PDF first, then redirect
+console.log("ðŸ§¾ Generating invoice PDF...");
 await new Promise((resolve) => {
   try {
     generatePDFs();
     setTimeout(resolve, 1800);
   } catch (pdfErr) {
-    console.warn("⚠️ PDF generation skipped:", pdfErr.message);
+    console.warn("âš ï¸ PDF generation skipped:", pdfErr.message);
     resolve();
   }
 });
@@ -846,7 +849,7 @@ window.location.href = data.redirectUrl;
         throw new Error(data.message || "Failed to initialize payment");
       }
     } catch (err) {
-      console.error("🚨 Confirm & Pay Error:", err);
+      console.error("ðŸš¨ Confirm & Pay Error:", err);
       alert("Payment Error: " + err.message);
       btn.textContent = originalText;
       btn.disabled = false;
@@ -871,7 +874,7 @@ function generatePDFs() {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "mm", "a4");
 
-  // 🎨 THEME COLORS (Perlyn)
+  // ðŸŽ¨ THEME COLORS (Perlyn)
   const accent = [185, 132, 116]; // Rose coffee
   const text = [75, 59, 50]; // Deep mocha
   const softBlush = [243, 225, 218]; // Light beige-pink background tone
@@ -882,7 +885,7 @@ function generatePDFs() {
   pdf.setTextColor(...accent);
   pdf.text("PERLYN BEAUTY", 15, 18);
 
-  // 🕒 Proper formatted date and time (12-hour)
+  // ðŸ•’ Proper formatted date and time (12-hour)
   const now = new Date();
   const formattedDate = now.toLocaleDateString("en-IN", {
     day: "2-digit",
@@ -943,7 +946,7 @@ function generatePDFs() {
   cartItems.forEach((item, i) => {
     const amt = item.price * item.qty;
 
-    // 🩰 Soft blush background (shifted down slightly to avoid cutting)
+    // ðŸ©° Soft blush background (shifted down slightly to avoid cutting)
     pdf.setFillColor(...softBlush);
     pdf.rect(15, y - 4.2, 180, 9.2, "F");
 
@@ -977,7 +980,7 @@ function generatePDFs() {
   pdf.setFont("helvetica", "normal");
   pdf.text(`${discount}`, xRight, y, { align: "right" });
 
-// 💚 Show Coupon Code (if applied)
+// ðŸ’š Show Coupon Code (if applied)
 if (discount > 0 && localStorage.getItem("appliedCoupon")) {
   const coupon = JSON.parse(localStorage.getItem("appliedCoupon"));
   y += 6;
@@ -1013,7 +1016,7 @@ pdf.setTextColor(...text);
 const amountWords = convertToWords(total);
 pdf.text(`INVOICE AMOUNT IN WORDS : ${amountWords} only`, 15, y);
 
-// 💌 Personalized Message (only if exists)
+// ðŸ’Œ Personalized Message (only if exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   y += 10;
   pdf.setFont("helvetica", "bold");
@@ -1024,7 +1027,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
   pdf.setFont("helvetica", "normal");
   pdf.setTextColor(...text);
 
-  // ✨ Wrap long message neatly across lines (max width 170mm)
+  // âœ¨ Wrap long message neatly across lines (max width 170mm)
   const wrappedMsg = pdf.splitTextToSize(`"${messageEl.value.trim()}"`, 170);
   pdf.text(wrappedMsg, 15, y);
   y += wrappedMsg.length * 6; // adjust vertical space based on line count
@@ -1042,7 +1045,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
 }
 
 
-// ✅ Helper to convert number to words (basic)
+// âœ… Helper to convert number to words (basic)
 function convertToWords(num) {
   const a = [
     "", "One", "Two", "Three", "Four", "Five", "Six",
@@ -1064,22 +1067,22 @@ function convertToWords(num) {
   return str.trim();
 }
 
-// 🧩 Prevent accidental double-login mismatch
+// ðŸ§© Prevent accidental double-login mismatch
 // ===========================================================
-// 🧠 PERLYN — CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
+// ðŸ§  PERLYN â€” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
 // ===========================================================
 // ===========================================================
-// 🧠 PERLYN — CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
+// ðŸ§  PERLYN â€” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
 // ===========================================================
 
-// ✅ Step 1: Check for saved customer details when page loads
+// âœ… Step 1: Check for saved customer details when page loads
 window.addEventListener("load", async () => {
   const session = await getActiveSession();
   if (!session) return;
   await showSavedCustomerDetails(session.user.id);
 });
 
-// ✅ Step 2: Fetch & display saved customer details box
+// âœ… Step 2: Fetch & display saved customer details box
 async function showSavedCustomerDetails(userId) {
   const { data, error } = await supabaseClient
     .from("customer_details")
@@ -1088,7 +1091,7 @@ async function showSavedCustomerDetails(userId) {
     .maybeSingle();
 
   if (error) {
-    console.error("⚠️ Fetch saved customer details failed:", error);
+    console.error("âš ï¸ Fetch saved customer details failed:", error);
     return;
   }
 
@@ -1108,7 +1111,7 @@ async function showSavedCustomerDetails(userId) {
     `;
     container.insertBefore(box, document.getElementById("shippingForm"));
 
-    // ✅ Apply → auto-fill inputs
+    // âœ… Apply â†’ auto-fill inputs
     box.querySelector(".apply-btn").addEventListener("click", () => {
       nameEl.value = data.name || "";
       phoneEl.value = data.phone || "";
@@ -1117,11 +1120,11 @@ async function showSavedCustomerDetails(userId) {
       stateEl.value = data.state || "";
       pincodeEl.value = data.pincode || "";
 
-      box.querySelector(".apply-btn").textContent = "Applied ✅";
+      box.querySelector(".apply-btn").textContent = "Applied âœ…";
       box.querySelector(".apply-btn").disabled = true;
     });
 
-    // 🧹 Change → remove box & allow editing
+    // ðŸ§¹ Change â†’ remove box & allow editing
     box.querySelector(".change-btn").addEventListener("click", () => {
       box.remove();
       alert("You can now edit your address details.");
@@ -1129,7 +1132,7 @@ async function showSavedCustomerDetails(userId) {
   }
 }
 
-// ✅ Step 3: Save details if checkbox is checked
+// âœ… Step 3: Save details if checkbox is checked
 async function saveCustomerDetailsIfChecked() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   if (!session) return;
@@ -1151,14 +1154,14 @@ async function saveCustomerDetailsIfChecked() {
     .from("customer_details")
     .upsert(payload, { onConflict: "user_id" });
 
-  if (error) console.error("⚠️ Save customer details failed:", error);
-  else console.log("✅ Customer details saved/updated successfully");
+  if (error) console.error("âš ï¸ Save customer details failed:", error);
+  else console.log("âœ… Customer details saved/updated successfully");
 }
 
 
     
 
-// 🏙️ City/State input restriction (alphabets & spaces only)
+// ðŸ™ï¸ City/State input restriction (alphabets & spaces only)
 document.getElementById("city").addEventListener("input", (e) => {
   e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
 });
@@ -1167,7 +1170,7 @@ document.getElementById("state").addEventListener("input", (e) => {
   e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
 });
 
-// 📋 Valid Indian cities/states for light validation
+// ðŸ“‹ Valid Indian cities/states for light validation
 const validCities = [
   "Chennai", "Coimbatore", "Madurai", "Salem", "Erode", "Tiruchirappalli",
   "Bengaluru", "Mysuru", "Kochi", "Hyderabad", "Vijayawada", "Visakhapatnam",
@@ -1179,11 +1182,11 @@ const validStates = [
   "Maharashtra", "Delhi", "West Bengal", "Uttar Pradesh"
 ];
 
-// ✅ Validate on blur (after typing)
+// âœ… Validate on blur (after typing)
 document.getElementById("city").addEventListener("blur", (e) => {
   const val = e.target.value.trim();
   if (val && !validCities.some(c => c.toLowerCase() === val.toLowerCase())) {
-    alert("❌ Please enter a valid Indian city name.");
+    alert("âŒ Please enter a valid Indian city name.");
     e.target.focus();
   }
 });
@@ -1191,7 +1194,7 @@ document.getElementById("city").addEventListener("blur", (e) => {
 document.getElementById("state").addEventListener("blur", (e) => {
   const val = e.target.value.trim();
   if (val && !validStates.some(s => s.toLowerCase() === val.toLowerCase())) {
-    alert("❌ Please enter a valid Indian state name.");
+    alert("âŒ Please enter a valid Indian state name.");
     e.target.focus();
   }
 });

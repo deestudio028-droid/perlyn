@@ -177,7 +177,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    /* ✨ Remove blue outline & add smooth blink effect when clicking cards */
+    /* âœ¨ Remove blue outline & add smooth blink effect when clicking cards */
     .product-card {
       cursor: pointer;
       transition: transform 0.2s ease, opacity 0.15s ease;
@@ -198,7 +198,7 @@
       /* Light blink on tap */
     }
 
-    /* 🛍️ Product Grid — 3 per row on mobile */
+    /* ðŸ›ï¸ Product Grid â€” 3 per row on mobile */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -207,7 +207,7 @@
       padding: 0 8px;
     }
 
-    /* ✨ Product Card Responsive Style */
+    /* âœ¨ Product Card Responsive Style */
     .product-card {
       background: #fff6f0;
       border-radius: 12px;
@@ -242,7 +242,7 @@
       color: #b98474;
     }
 
-    /* 🧠 Fine-tune on different screen widths */
+    /* ðŸ§  Fine-tune on different screen widths */
     @media (min-width: 768px) {
       .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -270,7 +270,7 @@
   color: #5a3e36;
 }
 
-/* 📱 Mobile screens */
+/* ðŸ“± Mobile screens */
 @media (max-width: 768px) {
   .hero-content h1 {
     font-size: 26px; /* Reduced from 42px */
@@ -283,12 +283,12 @@
   }
 }
 
-/* 💻 Very large screens (smooth upscale) */
+/* ðŸ’» Very large screens (smooth upscale) */
 @media (min-width: 1200px) {
   .hero-content h1 {
     font-size: 48px;
   }
-}/* 🛍️ Cart Icon + Hamburger Group */
+}/* ðŸ›ï¸ Cart Icon + Hamburger Group */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -308,7 +308,7 @@
   opacity: 0.85;
 }
 
-/* 🍔 Hamburger */
+/* ðŸ” Hamburger */
 .hamburger {
   background: none;
   border: none;
@@ -323,7 +323,7 @@
   }
 }
 
-/* ✨ Navbar seamless background blend */
+/* âœ¨ Navbar seamless background blend */
 .header {
   background: #f3e4db;
   border: none;
@@ -338,6 +338,9 @@ body {
 }
 
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 
 <div class="offer-banner" id="offerBanner">
@@ -377,7 +380,7 @@ body {
   }
 }
 
-/* 📱 Mobile smooth animation fix */
+/* ðŸ“± Mobile smooth animation fix */
 @media (max-width: 768px) {
   .offer-banner span {
     animation: scrollText 16s linear infinite;
@@ -402,7 +405,7 @@ body {
     <div class="hero-content">
       <h1>Gloss that loves. Tints that stay. Oils that care.<br />Where the Soul Shows, Perlyn.</h1>
 
-      <p>Luxe Shades • Soft Finish • Everyday Elegance</p>
+      <p>Luxe Shades â€¢ Soft Finish â€¢ Everyday Elegance</p>
       <a href="shop.html" class="btn-primary">Shop Now</a>
     </div>
   </section>
@@ -422,8 +425,8 @@ body {
       <div class="footer-col">
         <h3>Perlyn</h3>
         <p>Gloss that loves. Tints that stay. Oils that care.</p>
-        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
-        <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
+        <p>Imported Formulas â€¢ Clean â€¢ Vegan â€¢ Cruelty-Free</p>
+        <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
         <div class="social-icons" style="margin-top:10px;">
           <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
             target="_blank">
@@ -464,7 +467,7 @@ body {
     </div>
 
     <div class="footer-bottom">
-      <p>© 2025 Perlyn. All Rights Reserved.</p>
+      <p>Â© 2025 Perlyn. All Rights Reserved.</p>
       <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
     </div>
   </footer>
@@ -476,11 +479,11 @@ body {
   <!-- JS -->
   
 
-<!-- 🌸 WELCOME OFFER POPUP (Dynamic From Supabase) -->
+<!-- ðŸŒ¸ WELCOME OFFER POPUP (Dynamic From Supabase) -->
 <div id="welcome-offer" class="welcome-offer" style="display:none;">
   <div class="welcome-box">
-    <h3 id="offer-title">🎁 Welcome to Perlyn Beauty!</h3>
-    <p id="offer-desc">Enjoy <b>10% OFF</b> your first order above ₹599.</p>
+    <h3 id="offer-title">ðŸŽ Welcome to Perlyn Beauty!</h3>
+    <p id="offer-desc">Enjoy <b>10% OFF</b> your first order above â‚¹599.</p>
     <p>Use Code: <b id="offer-code">AURA10</b></p>
 
     <div class="popup-actions">
@@ -491,7 +494,7 @@ body {
 </div>
 
 <style>
-  /* ✨ Popup Overlay */
+  /* âœ¨ Popup Overlay */
   .welcome-offer {
     position: fixed;
     inset: 0;
@@ -564,7 +567,7 @@ body {
 <script>
   const supabaseClient = window.supabaseClient;
 
-  // 🛍️ Load Homepage Products
+  // ðŸ›ï¸ Load Homepage Products
   async function loadProducts() {
     try {
       const { data: displayData } = await supabaseClient
@@ -604,18 +607,18 @@ body {
           <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
             <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}" class="product-img" loading="lazy" />
             <h3>${p.name}</h3>
-            <span class="price">₹${p.price}</span>
+            <span class="price">â‚¹${p.price}</span>
             <p>${p.card_description || ""}</p>
           </div>`
         )
         .join("");
     } catch (err) {
-      console.error("🚨 Product load error:", err);
+      console.error("ðŸš¨ Product load error:", err);
     }
   }
 
-  // 🌟 Load Active Offer (for both Banner + Popup)
- // 🌟 Load Active Offer (for both Banner + Popup)
+  // ðŸŒŸ Load Active Offer (for both Banner + Popup)
+ // ðŸŒŸ Load Active Offer (for both Banner + Popup)
 async function loadOfferSystem() {
   try {
     const { data, error } = await supabaseClient
@@ -627,31 +630,31 @@ async function loadOfferSystem() {
     const banner = document.getElementById("offerBanner");
 
     if (error) {
-      console.error("⚠️ Offer fetch error:", error);
+      console.error("âš ï¸ Offer fetch error:", error);
       banner.innerHTML = `<span>Error loading offer.</span>`;
       return;
     }
 
-    // ❌ No active offer → hide both banner & popup
+    // âŒ No active offer â†’ hide both banner & popup
     if (!data || !data.active) {
-      console.log("ℹ️ No active offers — hiding banner and popup.");
+      console.log("â„¹ï¸ No active offers â€” hiding banner and popup.");
       banner.style.display = "none";
       document.getElementById("welcome-offer").style.display = "none";
       return;
     }
 
-    // ✅ Update banner text from Supabase
-    banner.innerHTML = `<span>✨ ${data.title} ✨</span>`;
+    // âœ… Update banner text from Supabase
+    banner.innerHTML = `<span>âœ¨ ${data.title} âœ¨</span>`;
 
     // Extract coupon code dynamically from the title
     const extractedCode = data.title.match(/code\s+(\w+)/i)?.[1] || "AURA10";
 
-    // ✅ Fill popup dynamically
-    document.getElementById("offer-title").textContent = `🎁 ${data.title}`;
+    // âœ… Fill popup dynamically
+    document.getElementById("offer-title").textContent = `ðŸŽ ${data.title}`;
     document.getElementById("offer-code").textContent = extractedCode;
-    document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer 💖";
+    document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer ðŸ’–";
 
-    // 🎁 Show popup only once per session
+    // ðŸŽ Show popup only once per session
     if (!sessionStorage.getItem("welcomeShown")) {
       setTimeout(() => {
         const popup = document.getElementById("welcome-offer");
@@ -664,19 +667,19 @@ async function loadOfferSystem() {
       }, 1500);
     }
 
-    // 📋 Copy button logic
+    // ðŸ“‹ Copy button logic
     document.getElementById("copyOfferBtn").onclick = () => {
       navigator.clipboard.writeText(extractedCode);
-      showToast(`✨ Code ${extractedCode} copied! Use it at checkout 💖`);
+      showToast(`âœ¨ Code ${extractedCode} copied! Use it at checkout ðŸ’–`);
       closeOffer();
     };
   } catch (err) {
-    console.error("🚨 Offer system error:", err);
+    console.error("ðŸš¨ Offer system error:", err);
   }
 }
 
 
-  // ✨ Popup Close + Toast Message
+  // âœ¨ Popup Close + Toast Message
   function closeOffer() {
     const popup = document.getElementById("welcome-offer");
     popup.style.display = "none";
@@ -689,7 +692,7 @@ async function loadOfferSystem() {
     setTimeout(() => toast.classList.remove("show"), 2500);
   }
 
-  // 🚀 Run when page fully loads
+  // ðŸš€ Run when page fully loads
   window.addEventListener("load", async () => {
     await loadProducts();
     await loadOfferSystem();

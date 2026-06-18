@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn — Offers</title>
+  <title>Perlyn â€” Offers</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
@@ -21,7 +21,7 @@
       font-family: 'Cormorant Garamond', serif;
       color: var(--text);
     }
-    /* 🔝 Navbar */
+    /* ðŸ” Navbar */
     header {
       background: var(--bg);
       padding: 14px 24px;
@@ -54,7 +54,7 @@
       color: var(--accent);
     }
 
-    /* 🎉 Popup base */
+    /* ðŸŽ‰ Popup base */
     #coupon-popup {
       position: fixed;
       inset: 0;
@@ -114,7 +114,7 @@
       background: #f3e4db;
     }
 
-    /* 📦 Offers List */
+    /* ðŸ“¦ Offers List */
     .offers-container {
       max-width: 700px;
       background: var(--light);
@@ -158,11 +158,14 @@
     @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
     @keyframes scaleUp { from { transform: scale(0.9); opacity: 0.5 } to { transform: scale(1); opacity: 1 } }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 
 <body>
   <header>
-    <div class="brand">💄 Perlyn Beauty</div>
+    <div class="brand">ðŸ’„ Perlyn Beauty</div>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="shop.html">Shop</a>
@@ -172,11 +175,11 @@
     </div>
   </header>
 
-  <!-- ✨ Welcome Offer Popup -->
+  <!-- âœ¨ Welcome Offer Popup -->
   <div id="coupon-popup">
     <div class="popup-box">
-      <h3>✨ Welcome Offer!</h3>
-      <p>Get <b>10% OFF</b> on your first purchase above ₹599.</p>
+      <h3>âœ¨ Welcome Offer!</h3>
+      <p>Get <b>10% OFF</b> on your first purchase above â‚¹599.</p>
       <p>Use Code: <b>AURA10</b></p>
       <div class="popup-actions">
         <button class="copy-btn" onclick="copyCode('AURA10')">Copy Code</button>
@@ -185,13 +188,13 @@
     </div>
   </div>
 
-  <!-- 🎁 Active Offers -->
+  <!-- ðŸŽ Active Offers -->
   <div class="offers-container">
-    <h2 style="text-align:center;color:var(--accent);font-family:'Gilda Display',serif;">🎁 Active Offers</h2>
+    <h2 style="text-align:center;color:var(--accent);font-family:'Gilda Display',serif;">ðŸŽ Active Offers</h2>
 
     <div class="offer-card" data-min="599" data-code="AURA10">
-      <h4>✨ AURA10 — 10% Off</h4>
-      <p>Get 10% off your first purchase above ₹599.</p>
+      <h4>âœ¨ AURA10 â€” 10% Off</h4>
+      <p>Get 10% off your first purchase above â‚¹599.</p>
       <div class="offer-buttons">
         <button class="copy" onclick="copyCode('AURA10')">Copy</button>
         <button class="apply" onclick="applyCoupon('AURA10',599)">Apply</button>
@@ -199,8 +202,8 @@
     </div>
 
     <div class="offer-card" data-min="999" data-code="FREESHIP">
-      <h4>🚚 FREESHIP — Free Shipping</h4>
-      <p>Enjoy free shipping on orders above ₹999.</p>
+      <h4>ðŸšš FREESHIP â€” Free Shipping</h4>
+      <p>Enjoy free shipping on orders above â‚¹999.</p>
       <div class="offer-buttons">
         <button class="copy" onclick="copyCode('FREESHIP')">Copy</button>
         <button class="apply" onclick="applyCoupon('FREESHIP',999)">Apply</button>
@@ -209,7 +212,7 @@
   </div>
 
   <script>
-    // 🌸 Show popup only first time
+    // ðŸŒ¸ Show popup only first time
     window.addEventListener("load", () => {
       if (!localStorage.getItem("popupShown")) {
         document.getElementById("coupon-popup").style.display = "flex";
@@ -231,7 +234,7 @@
       const fakeSubtotal = 450; // example
       if (fakeSubtotal < min) {
         const diff = min - fakeSubtotal;
-        alert(`₹${diff} more to unlock this coupon!`);
+        alert(`â‚¹${diff} more to unlock this coupon!`);
       } else {
         alert(`Coupon ${code} applied successfully!`);
         localStorage.setItem("appliedCoupon", code);

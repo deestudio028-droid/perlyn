@@ -170,6 +170,9 @@
 
   </style>
   
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 
 <body>
@@ -253,7 +256,7 @@
       <button id="admin-pass-submit" class="lock-btn">Unlock</button>
       <button id="admin-pass-cancel" class="lock-btn" style="background:#eee;color:#4b3b32;">Close Tab</button>
     </div>
-    <div id="admin-lock-err" class="err">Incorrect password — try again.</div>
+    <div id="admin-lock-err" class="err">Incorrect password â€” try again.</div>
     <div class="help">Session will end when you close the browser tab.</div>
   </div>
 </div>
@@ -307,7 +310,7 @@
       if (e.key === "Enter") unlock();
     });
 
-    // Cancel — encourage closing tab
+    // Cancel â€” encourage closing tab
     cancelBtn.addEventListener("click", () => {
       // Attempt to close tab (only works in some browsers if opened by script)
       try { window.close(); } catch (e) {}
@@ -346,18 +349,18 @@
 
   <header>Perlyn Admin Panel</header>
 
-  <!-- 🧭 TABS -->
+  <!-- ðŸ§­ TABS -->
   <div class="tabs">
-    <div class="tab active" onclick="showTab('products')">🛍️ Products</div>
-    <div class="tab" onclick="showTab('add')">➕ Add Product</div>
-    <div class="tab" onclick="showTab('coupons')">💰 Coupons</div>
-    <div class="tab" onclick="showTab('home-display')">🏡 Homepage</div>
-    <div class="tab" onclick="showTab('offers')">🎁 Offers</div>
-    <div class="tab" onclick="showTab('reviews')">⭐ Reviews</div>
-    <div class="tab" onclick="showTab('shipping')">🚚 Shipping</div>
-    <div class="tab" onclick="showTab('orders'); document.getElementById('ordersBadge').style.display='none'; unreadOrders=0;">📦 Orders <span id="ordersBadge" style="display:none; background:#d9534f; color:white; border-radius:50%; padding:2px 6px; font-size:12px; margin-left:4px; font-weight:bold;">0</span></div>
+    <div class="tab active" onclick="showTab('products')">ðŸ›ï¸ Products</div>
+    <div class="tab" onclick="showTab('add')">âž• Add Product</div>
+    <div class="tab" onclick="showTab('coupons')">ðŸ’° Coupons</div>
+    <div class="tab" onclick="showTab('home-display')">ðŸ¡ Homepage</div>
+    <div class="tab" onclick="showTab('offers')">ðŸŽ Offers</div>
+    <div class="tab" onclick="showTab('reviews')">â­ Reviews</div>
+    <div class="tab" onclick="showTab('shipping')">ðŸšš Shipping</div>
+    <div class="tab" onclick="showTab('orders'); document.getElementById('ordersBadge').style.display='none'; unreadOrders=0;">ðŸ“¦ Orders <span id="ordersBadge" style="display:none; background:#d9534f; color:white; border-radius:50%; padding:2px 6px; font-size:12px; margin-left:4px; font-weight:bold;">0</span></div>
  </div>
- <!-- 🧩 PRODUCTS TAB -->
+ <!-- ðŸ§© PRODUCTS TAB -->
   <div id="products" class="tab-content active">
     <h2>All Products</h2>
     <table>
@@ -380,7 +383,7 @@
     </table>
   </div>
 
-  <!-- 🧾 ADD PRODUCT TAB -->
+  <!-- ðŸ§¾ ADD PRODUCT TAB -->
   <div id="add" class="tab-content">
     <h2>Add / Update Product</h2>
     <form id="productForm">
@@ -392,7 +395,7 @@
       <label>Shade Description:</label>
       <input type="text" id="shade">
 
-      <label>Price (₹):</label>
+      <label>Price (â‚¹):</label>
       <input type="number" id="price" step="0.01" required>
 
       <label>Card Description:</label>
@@ -438,12 +441,12 @@
 <label>Product Videos (optional):</label>
 <input type="file" id="videos" accept="video/mp4,video/webm,video/quicktime" multiple>
 <div id="videoPreview" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;"></div>
-      <button type="submit">💾 Save Product</button>
+      <button type="submit">ðŸ’¾ Save Product</button>
       <p id="status" class="status"></p>
     </form>
   </div>
 
-  <!-- 🎟️ COUPON TAB -->
+  <!-- ðŸŽŸï¸ COUPON TAB -->
   <div id="coupons" class="tab-content">
     <h2>Manage Coupons</h2>
     <form id="couponForm">
@@ -451,18 +454,18 @@
       <input type="text" id="couponCode" placeholder="E.g. DIWALI5" required>
 
       <label>Description:</label>
-      <textarea id="couponDescription" placeholder="E.g. 5% off above ₹1499"></textarea>
+      <textarea id="couponDescription" placeholder="E.g. 5% off above â‚¹1499"></textarea>
 
       <label>Discount (%):</label>
       <input type="number" id="discountPercent" min="0" max="100" required>
 
-      <label>Minimum Purchase (₹):</label>
+      <label>Minimum Purchase (â‚¹):</label>
       <input type="number" id="minPurchase" step="0.01">
 
       <label>Expiry Date:</label>
       <input type="date" id="expiryDate">
 
-      <button type="submit">💰 Add Coupon</button>
+      <button type="submit">ðŸ’° Add Coupon</button>
       <p id="couponStatus" class="status"></p>
     </form>
 
@@ -483,9 +486,9 @@
       </tbody>
     </table>
   </div>
-<!-- 🏡 HOMEPAGE DISPLAY CONTROL -->
+<!-- ðŸ¡ HOMEPAGE DISPLAY CONTROL -->
 <div id="home-display" class="tab-content">
-  <h2>🏠 Homepage Display Control</h2>
+  <h2>ðŸ  Homepage Display Control</h2>
   <form id="homeDisplayForm">
     <label>Select which products appear on homepage:</label>
     <select id="homeDisplaySelect">
@@ -494,13 +497,13 @@
       <option value="bestseller">Bestsellers</option>
       <option value="all">All Products</option>
     </select>
-    <button type="submit">💾 Save Display Preference</button>
+    <button type="submit">ðŸ’¾ Save Display Preference</button>
     <p id="homeDisplayStatus" class="status"></p>
   </form>
 </div>
-<!-- 🎁 OFFERS TAB -->
+<!-- ðŸŽ OFFERS TAB -->
 <div id="offers" class="tab-content">
-  <h2>🎁 Manage Offers & Discounts</h2>
+  <h2>ðŸŽ Manage Offers & Discounts</h2>
 
   <form id="offerForm">
     <label>Offer Title:</label>
@@ -512,11 +515,11 @@
       <option value="false">No (Save but keep inactive)</option>
     </select>
 
-    <button type="submit">💾 Add / Update Offer</button>
+    <button type="submit">ðŸ’¾ Add / Update Offer</button>
     <p id="offerStatus" class="status"></p>
   </form>
 
-  <h3>📋 Current Offers</h3>
+  <h3>ðŸ“‹ Current Offers</h3>
   <table>
     <thead>
       <tr>
@@ -531,9 +534,9 @@
     </tbody>
   </table>
 </div>
-<!-- ⭐ REVIEWS TAB -->
+<!-- â­ REVIEWS TAB -->
 <div id="reviews" class="tab-content">
-  <h2>⭐ Manage Product Reviews</h2>
+  <h2>â­ Manage Product Reviews</h2>
   <p style="margin-bottom: 20px;">View and delete customer reviews across all products.</p>
 
   <table>
@@ -553,18 +556,18 @@
     </tbody>
   </table>
 </div>
-<!-- 🚚 SHIPPING SETTINGS TAB -->
+<!-- ðŸšš SHIPPING SETTINGS TAB -->
 <div id="shipping" class="tab-content">
-  <h2>🚚 Manage Shipping Charges</h2>
+  <h2>ðŸšš Manage Shipping Charges</h2>
 
   <form id="shippingForm">
-    <label>South India Shipping (₹):</label>
+    <label>South India Shipping (â‚¹):</label>
     <input type="number" id="southRate" placeholder="40" required>
 
-    <label>Rest of India Shipping (₹):</label>
+    <label>Rest of India Shipping (â‚¹):</label>
     <input type="number" id="restRate" placeholder="70" required>
 
-    <button type="submit">💾 Update Shipping Rates</button>
+    <button type="submit">ðŸ’¾ Update Shipping Rates</button>
     <p id="shippingStatus" class="status"></p>
   </form>
 
@@ -572,7 +575,7 @@
     <thead>
       <tr>
         <th>Region</th>
-        <th>Price (₹)</th>
+        <th>Price (â‚¹)</th>
       </tr>
     </thead>
     <tbody id="shippingTable">
@@ -580,9 +583,9 @@
     </tbody>
   </table>
 </div>
-<!-- 📦 ORDERS TAB -->
+<!-- ðŸ“¦ ORDERS TAB -->
 <div id="orders" class="tab-content">
-  <h2>📦 Manage Orders</h2>
+  <h2>ðŸ“¦ Manage Orders</h2>
   <table>
     <thead>
       <tr>
@@ -604,7 +607,7 @@
 </div>
 
 <script>
-  // 🪄 TAB SWITCH
+  // ðŸª„ TAB SWITCH
   function showTab(id) {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
@@ -615,19 +618,19 @@
  
 var supabase = window.supabaseClient;
 
-// 🔔 Realtime Order Notifications
+// ðŸ”” Realtime Order Notifications
 let unreadOrders = 0;
 const ordersBadge = document.getElementById("ordersBadge");
 
 supabase
   .channel('public:orders')
   .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, payload => {
-    console.log('📦 New Order received!', payload);
+    console.log('ðŸ“¦ New Order received!', payload);
     
     // Show browser notification if permitted
     if ("Notification" in window && Notification.permission === "granted") {
-      new Notification("📦 New Order Received!", {
-        body: `Order ${payload.new.order_id} placed for ₹${payload.new.total}`,
+      new Notification("ðŸ“¦ New Order Received!", {
+        body: `Order ${payload.new.order_id} placed for â‚¹${payload.new.total}`,
       });
     }
     
@@ -658,13 +661,13 @@ if ("Notification" in window && Notification.permission !== "denied" && Notifica
 }
 
 
-// 👉 ADD BELOW LINE HERE
+// ðŸ‘‰ ADD BELOW LINE HERE
 const categorySelect = document.getElementById("category"); 
 categorySelect.innerHTML = [
   "lip gloss",
   "lip & cheek tint",
   "lip oils",
-  "combo",              // 🆕 Added
+  "combo",              // ðŸ†• Added
   "limited edition",
   "bestseller",
   "newly launched"
@@ -672,7 +675,7 @@ categorySelect.innerHTML = [
 
 
 
-  // 🛍 Load Products
+  // ðŸ› Load Products
   async function loadProducts() {
     const { data, error } = await supabase.from("products").select("*").order("id", { ascending: false });
     const table = document.getElementById("productsTable");
@@ -685,19 +688,19 @@ categorySelect.innerHTML = [
         <td><img src="${p.image_url || ''}" alt=""></td>
         <td>${p.name}</td>
         <td>${p.shade || '-'}</td>
-        <td>₹${p.price}</td>
+        <td>â‚¹${p.price}</td>
         <td>${p.stock}</td>
         <td>${p.category}</td>
-        <td>${p.bestseller ? "🔥" : "—"}</td>
-        <td>${p.newly_launched ? "🆕" : "—"}</td>
+        <td>${p.bestseller ? "ðŸ”¥" : "â€”"}</td>
+        <td>${p.newly_launched ? "ðŸ†•" : "â€”"}</td>
         <td>
-          <button onclick="editProduct(${p.id})" class="edit-btn" style="background:#b8905a;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">✏️</button>
-          <button onclick="deleteProduct(${p.id})" class="delete-btn" style="margin-left:6px;">🗑️</button>
+          <button onclick="editProduct(${p.id})" class="edit-btn" style="background:#b8905a;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">âœï¸</button>
+          <button onclick="deleteProduct(${p.id})" class="delete-btn" style="margin-left:6px;">ðŸ—‘ï¸</button>
         </td>
       </tr>
     `).join("");
   }
-  // 🏡 Load & Save Homepage Display Preference
+  // ðŸ¡ Load & Save Homepage Display Preference
 async function loadHomeDisplay() {
   const { data, error } = await supabase.from("home_display").select("*").single();
   const select = document.getElementById("homeDisplaySelect");
@@ -708,17 +711,17 @@ document.getElementById("homeDisplayForm").addEventListener("submit", async (e) 
   e.preventDefault();
   const section = document.getElementById("homeDisplaySelect").value;
   await supabase.from("home_display").upsert({ id: 1, section });
-  document.getElementById("homeDisplayStatus").innerText = "✅ Updated homepage section!";
+  document.getElementById("homeDisplayStatus").innerText = "âœ… Updated homepage section!";
 });
 
 loadHomeDisplay();
 
 
-  // ✏️ Edit Product
+  // âœï¸ Edit Product
   async function editProduct(id) {
     showTab("add"); // switch to Add/Edit tab
     const { data, error } = await supabase.from("products").select("*").eq("id", id).single();
-    if (error || !data) return alert("❌ Could not fetch product.");
+    if (error || !data) return alert("âŒ Could not fetch product.");
 
     document.getElementById("productId").value = data.id;
     document.getElementById("name").value = data.name || "";
@@ -735,8 +738,8 @@ loadHomeDisplay();
     document.getElementById("bestseller").value = data.bestseller ? "true" : "false";
     document.getElementById("newly_launched").value = data.newly_launched ? "true" : "false";
 
-    document.getElementById("status").innerText = "✏️ Edit mode — make changes and click Save Product.";
-// 🖼️ Show existing image previews
+    document.getElementById("status").innerText = "âœï¸ Edit mode â€” make changes and click Save Product.";
+// ðŸ–¼ï¸ Show existing image previews
 const imgPreview = document.getElementById("imagePreview");
 imgPreview.innerHTML = "";
 if (data.image_urls && data.image_urls.length > 0) {
@@ -751,7 +754,7 @@ if (data.image_urls && data.image_urls.length > 0) {
     img.onclick = () => {
   img.style.opacity = "0.5";
   img.style.border = "2px solid #d9534f";
-  img.dataset.removed = "true"; // 🔥 Mark this image as removed
+  img.dataset.removed = "true"; // ðŸ”¥ Mark this image as removed
   setTimeout(() => img.remove(), 150);
 };
 
@@ -759,7 +762,7 @@ if (data.image_urls && data.image_urls.length > 0) {
   });
 }
 
-// 🎥 Show existing video previews (with remove on click)
+// ðŸŽ¥ Show existing video previews (with remove on click)
 const vidPreview = document.getElementById("videoPreview");
 vidPreview.innerHTML = "";
 if (data.video_urls && data.video_urls.length > 0) {
@@ -776,12 +779,12 @@ if (data.video_urls && data.video_urls.length > 0) {
     vid.style.cursor = "pointer";
     vid.style.transition = "all 0.2s ease";
 
-    // 🔥 click to remove
+    // ðŸ”¥ click to remove
     vid.title = "Click to remove video";
 vid.onclick = () => {
   vid.style.opacity = "0.5";
   vid.style.border = "2px solid #d9534f";
-  vid.dataset.removed = "true"; // 🔥 Mark removed
+  vid.dataset.removed = "true"; // ðŸ”¥ Mark removed
   setTimeout(() => vidContainer.remove(), 150);
 };
 
@@ -795,7 +798,7 @@ vid.onclick = () => {
 
 
 
-  // 💾 Add or Update Product
+  // ðŸ’¾ Add or Update Product
   const form = document.getElementById("productForm");
   form.addEventListener("submit", async e => {
     e.preventDefault();
@@ -826,8 +829,8 @@ if (files.length > 0) {
       .upload(filePath, file);
 
     if (uploadError) {
-      console.error("❌ Image upload failed:", uploadError);
-      document.getElementById("status").innerText = "❌ Some images failed to upload.";
+      console.error("âŒ Image upload failed:", uploadError);
+      document.getElementById("status").innerText = "âŒ Some images failed to upload.";
       continue;
     }
 
@@ -839,18 +842,18 @@ if (files.length > 0) {
   }
 }
 
-// 🧠 Keep existing images that weren’t removed
+// ðŸ§  Keep existing images that werenâ€™t removed
 let oldImages = Array.from(document.querySelectorAll("#imagePreview img"))
   .filter(img => img.dataset.removed !== "true") // skip removed ones
   .map(img => img.src);
 
-// ✅ Combine old + new properly
+// âœ… Combine old + new properly
 const finalImageUrls = [...oldImages, ...imageUrls];
 
 
 
 
-// 🎥 Upload Multiple Product Videos (optional)
+// ðŸŽ¥ Upload Multiple Product Videos (optional)
 const videoFiles = document.getElementById("videos").files;
 let videoUrls = [];
 
@@ -862,8 +865,8 @@ if (videoFiles.length > 0) {
       .upload(videoPath, videoFile);
 
     if (videoError) {
-      console.error("❌ Video upload failed:", videoError);
-      document.getElementById("status").innerText = "❌ Some videos failed to upload.";
+      console.error("âŒ Video upload failed:", videoError);
+      document.getElementById("status").innerText = "âŒ Some videos failed to upload.";
       continue;
     }
 
@@ -874,16 +877,16 @@ if (videoFiles.length > 0) {
     videoUrls.push(videoData.publicUrl);
   }
 }
-// 🧠 Keep existing videos that weren’t removed
+// ðŸ§  Keep existing videos that werenâ€™t removed
 let oldVideos = Array.from(document.querySelectorAll("#videoPreview video"))
   .filter(vid => vid.dataset.removed !== "true") // skip removed
   .map(vid => vid.src);
 
-// ✅ Combine old + new videos properly
+// âœ… Combine old + new videos properly
 const finalVideoUrls = [...oldVideos, ...videoUrls];
 
 
-// 🧠 Keep old images/videos if user didn’t upload new ones
+// ðŸ§  Keep old images/videos if user didnâ€™t upload new ones
 
 const newData = {
   name, shade, price, card_description, description,
@@ -899,12 +902,12 @@ const newData = {
     let res;
     if (id) {
       res = await supabase.from("products").update(newData).eq("id", id);
-      document.getElementById("status").innerText = "✅ Product updated!";
+      document.getElementById("status").innerText = "âœ… Product updated!";
     } else {
       res = await supabase.from("products").insert([newData]);
-      document.getElementById("status").innerText = "✅ Product added!";
+      document.getElementById("status").innerText = "âœ… Product added!";
     }
-     console.log("🖼️ Final image URLs saved:", newData.image_urls);
+     console.log("ðŸ–¼ï¸ Final image URLs saved:", newData.image_urls);
 
     form.reset();
     document.getElementById("productId").value = "";
@@ -912,14 +915,14 @@ const newData = {
     showTab("products");
   });
 
-  // 💣 Delete Product
+  // ðŸ’£ Delete Product
   async function deleteProduct(id) {
     if (!confirm("Are you sure you want to delete this product?")) return;
     await supabase.from("products").delete().eq("id", id);
     loadProducts();
   }
 
-  // 💰 Coupons
+  // ðŸ’° Coupons
   async function loadCoupons() {
     const { data, error } = await supabase.from("coupons").select("*").order("id", { ascending: false });
     const table = document.getElementById("couponTable");
@@ -932,9 +935,9 @@ const newData = {
         <td>${c.code}</td>
         <td>${c.description || '-'}</td>
         <td>${c.discount_percent}%</td>
-        <td>₹${c.min_purchase}</td>
-        <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : "—"}</td>
-        <td><button class="delete-btn" onclick="deleteCoupon(${c.id})">🗑️</button></td>
+        <td>â‚¹${c.min_purchase}</td>
+        <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : "â€”"}</td>
+        <td><button class="delete-btn" onclick="deleteCoupon(${c.id})">ðŸ—‘ï¸</button></td>
       </tr>
     `).join("");
   }
@@ -950,7 +953,7 @@ const newData = {
       : null;
 
     await supabase.from("coupons").insert([{ code, description: desc, discount_percent: discount, min_purchase: min, expires_at: expiry }]);
-    document.getElementById("couponStatus").innerText = "✅ Coupon added!";
+    document.getElementById("couponStatus").innerText = "âœ… Coupon added!";
     e.target.reset();
     loadCoupons();
   });
@@ -961,16 +964,16 @@ const newData = {
     loadCoupons();
   }
 
-  // 🚀 Init
+  // ðŸš€ Init
 loadProducts();
 loadCoupons();
 loadOffers();
-loadReviews(); // ✅ Add this line to load all reviews automatically on startup
+loadReviews(); // âœ… Add this line to load all reviews automatically on startup
 loadOrders();
 
 
 
-  // 🎁 OFFERS MANAGEMENT
+  // ðŸŽ OFFERS MANAGEMENT
 
 // Load all offers
 async function loadOffers() {
@@ -986,12 +989,12 @@ async function loadOffers() {
     <tr>
       <td>${o.id}</td>
       <td>${o.title}</td>
-      <td>${o.active ? "🟢 Active" : "🔴 Inactive"}</td>
+      <td>${o.active ? "ðŸŸ¢ Active" : "ðŸ”´ Inactive"}</td>
       <td>
         <button onclick="toggleOffer(${o.id}, ${!o.active})" style="background:#b98474;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">
           ${o.active ? "Deactivate" : "Activate"}
         </button>
-        <button onclick="deleteOffer(${o.id})" class="delete-btn" style="margin-left:6px;">🗑️</button>
+        <button onclick="deleteOffer(${o.id})" class="delete-btn" style="margin-left:6px;">ðŸ—‘ï¸</button>
       </td>
     </tr>
   `).join("");
@@ -1005,17 +1008,17 @@ document.getElementById("offerForm").addEventListener("submit", async e => {
 
   if (!title) return alert("Enter an offer title!");
 
-  // 🧠 If activating a new offer, deactivate others automatically
+  // ðŸ§  If activating a new offer, deactivate others automatically
   if (active) await supabase.from("offers").update({ active: false }).neq("id", 0);
 
   const { error } = await supabase.from("offers").insert([{ title, active }]);
   if (error) return alert("Error adding offer");
 
-  document.getElementById("offerStatus").innerText = "✅ Offer added successfully!";
+  document.getElementById("offerStatus").innerText = "âœ… Offer added successfully!";
   document.getElementById("offerForm").reset();
   loadOffers();
 });
-// ⭐ LOAD ALL REVIEWS (ADMIN CONTROL)
+// â­ LOAD ALL REVIEWS (ADMIN CONTROL)
 async function loadReviews() {
   const { data, error } = await supabase
     .from("reviews")
@@ -1033,28 +1036,28 @@ async function loadReviews() {
       <tr>
         <td>${r.id}</td>
         <td>${r.product_id}</td>
-        <td>${r.user_name || "—"}</td>
-        <td>⭐ ${r.rating}</td>
+        <td>${r.user_name || "â€”"}</td>
+        <td>â­ ${r.rating}</td>
         <td style="max-width:300px;word-break:break-word;">${r.comment}</td>
         <td>${new Date(r.created_at).toLocaleString()}</td>
         <td>
-          <button class="delete-btn" onclick="deleteReview(${r.id})">🗑️ Delete</button>
+          <button class="delete-btn" onclick="deleteReview(${r.id})">ðŸ—‘ï¸ Delete</button>
         </td>
       </tr>
     `)
     .join("");
 }
 
-// 🗑️ ADMIN DELETE REVIEW
+// ðŸ—‘ï¸ ADMIN DELETE REVIEW
 async function deleteReview(id) {
   if (!confirm("Are you sure you want to delete this review?")) return;
   const { error } = await supabase.from("reviews").delete().eq("id", id);
   if (error) {
-    alert("❌ Error deleting review.");
+    alert("âŒ Error deleting review.");
     console.error(error);
     return;
   }
-  alert("✅ Review deleted successfully!");
+  alert("âœ… Review deleted successfully!");
   loadReviews();
 }
 
@@ -1073,7 +1076,7 @@ async function deleteOffer(id) {
 }
 
 loadOffers();
-// 🚚 LOAD CURRENT SHIPPING RATES
+// ðŸšš LOAD CURRENT SHIPPING RATES
 async function loadShippingRates() {
   const { data, error } = await supabase
     .from("shipping_rates")
@@ -1086,7 +1089,7 @@ async function loadShippingRates() {
     return;
   }
 
-  // ✅ Fill input fields
+  // âœ… Fill input fields
   const south = data.find(r => r.region === "South India");
   const rest = data.find(r => r.region === "Rest of India");
   if (south) document.getElementById("southRate").value = south.price;
@@ -1096,13 +1099,13 @@ async function loadShippingRates() {
     .map(r => `
       <tr>
         <td>${r.region}</td>
-        <td>₹${r.price}</td>
+        <td>â‚¹${r.price}</td>
       </tr>
     `)
     .join("");
 }
 
-// 💾 UPDATE SHIPPING RATES
+// ðŸ’¾ UPDATE SHIPPING RATES
 document.getElementById("shippingForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const southRate = parseInt(document.getElementById("southRate").value);
@@ -1115,12 +1118,12 @@ document.getElementById("shippingForm").addEventListener("submit", async (e) => 
       { id: 2, region: "Rest of India", price: restRate }
     ]);
 
-  document.getElementById("shippingStatus").innerText = "✅ Updated successfully!";
+  document.getElementById("shippingStatus").innerText = "âœ… Updated successfully!";
   loadShippingRates();
 });
 
 loadShippingRates();
-// 📦 LOAD ALL ORDERS
+// ðŸ“¦ LOAD ALL ORDERS
 async function loadOrders() {
   const { data, error } = await supabase
     .from("orders")
@@ -1136,28 +1139,28 @@ async function loadOrders() {
   table.innerHTML = data.map(o => `
     <tr>
       <td>${o.order_id}</td>
-      <td>${o.name || "—"}</td>
+      <td>${o.name || "â€”"}</td>
 
-      <td>${o.phone || "—"}</td>
-      <td>${o.city || "—"}</td>
-      <td>${o.state || "—"}</td>
-      <td>₹${o.total || 0}</td>
+      <td>${o.phone || "â€”"}</td>
+      <td>${o.city || "â€”"}</td>
+      <td>${o.state || "â€”"}</td>
+      <td>â‚¹${o.total || 0}</td>
       <td>${o.status || "Pending"}</td>
       <td>${new Date(o.created_at).toLocaleDateString()}</td>
      <td>
-  <button onclick="viewInvoice('${o.order_id}')" style="background:#b98474;color:#fff;border:none;padding:5px 8px;border-radius:6px;">🧾 Invoice</button>
-  <button onclick="viewShippingSlip('${o.order_id}')" style="background:#5a9e5a;color:#fff;border:none;padding:5px 8px;border-radius:6px;">🚚 Slip</button>
-  <button onclick="markShipped('${o.order_id}')" style="background:#3d9f5d;color:#fff;border:none;padding:5px 8px;border-radius:6px;">✅ Shipped</button>
-  <button onclick="deleteOrder('${o.order_id}')" style="background:#d9534f;color:#fff;border:none;padding:5px 8px;border-radius:6px;">🗑️ Delete</button>
+  <button onclick="viewInvoice('${o.order_id}')" style="background:#b98474;color:#fff;border:none;padding:5px 8px;border-radius:6px;">ðŸ§¾ Invoice</button>
+  <button onclick="viewShippingSlip('${o.order_id}')" style="background:#5a9e5a;color:#fff;border:none;padding:5px 8px;border-radius:6px;">ðŸšš Slip</button>
+  <button onclick="markShipped('${o.order_id}')" style="background:#3d9f5d;color:#fff;border:none;padding:5px 8px;border-radius:6px;">âœ… Shipped</button>
+  <button onclick="deleteOrder('${o.order_id}')" style="background:#d9534f;color:#fff;border:none;padding:5px 8px;border-radius:6px;">ðŸ—‘ï¸ Delete</button>
 </td>
 
     </tr>
   `).join("");
 }
 
-// 🧾 VIEW CUSTOMER INVOICE (PDF)
-// 🧾 VIEW CUSTOMER INVOICE (Perlyn Style)
-// 🧾 VIEW CUSTOMER INVOICE (Fixed & Clean)
+// ðŸ§¾ VIEW CUSTOMER INVOICE (PDF)
+// ðŸ§¾ VIEW CUSTOMER INVOICE (Perlyn Style)
+// ðŸ§¾ VIEW CUSTOMER INVOICE (Fixed & Clean)
 async function viewInvoice(orderId) {
   const { data: order, error } = await supabase
     .from("orders")
@@ -1165,7 +1168,7 @@ async function viewInvoice(orderId) {
     .eq("order_id", orderId)
     .single();
 
-  if (error || !order) return alert("❌ Order not found!");
+  if (error || !order) return alert("âŒ Order not found!");
 
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "mm", "a4");
@@ -1213,7 +1216,7 @@ async function viewInvoice(orderId) {
   pdf.setFont("helvetica", "normal");
   pdf.text(`${order.name || ""}`, 30, 58);
 
-// 🧾 Proper multiline address handling
+// ðŸ§¾ Proper multiline address handling
 const addressLines = pdf.splitTextToSize(order.address || "", 150);
 let currentY = 63;
 addressLines.forEach((line) => {
@@ -1258,7 +1261,7 @@ pdf.text(`Contact: ${order.phone || ""}`, 30, currentY);
     pdf.rect(15, y - 4, 180, 9, "F");
     pdf.text(`${i + 1}`, 20, y + 1);
     pdf.text(`${item.name}`, 35, y + 1);
- // ✅ only shade now
+ // âœ… only shade now
     pdf.text(`${item.qty}`, 130, y + 1, { align: "right" });
     pdf.text(`${item.price}`, 160, y + 1, { align: "right" });
     pdf.text(`${amt}`, 190, y + 1, { align: "right" });
@@ -1302,20 +1305,20 @@ pdf.text(`Contact: ${order.phone || ""}`, 30, currentY);
   pdf.setFont("helvetica", "normal");
   pdf.text(`${order.personalized_message ? 30 : 0}`, xRight, y, { align: "right" });
 
-  // ✅ Only one "Including all charges" line
+  // âœ… Only one "Including all charges" line
   y += 8;
   pdf.setFont("helvetica", "bold");
   pdf.setTextColor(...accent);
   pdf.text(`Including all charges : ${order.total || 0} (Prepaid)`, xLeft, y, { maxWidth: 65 });
 
-  // 💬 Amount in Words
+  // ðŸ’¬ Amount in Words
   y += 12;
   pdf.setFont("helvetica", "bolditalic");
   pdf.setTextColor(...text);
   const amountWords = convertToWords(order.total || 0);
   pdf.text(`INVOICE AMOUNT IN WORDS : ${amountWords} only`, 15, y);
 
-  // 💌 Personalized Message
+  // ðŸ’Œ Personalized Message
   if (order.personalized_message && order.personalized_message.trim() !== "") {
     y += 10;
     pdf.setFont("helvetica", "bold");
@@ -1325,7 +1328,7 @@ pdf.text(`Contact: ${order.phone || ""}`, 30, currentY);
     pdf.setFont("helvetica", "normal");
     pdf.setTextColor(...text);
     let cleanMsg = order.personalized_message
-  .replace(/[^\x00-\x7F]/g, "")  // removes non-ASCII chars (like Ø, Þ, etc)
+  .replace(/[^\x00-\x7F]/g, "")  // removes non-ASCII chars (like Ã˜, Ãž, etc)
   .trim();
 const wrappedMsg = pdf.splitTextToSize(`"${cleanMsg}"`, 170);
 pdf.text(wrappedMsg, 15, y);
@@ -1344,7 +1347,7 @@ pdf.text(wrappedMsg, 15, y);
   pdf.save(`Perlyn_Invoice_${order.order_id}.pdf`);
 }
 
-// ✅ Helper for number to words
+// âœ… Helper for number to words
 function convertToWords(num) {
   const a = [
     "", "One", "Two", "Three", "Four", "Five", "Six",
@@ -1367,8 +1370,8 @@ function convertToWords(num) {
 }
 
 
-// 📦 CLIENT SHIPPING SLIP
-// 📦 FINAL SHIPPING SLIP — “From” just below “To” block
+// ðŸ“¦ CLIENT SHIPPING SLIP
+// ðŸ“¦ FINAL SHIPPING SLIP â€” â€œFromâ€ just below â€œToâ€ block
 async function viewShippingSlip(orderId) {
   const { data: order } = await supabase
     .from("orders")
@@ -1381,17 +1384,17 @@ async function viewShippingSlip(orderId) {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "mm", "a4");
 
-  // 🎨 Theme Colors
+  // ðŸŽ¨ Theme Colors
   const accent = [185, 132, 116]; // Perlyn rose tone
   const text = [45, 35, 35];
 
-  // 🩷 Header Brand (optional)
+  // ðŸ©· Header Brand (optional)
   pdf.setFont("times", "bold");
   pdf.setFontSize(15);
   pdf.setTextColor(...accent);
   pdf.text("PERLYN BEAUTY", 15, 20);
 
-  // ✉️ To Section
+  // âœ‰ï¸ To Section
   pdf.setFont("times", "bold");
   pdf.setFontSize(13);
   pdf.setTextColor(...text);
@@ -1403,13 +1406,13 @@ async function viewShippingSlip(orderId) {
 
   pdf.text(order.name || "", 15, y);
   y += 8;
-// 🧾 Wrap address neatly within page width
+// ðŸ§¾ Wrap address neatly within page width
 const addressText = order.address || "";
 const wrappedAddress = pdf.splitTextToSize(addressText, 170); // 170mm width
 pdf.text(wrappedAddress, 15, y);
 y += wrappedAddress.length * 6; // adjust spacing dynamically
 
-  pdf.text(`${order.city || ""}, ${order.state || ""} – ${order.pincode || ""}`, 15, y);
+  pdf.text(`${order.city || ""}, ${order.state || ""} â€“ ${order.pincode || ""}`, 15, y);
   y += 8;
   pdf.text(order.phone || "", 15, y);
 
@@ -1418,7 +1421,7 @@ y += wrappedAddress.length * 6; // adjust spacing dynamically
   pdf.setDrawColor(...accent);
   pdf.line(15, y, 195, y);
 
-  // 🏷️ From Section (Immediately Below “To”)
+  // ðŸ·ï¸ From Section (Immediately Below â€œToâ€)
   y += 10;
   pdf.setFont("times", "bold");
   pdf.setFontSize(13);
@@ -1445,30 +1448,30 @@ y += wrappedAddress.length * 6; // adjust spacing dynamically
   pdf.save(`Perlyn_ShippingSlip_${order.order_id}.pdf`);
 }
 
-// ✅ MARK ORDER AS SHIPPED
+// âœ… MARK ORDER AS SHIPPED
 async function markShipped(orderId) {
   await supabase.from("orders").update({ status: "Shipped" }).eq("order_id", orderId);
-  alert("✅ Order marked as shipped!");
+  alert("âœ… Order marked as shipped!");
   await loadOrders();
 }
 
-// 💣 DELETE ORDER (Admin)
+// ðŸ’£ DELETE ORDER (Admin)
 async function deleteOrder(orderId) {
-  const confirmDelete = confirm(`⚠️ Are you sure you want to permanently delete Order ${orderId}?`);
+  const confirmDelete = confirm(`âš ï¸ Are you sure you want to permanently delete Order ${orderId}?`);
   if (!confirmDelete) return;
 
   const { error } = await supabase.from("orders").delete().eq("order_id", orderId);
 
   if (error) {
-    console.error("❌ Error deleting order:", error);
-    alert("❌ Failed to delete order. Please check console for details.");
+    console.error("âŒ Error deleting order:", error);
+    alert("âŒ Failed to delete order. Please check console for details.");
     return;
   }
 
-  alert(`✅ Order ${orderId} deleted successfully!`);
+  alert(`âœ… Order ${orderId} deleted successfully!`);
   loadOrders(); // refresh the table
 }
-// ✨ Enable Drag-and-Drop Reordering for Product Images
+// âœ¨ Enable Drag-and-Drop Reordering for Product Images
 (function enableImageReorder() {
   const preview = document.getElementById("imagePreview");
   if (!preview) return;
@@ -1502,7 +1505,7 @@ async function deleteOrder(orderId) {
     }
   });
 })();
-// ✨ Enable Drag-and-Drop Reordering for Product Videos
+// âœ¨ Enable Drag-and-Drop Reordering for Product Videos
 (function enableVideoReorder() {
   const preview = document.getElementById("videoPreview");
   if (!preview) return;

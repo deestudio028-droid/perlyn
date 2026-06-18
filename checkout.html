@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Checkout — Perlyn Beauty</title>
+  <title>Checkout â€” Perlyn Beauty</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <script src="env.js"></script>
@@ -117,10 +117,13 @@
     }
     @keyframes fadeIn { from {opacity:0} to {opacity:1} }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 
 <body>
-  <header>Perlyn — Checkout</header>
+  <header>Perlyn â€” Checkout</header>
 
   <div class="checkout-container">
     <h2>Shipping Details</h2>
@@ -135,25 +138,25 @@
       <input type="text" id="pincode" pattern="[0-9]{6}" required />
 
       <label>Personalized Message (Optional)</label>
-      <textarea id="message" maxlength="150" placeholder="Write your gift note (₹30 extra)"></textarea>
+      <textarea id="message" maxlength="150" placeholder="Write your gift note (â‚¹30 extra)"></textarea>
       <small><span id="charCount">0</span>/150 characters</small>
 
       <div class="order-summary">
-        <div class="summary-item"><span>Subtotal:</span> <strong id="subtotal">₹0</strong></div>
-        <div class="summary-item"><span>Shipping:</span> <strong id="shipping">₹0</strong></div>
-        <div class="summary-item"><span>Message Fee:</span> <strong id="msgCost">₹0</strong></div>
-        <div class="summary-item"><span>Discount:</span> <strong id="discount">₹0</strong></div>
-        <div class="total-line">Total: <span id="grandTotal">₹0</span></div>
+        <div class="summary-item"><span>Subtotal:</span> <strong id="subtotal">â‚¹0</strong></div>
+        <div class="summary-item"><span>Shipping:</span> <strong id="shipping">â‚¹0</strong></div>
+        <div class="summary-item"><span>Message Fee:</span> <strong id="msgCost">â‚¹0</strong></div>
+        <div class="summary-item"><span>Discount:</span> <strong id="discount">â‚¹0</strong></div>
+        <div class="total-line">Total: <span id="grandTotal">â‚¹0</span></div>
       </div>
 
       <button type="submit" class="pay-btn">Pay with PhonePe</button>
-      <div class="reward-note" id="reward-note">You'll earn 🎁 reward points for this order!</div>
+      <div class="reward-note" id="reward-note">You'll earn ðŸŽ reward points for this order!</div>
     </form>
 
     <div class="confirmation" id="confirmation">
-      <h3>🎉 Order Placed Successfully!</h3>
-      <p>Your order will be dispatched within 3–5 working days.</p>
-      <p>Thank you for shopping with <b>Perlyn Beauty</b> 💖</p>
+      <h3>ðŸŽ‰ Order Placed Successfully!</h3>
+      <p>Your order will be dispatched within 3â€“5 working days.</p>
+      <p>Thank you for shopping with <b>Perlyn Beauty</b> ðŸ’–</p>
     </div>
   </div>
 
@@ -199,14 +202,14 @@
 
     function updateTotal() {
       grandTotal = subtotal - discount + shipping + messageCost;
-      document.getElementById("subtotal").textContent = `₹${subtotal}`;
-      document.getElementById("shipping").textContent = `₹${shipping}`;
-      document.getElementById("msgCost").textContent = `₹${messageCost}`;
-      document.getElementById("discount").textContent = `₹${discount.toFixed(0)}`;
-      document.getElementById("grandTotal").textContent = `₹${grandTotal.toFixed(0)}`;
+      document.getElementById("subtotal").textContent = `â‚¹${subtotal}`;
+      document.getElementById("shipping").textContent = `â‚¹${shipping}`;
+      document.getElementById("msgCost").textContent = `â‚¹${messageCost}`;
+      document.getElementById("discount").textContent = `â‚¹${discount.toFixed(0)}`;
+      document.getElementById("grandTotal").textContent = `â‚¹${grandTotal.toFixed(0)}`;
 
       const points = Math.floor(grandTotal / 100) * 10;
-      document.getElementById("reward-note").textContent = `You'll earn 🎁 ${points} reward points for this order!`;
+      document.getElementById("reward-note").textContent = `You'll earn ðŸŽ ${points} reward points for this order!`;
     }
 
     document.getElementById("checkoutForm").addEventListener("submit", async (e) => {
@@ -246,7 +249,7 @@
         return;
       }
 
-      // 🚀 Trigger payment
+      // ðŸš€ Trigger payment
       try {
         const apiUrl = window.ENV.SUPABASE_URL + "/functions/v1/create-payment";
         const res = await fetch(apiUrl, {
@@ -271,7 +274,7 @@
       }
     });
 
-// ✅ Handle redirect from PhonePe success (fixed)
+// âœ… Handle redirect from PhonePe success (fixed)
 (async () => {
   if (window.location.search.includes("success=true")) {
     document.querySelector("form").style.display = "none";
@@ -279,7 +282,7 @@
 
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      // 🔹 Get the latest order for this user
+      // ðŸ”¹ Get the latest order for this user
       const { data: latestOrder, error: fetchErr } = await supabase
         .from("orders")
         .select("id")
@@ -289,7 +292,7 @@
         .single();
 
       if (!fetchErr && latestOrder) {
-        // 🔹 Update its status
+        // ðŸ”¹ Update its status
         const { error: updateErr } = await supabase
           .from("orders")
           .update({ status: "paid" })

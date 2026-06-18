@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn — Reset Password</title>
+  <title>Perlyn â€” Reset Password</title>
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <script src="env.js"></script>
   <script src="supabaseClient.js"></script>
@@ -58,6 +58,9 @@
       color: green;
     }
   </style>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 </head>
 <body>
   <div class="reset-container">
@@ -84,7 +87,7 @@
       if (error) {
         alert(error.message);
       } else {
-        messageBox.innerText = "✅ Password updated successfully! Redirecting...";
+        messageBox.innerText = "âœ… Password updated successfully! Redirecting...";
         setTimeout(() => {
           window.location.href = "login.html";
         }, 2000);
