@@ -1253,9 +1253,9 @@ body {
     // 🧩 Check if the reviewer purchased the product
     const { data: orderCheck } = await supabase
       .from("orders")
-      .select("id")
+      .select("order_id")
       .eq("user_id", r.user_id)
-      .ilike("order_items", `%${productId}%`)
+      .ilike("products", `%${productId}%`)
       .limit(1);
 
     const isVerified = orderCheck && orderCheck.length > 0;
