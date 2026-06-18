@@ -1034,6 +1034,20 @@ function setupRealtime() {
    🚀 INIT (SAFE)
 ================================ */
 document.addEventListener("DOMContentLoaded", () => {
+  // 🧠 Check URL for pre-selected category
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get('category');
+  
+  if (categoryParam) {
+    const catSelect = document.getElementById("categoryFilter");
+    for (let i = 0; i < catSelect.options.length; i++) {
+      if (catSelect.options[i].value.toLowerCase() === categoryParam.toLowerCase()) {
+        catSelect.selectedIndex = i;
+        break;
+      }
+    }
+  }
+
   document.getElementById("search").addEventListener("input", renderProducts);
   document.getElementById("categoryFilter").addEventListener("change", renderProducts);
   document.getElementById("priceSort").addEventListener("change", renderProducts);
