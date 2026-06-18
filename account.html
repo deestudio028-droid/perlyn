@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn â€” My Account</title>
+  <title>Perlyn "” My Account</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
@@ -258,7 +258,7 @@
         <span class="brand-text">Perlyn Beauty</span>
       </div>
 
-      <button class="hamburger" id="hamburger">â˜°</button>
+      <button class="hamburger" id="hamburger">˜°</button>
 
      <nav class="nav" id="nav-menu">
   <a href="index.html">Home</a>
@@ -294,7 +294,7 @@
     <div class="footer-col">
       <h3>Perlyn</h3>
       <p>Gloss that loves. Tints that stay. Oils that care.</p>
-      <p>Imported Formulas â€¢ Clean â€¢ Vegan â€¢ Cruelty-Free</p>
+      <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
       <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
       <div class="social-icons" style="margin-top:10px;">
         <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
@@ -336,7 +336,7 @@
   </div>
 
   <div class="footer-bottom">
-    <p>Â© 2025 Perlyn. All Rights Reserved.</p>
+    <p>© 2025 Perlyn. All Rights Reserved.</p>
     <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
   </div>
 </footer>
@@ -381,7 +381,7 @@
         return;
       }
 
-      // âœ… Display Email
+      // œ… Display Email
       userEmail.innerText = session.user.email;
       logoutBtn.style.display = "inline";
 
@@ -393,7 +393,7 @@
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("âŒ Error fetching orders:", error.message);
+        console.error("Œ Error fetching orders:", error.message);
         ordersList.innerHTML = "<p>Error loading orders. Please try again later.</p>";
         return;
       }
@@ -408,13 +408,13 @@
         <div class="order-card">
           <div><strong>Order ID:</strong> ${o.order_id}</div>
           <div><strong>Date:</strong> ${new Date(o.created_at).toLocaleString("en-IN")}</div>
-          <div><strong>Amount:</strong> â‚¹${o.total}</div>
+          <div><strong>Amount:</strong> ‚¹${o.total}</div>
           <div><strong>Status:</strong> ${o.status}</div>
         </div>
       `).join("");
 
     } catch (err) {
-      console.error("âš ï¸ Unexpected error:", err);
+      console.error("š ï¸ Unexpected error:", err);
       ordersList.innerHTML = "<p>Something went wrong while loading your account.</p>";
     }
   }

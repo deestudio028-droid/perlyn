@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn â€” Cart</title>
+  <title>Perlyn "” Cart</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
@@ -446,7 +446,7 @@
     margin-top: 4px;
   }
 
-  /* âž•âž– aligned with "Lip Gloss" */
+  /* ž•ž– aligned with "Lip Gloss" */
   .qty-top {
     position: absolute;
     top: 44px; /* ðŸ”¥ perfectly level with "Lip Gloss" */
@@ -480,10 +480,10 @@
   line-height: 1;
 }
 
-  /* âŒ "Remove" aligned with description */
+  /* Œ "Remove" aligned with description */
   .remove-btn {
     position: absolute;
-    top: 80px; /* ðŸ”¥ inline with "A juicy rose-plumâ€¦" */
+    top: 80px; /* ðŸ”¥ inline with "A juicy rose-plum"¦" */
     right: 26px;
     font-size: 15px;
     color: #a04c4c;
@@ -545,7 +545,7 @@
 
     .subtotal div:last-child {
       margin-top: 10px;
-      /* ðŸ‘Œ adds soft space between qty and â‚¹total */
+      /* ðŸ‘Œ adds soft space between qty and ‚¹total */
     }
     .coupon-summary {
   font-family: 'Cormorant Garamond', serif;
@@ -576,7 +576,7 @@
   background: #f1dad0;
   transform: translateY(-1px);
 }
-/* ðŸŽ€ Offers & Discounts Section â€” Refined Perlyn Style */
+/* ðŸŽ€ Offers & Discounts Section "” Refined Perlyn Style */
 .offers-box {
   background: #fff6f0;
   border-radius: 16px;
@@ -603,7 +603,7 @@
   margin-bottom: 4px;
 }
 
-/* â€œView All â†’â€ */
+/* "View All †’" */
 .offers-header .view-all {
   color: #b98474;
   font-weight: 500;
@@ -616,7 +616,7 @@
   color: #a36c5c;
 }
 
-/* Unlock line (Add â‚¹___ more...) */
+/* Unlock line (Add ‚¹___ more...) */
 .unlock-msg {
   font-style: italic;
   color: #7b5b4a;
@@ -690,16 +690,16 @@
 <div class="offers-box" id="offers-box">
   <div class="offers-header">
     <span>Offers & Discounts</span>
-    <a href="#" id="view-all-offers" class="view-all" style="display:none;">View All â†’</a>
+    <a href="#" id="view-all-offers" class="view-all" style="display:none;">View All †’</a>
   </div>
 
-  <p id="unlock-msg" class="unlock-msg">Add â‚¹599 more to unlock coupons</p>
+  <p id="unlock-msg" class="unlock-msg">Add ‚¹599 more to unlock coupons</p>
 
   <!-- Hidden list (no visible offers) -->
   <div id="offers-list" style="display:none;"></div>
 </div>
 
-<!-- ðŸ’Œ Coupon Section â€” moved above footer -->
+<!-- ðŸ’Œ Coupon Section "” moved above footer -->
 <div class="coupon-box" style="position: sticky; bottom: 100px; background: #fff6f0; z-index: 90; padding: 8px 0; box-shadow: 0 -1px 6px rgba(0,0,0,0.05);">
   <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
 
@@ -709,21 +709,21 @@
   </div>
 
   <p id="coupon-msg" class="coupon-msg"></p>
-</div> <!-- âœ… Correctly closed here -->
+</div> <!-- œ… Correctly closed here -->
 
 <!-- ðŸ›’ FIXED CART ACTION BAR -->
 <div class="fixed-cart-bar">
   <div class="cart-bar-content">
     <div class="cart-summary">
       <div id="free-ship-msg" class="free-ship">Loading offer...</div>
-      <div id="cart-total" class="cart-total">Total: â‚¹0</div>
+      <div id="cart-total" class="cart-total">Total: ‚¹0</div>
     </div>
     <button id="buyNowBtn" class="btn-buy-now">Buy Now</button>
   </div>
 </div>
 
 <style>
-    /* ðŸ©µ Fixed Cart Action Bar â€” Centered + Floating Refined Look */
+    /* ðŸ©µ Fixed Cart Action Bar "” Centered + Floating Refined Look */
 .fixed-cart-bar {
   position: fixed;
   bottom: 10px; /* ðŸ”¹ lifted slightly for floating feel */
@@ -782,7 +782,7 @@
   color: #4b3b32;
 }
 
-/* âœ¨ Slim & Elegant Buy Now Button */
+/* œ¨ Slim & Elegant Buy Now Button */
 .btn-buy-now {
   border: none;
   background: #b98474;
@@ -813,7 +813,7 @@
   opacity: 0.9;
 }
 
-/* ðŸ“± Mobile optimization â€” balanced & full width */
+/* ðŸ“± Mobile optimization "” balanced & full width */
 @media (max-width: 768px) {
   .fixed-cart-bar {
     bottom: 6px;
@@ -841,7 +841,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* âœ¨ Offer item hover smoothness */
+/* œ¨ Offer item hover smoothness */
 .offer-item {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -877,7 +877,7 @@ function shopNow() {
           const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
           if (guestCart.length === 0) {
             cartBox.innerHTML = "<p>Your cart is empty.</p>";
-            totalEl.textContent = "Total: â‚¹0";
+            totalEl.textContent = "Total: ‚¹0";
             return;
           }
           
@@ -918,8 +918,8 @@ function shopNow() {
 
         if (!cartItems || !cartItems.length) {
           cartBox.innerHTML = "<p>Your cart is empty.</p>";
-          totalEl.textContent = "Total: â‚¹0";
-          freeMsg.innerHTML = `Add items worth <span>â‚¹999</span> for free shipping.`;
+          totalEl.textContent = "Total: ‚¹0";
+          freeMsg.innerHTML = `Add items worth <span>‚¹999</span> for free shipping.`;
           freeMsg.classList.remove("unlocked");
           return;
         }
@@ -936,7 +936,7 @@ div.className = "cart-item";
 div.innerHTML = `
   <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}">
  <div class="qty-top">
-  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">âˆ’</button>
+  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">ˆ’</button>
   <input 
     type="number" 
     id="qty-input-${item.id}" 
@@ -965,12 +965,12 @@ div.innerHTML = `
   <div class="item-info">
     <span class="item-name">${p.name}</span>
     <p class="category">${p.category || "Lip Tint"}</p>
-    <p class="shade">${p.shade || "â€”"}</p>
-    <span class="item-price">â‚¹${p.price}</span>
+    <p class="shade">${p.shade || ""”"}</p>
+    <span class="item-price">‚¹${p.price}</span>
     <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
   </div>
 
-  <div class="subtotal">â‚¹${subtotal}</div>
+  <div class="subtotal">‚¹${subtotal}</div>
 `;
 
 // ðŸ›ï¸ Make entire product card clickable (except buttons)
@@ -983,13 +983,13 @@ cartBox.appendChild(div);
 
       });
 
-      totalEl.innerHTML = "Total: â‚¹" + total.toLocaleString("en-IN");
+      totalEl.innerHTML = "Total: ‚¹" + total.toLocaleString("en-IN");
       const diff = 999 - total;
       if (diff > 0) {
-        freeMsg.innerHTML = `<span>â‚¹${diff}</span> away from free shipping (<span>â‚¹999+</span>)`;
+        freeMsg.innerHTML = `<span>‚¹${diff}</span> away from free shipping (<span>‚¹999+</span>)`;
         freeMsg.classList.remove("unlocked");
       } else {
-        freeMsg.innerHTML = "âœ… Free shipping unlocked!";
+        freeMsg.innerHTML = "œ… Free shipping unlocked!";
         freeMsg.classList.add("unlocked");
       }
 
@@ -1024,17 +1024,17 @@ cartBox.appendChild(div);
       await supabase.from("cart").update({ quantity: newQty }).eq("id", cartId);
     }
 
-    // âœ¨ Update subtotal of this item directly
+    // œ¨ Update subtotal of this item directly
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
-    const price = parseFloat(priceEl.textContent.replace(/[â‚¹,]/g, ""));
-    subtotalEl.textContent = "â‚¹" + (price * newQty).toLocaleString("en-IN");
+    const price = parseFloat(priceEl.textContent.replace(/[‚¹,]/g, ""));
+    subtotalEl.textContent = "‚¹" + (price * newQty).toLocaleString("en-IN");
 
     vibrate(); // feedback
-    await updateCartTotal(); // âœ¨ only recalc totals, not reload full cart
+    await updateCartTotal(); // œ¨ only recalc totals, not reload full cart
   }
 
-  // âœï¸ Handle Manual Typing
+  // œï¸ Handle Manual Typing
   async function manualQtyChange(cartId, newValue, stock) {
     let qty = parseInt(newValue);
     if (isNaN(qty) || qty < 1) qty = 1;
@@ -1058,15 +1058,15 @@ cartBox.appendChild(div);
       await supabase.from("cart").update({ quantity: qty }).eq("id", cartId);
     }
 
-    // âœ¨ Update subtotal instantly
+    // œ¨ Update subtotal instantly
     const qtyInput = document.getElementById(`qty-input-${cartId}`);
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
-    const price = parseFloat(priceEl.textContent.replace(/[â‚¹,]/g, ""));
-    subtotalEl.textContent = "â‚¹" + (price * qty).toLocaleString("en-IN");
+    const price = parseFloat(priceEl.textContent.replace(/[‚¹,]/g, ""));
+    subtotalEl.textContent = "‚¹" + (price * qty).toLocaleString("en-IN");
 
     vibrate();
-    await updateCartTotal(); // âœ¨ recalc bottom summary only
+    await updateCartTotal(); // œ¨ recalc bottom summary only
   }
 
 // ðŸ“³ Vibration Feedback
@@ -1127,12 +1127,12 @@ async function refreshOffersBox() {
 
   // ðŸ›¡ï¸ Prevent null errors
   if (!unlockMsg) {
-    console.warn("âš ï¸ unlock-msg element not found yet, skipping refreshOffersBox()");
+    console.warn("š ï¸ unlock-msg element not found yet, skipping refreshOffersBox()");
     return;
   }
 
   if (subtotal < 599) {
-    unlockMsg.innerHTML = `Add â‚¹${599 - subtotal} more to unlock coupons`;
+    unlockMsg.innerHTML = `Add ‚¹${599 - subtotal} more to unlock coupons`;
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `ðŸŽ‰ Coupons unlocked! Use <b>AURA10</b> for 10% off`;
   } else {
@@ -1218,31 +1218,31 @@ if (used) {
       // ðŸ”¹ Check minimum purchase
       const subtotal = await getCartSubtotal();
       if (subtotal < coupon.min_purchase) {
-        msg.innerText = `Add â‚¹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
+        msg.innerText = `Add ‚¹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
         return;
       }
 
-// âœ… Apply coupon
+// œ… Apply coupon
 appliedCoupon = coupon;
 
 // ðŸ§® Calculate rounded discount
 discountAmount = Math.round(subtotal * (coupon.discount_percent / 100));
 
 // ðŸ’¬ Show success message
-msg.innerText = `Coupon ${code} applied! You saved â‚¹${discountAmount.toFixed(0)}.`;
+msg.innerText = `Coupon ${code} applied! You saved ‚¹${discountAmount.toFixed(0)}.`;
 removeBtn.style.display = "inline-block";
 
 // ðŸ” Update totals and UI immediately
 updateCartTotal();
 
-// ðŸ§  Save locally â€” usage will be recorded after payment success
+// ðŸ§  Save locally "” usage will be recorded after payment success
 saveCoupon();
 
 
     }
 
 
-    // âŒ Remove Coupon
+    // Œ Remove Coupon
     function removeCoupon() {
       appliedCoupon = null;
       discountAmount = 0;
@@ -1259,7 +1259,7 @@ saveCoupon();
 
       let subtotal = 0;
       container.forEach(el => {
-        const val = parseFloat(el.textContent.replace(/[â‚¹,]/g, ""));
+        const val = parseFloat(el.textContent.replace(/[‚¹,]/g, ""));
         if (!isNaN(val)) subtotal += val;
       });
       return subtotal;
@@ -1285,7 +1285,7 @@ if (subtotal > 0 && subtotal < 999) {
       restRate = rest?.price || 70;
     }
   } catch (err) {
-    console.warn("âš ï¸ Failed to fetch rates, using fallback 40/70:", err.message);
+    console.warn("š ï¸ Failed to fetch rates, using fallback 40/70:", err.message);
   }
 
   // ðŸ“ Try to detect user's saved shipping state (if logged in)
@@ -1307,7 +1307,7 @@ if (subtotal > 0 && subtotal < 999) {
 }
 
 const total = subtotal > 0 ? subtotal - discountAmount + shipping : 0;
-// âœ… Store totals for next page (checkout)
+// œ… Store totals for next page (checkout)
 sessionStorage.setItem("cartSubtotal", subtotal);
 sessionStorage.setItem("cartDiscount", discountAmount);
 sessionStorage.setItem("cartShipping", shipping);
@@ -1318,15 +1318,15 @@ sessionStorage.setItem("finalTotal", total);
   // ðŸ’¸ Show total + applied coupon details
   if (discountAmount > 0 && appliedCoupon) {
     totalEl.innerHTML = `
-      Total: â‚¹${total.toLocaleString("en-IN")}
+      Total: ‚¹${total.toLocaleString("en-IN")}
       <br><span style="font-size:15px;color:#3a814e;">
-        (Saved â‚¹${discountAmount.toFixed(0)} using ${appliedCoupon.code})
+        (Saved ‚¹${discountAmount.toFixed(0)} using ${appliedCoupon.code})
       </span>`;
   } else {
-    totalEl.innerHTML = `Total: â‚¹${total.toLocaleString("en-IN")}`;
+    totalEl.innerHTML = `Total: ‚¹${total.toLocaleString("en-IN")}`;
   }
 
-  // ðŸ©· Free shipping message â€” Lip Gloss font style
+  // ðŸ©· Free shipping message "” Lip Gloss font style
   const diff = 999 - subtotal;
   freeMsg.style.fontFamily = "'Cormorant Garamond', serif";
   freeMsg.style.fontStyle = "italic";
@@ -1335,7 +1335,7 @@ sessionStorage.setItem("finalTotal", total);
   freeMsg.style.color = "#b98474";
 
   if (diff > 0) {
-    freeMsg.innerHTML = `â‚¹${diff} away from free shipping (â‚¹999+)`;
+    freeMsg.innerHTML = `‚¹${diff} away from free shipping (‚¹999+)`;
     freeMsg.classList.remove("unlocked");
   } else {
     freeMsg.innerHTML = "ðŸŽ‰ Free shipping unlocked!";
@@ -1345,7 +1345,7 @@ sessionStorage.setItem("finalTotal", total);
 // ðŸŽ Dynamic Offers Unlock Message (linked to live coupon min_purchase)
 if (unlockMsg) {
   if (subtotal < minCouponPurchase) {
-    unlockMsg.innerHTML = `Add â‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+    unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `ðŸŽ‰ Coupons unlocked! Use <b>any active coupon</b> for savings`;
   } else {
@@ -1365,7 +1365,7 @@ const savings = discountAmount + (shipping === 0 ? 99 : 0);
 if (total > 0 && savings > 0) {
   totalEl.innerHTML += `
     <div style="font-size:16px;color:#3a814e;font-weight:600;margin-top:4px;">
-      ðŸ’ Youâ€™ve saved â‚¹${savings.toFixed(0)} on this order!
+      ðŸ’ You"™ve saved ‚¹${savings.toFixed(0)} on this order!
     </div>`;
 }
 
@@ -1377,10 +1377,10 @@ async function updateRewardPoints(total) {
   const rewardMsg = document.getElementById("reward-msg");
   if (!rewardMsg) return;
   const points = Math.floor(total / 10);
-  rewardMsg.textContent = `Youâ€™ll earn ðŸŽ ${points} reward points on this order!`;
+  rewardMsg.textContent = `You"™ll earn ðŸŽ ${points} reward points on this order!`;
 }
 // =================================================
-// ðŸŒŸ PERLYN â€” LIVE REWARD POINTS SYSTEM (Supabase)
+// ðŸŒŸ PERLYN "” LIVE REWARD POINTS SYSTEM (Supabase)
 // =================================================
 async function loadRewardPoints() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -1402,7 +1402,7 @@ async function loadRewardPoints() {
     .maybeSingle();
 
   if (error) {
-    console.error("âš ï¸ Reward fetch failed:", error);
+    console.error("š ï¸ Reward fetch failed:", error);
     rewardMsg.textContent = "Unable to load rewards.";
     return;
   }
@@ -1420,9 +1420,9 @@ async function loadRewardPoints() {
   const nextMilestone = 100;
   if (currentPoints < nextMilestone) {
     const needed = nextMilestone - currentPoints;
-    rewardMsg.innerHTML += ` â€” Collect <b>${needed}</b> more for a surprise free gift ðŸŽ`;
+    rewardMsg.innerHTML += ` "” Collect <b>${needed}</b> more for a surprise free gift ðŸŽ`;
   } else {
-    rewardMsg.innerHTML += ` â€” ðŸŽ‰ <b>Youâ€™ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
+    rewardMsg.innerHTML += ` "” ðŸŽ‰ <b>You"™ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
   }
 }
 
@@ -1440,7 +1440,7 @@ async function checkRewardGift() {
 
   if (reward && reward.total_points >= 100) {
     const msg = document.getElementById("coupon-msg");
-    msg.innerHTML = `ðŸŽ‰ Youâ€™ve unlocked a <b>surprise free gift!</b> Use code <b>GIFT100</b>`;
+    msg.innerHTML = `ðŸŽ‰ You"™ve unlocked a <b>surprise free gift!</b> Use code <b>GIFT100</b>`;
     msg.style.color = "#3a814e";
   }
 }
@@ -1483,7 +1483,7 @@ async function loadOffers() {
     // ðŸŽ Show only the unlock message, hide the offers list
     offersBox.innerHTML = "";
 
-    // ðŸŽ‰ â€œView Allâ€ button toggle
+    // ðŸŽ‰ "View All" button toggle
     if (validOffers.length > 0) {
       viewAllBtn.style.display = "inline";
       viewAllBtn.onclick = () => showAllOffers(validOffers);
@@ -1509,7 +1509,7 @@ if (!couponError && coupons && coupons.length > 0) {
     // ðŸ§® Update Unlock Message dynamically
     const subtotal = await getCartSubtotal();
     if (subtotal < minCouponPurchase) {
-      unlockMsg.innerHTML = `Add â‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+      unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
     } else if (subtotal < 999) {
       unlockMsg.innerHTML = `ðŸŽ‰ Coupons unlocked! Use <b>any active coupon</b> for savings`;
     } else {
@@ -1517,15 +1517,15 @@ if (!couponError && coupons && coupons.length > 0) {
     }
 
   } catch (err) {
-    console.error("âŒ Offers fetch failed:", err);
+    console.error("Œ Offers fetch failed:", err);
     offersBox.innerHTML = `<p style="color:#a04c4c;">Couldn't load offers. Please refresh.</p>`;
   }
 }
 
-// âœ¨ View All Offers Popup
+// œ¨ View All Offers Popup
 function showAllOffers(offers) {
   const text = offers
-    .map(o => `â€¢ ${o.title}${o.description ? " â€” " + o.description : ""}`)
+    .map(o => `• ${o.title}${o.description ? " "” " + o.description : ""}`)
     .join("\n");
   alert("Available Offers:\n\n" + text);
 }
@@ -1534,13 +1534,13 @@ function showAllOffers(offers) {
 // ðŸŽ OFFERS BUTTON FUNCTION
 // ================================
 function showOffers() {
-  alert("Available Offers:\nâ€¢ AURA10 â€“ 10% off above â‚¹599\nâ€¢ FREESHIP â€“ Free shipping above â‚¹999");
+  alert("Available Offers:\n• AURA10 "“ 10% off above ‚¹599\n• FREESHIP "“ Free shipping above ‚¹999");
 }
 window.addEventListener("load", async () => {
   await initCartSystem();  // ðŸ›’ Loads cart + totals + offers
   await loadOffers();      // ðŸŽ Refreshes offers dynamically
 
-  // â™»ï¸ Restore saved coupon if any
+  // ™»ï¸ Restore saved coupon if any
   const saved = localStorage.getItem("appliedCoupon");
   if (saved) {
     appliedCoupon = JSON.parse(saved);

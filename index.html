@@ -177,7 +177,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    /* âœ¨ Remove blue outline & add smooth blink effect when clicking cards */
+    /* œ¨ Remove blue outline & add smooth blink effect when clicking cards */
     .product-card {
       cursor: pointer;
       transition: transform 0.2s ease, opacity 0.15s ease;
@@ -198,7 +198,7 @@
       /* Light blink on tap */
     }
 
-    /* ðŸ›ï¸ Product Grid â€” 3 per row on mobile */
+    /* ðŸ›ï¸ Product Grid "” 3 per row on mobile */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -207,7 +207,7 @@
       padding: 0 8px;
     }
 
-    /* âœ¨ Product Card Responsive Style */
+    /* œ¨ Product Card Responsive Style */
     .product-card {
       background: #fff6f0;
       border-radius: 12px;
@@ -323,7 +323,7 @@
   }
 }
 
-/* âœ¨ Navbar seamless background blend */
+/* œ¨ Navbar seamless background blend */
 .header {
   background: #f3e4db;
   border: none;
@@ -405,7 +405,7 @@ body {
     <div class="hero-content">
       <h1>Gloss that loves. Tints that stay. Oils that care.<br />Where the Soul Shows, Perlyn.</h1>
 
-      <p>Luxe Shades â€¢ Soft Finish â€¢ Everyday Elegance</p>
+      <p>Luxe Shades • Soft Finish • Everyday Elegance</p>
       <a href="shop.html" class="btn-primary">Shop Now</a>
     </div>
   </section>
@@ -425,7 +425,7 @@ body {
       <div class="footer-col">
         <h3>Perlyn</h3>
         <p>Gloss that loves. Tints that stay. Oils that care.</p>
-        <p>Imported Formulas â€¢ Clean â€¢ Vegan â€¢ Cruelty-Free</p>
+        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
         <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
         <div class="social-icons" style="margin-top:10px;">
           <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
@@ -467,7 +467,7 @@ body {
     </div>
 
     <div class="footer-bottom">
-      <p>Â© 2025 Perlyn. All Rights Reserved.</p>
+      <p>© 2025 Perlyn. All Rights Reserved.</p>
       <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
     </div>
   </footer>
@@ -483,7 +483,7 @@ body {
 <div id="welcome-offer" class="welcome-offer" style="display:none;">
   <div class="welcome-box">
     <h3 id="offer-title">ðŸŽ Welcome to Perlyn Beauty!</h3>
-    <p id="offer-desc">Enjoy <b>10% OFF</b> your first order above â‚¹599.</p>
+    <p id="offer-desc">Enjoy <b>10% OFF</b> your first order above ‚¹599.</p>
     <p>Use Code: <b id="offer-code">AURA10</b></p>
 
     <div class="popup-actions">
@@ -494,7 +494,7 @@ body {
 </div>
 
 <style>
-  /* âœ¨ Popup Overlay */
+  /* œ¨ Popup Overlay */
   .welcome-offer {
     position: fixed;
     inset: 0;
@@ -607,7 +607,7 @@ body {
           <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
             <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}" class="product-img" loading="lazy" />
             <h3>${p.name}</h3>
-            <span class="price">â‚¹${p.price}</span>
+            <span class="price">‚¹${p.price}</span>
             <p>${p.card_description || ""}</p>
           </div>`
         )
@@ -630,26 +630,26 @@ async function loadOfferSystem() {
     const banner = document.getElementById("offerBanner");
 
     if (error) {
-      console.error("âš ï¸ Offer fetch error:", error);
+      console.error("š ï¸ Offer fetch error:", error);
       banner.innerHTML = `<span>Error loading offer.</span>`;
       return;
     }
 
-    // âŒ No active offer â†’ hide both banner & popup
+    // Œ No active offer †’ hide both banner & popup
     if (!data || !data.active) {
-      console.log("â„¹ï¸ No active offers â€” hiding banner and popup.");
+      console.log("„¹ï¸ No active offers "” hiding banner and popup.");
       banner.style.display = "none";
       document.getElementById("welcome-offer").style.display = "none";
       return;
     }
 
-    // âœ… Update banner text from Supabase
-    banner.innerHTML = `<span>âœ¨ ${data.title} âœ¨</span>`;
+    // œ… Update banner text from Supabase
+    banner.innerHTML = `<span>œ¨ ${data.title} œ¨</span>`;
 
     // Extract coupon code dynamically from the title
     const extractedCode = data.title.match(/code\s+(\w+)/i)?.[1] || "AURA10";
 
-    // âœ… Fill popup dynamically
+    // œ… Fill popup dynamically
     document.getElementById("offer-title").textContent = `ðŸŽ ${data.title}`;
     document.getElementById("offer-code").textContent = extractedCode;
     document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer ðŸ’–";
@@ -670,7 +670,7 @@ async function loadOfferSystem() {
     // ðŸ“‹ Copy button logic
     document.getElementById("copyOfferBtn").onclick = () => {
       navigator.clipboard.writeText(extractedCode);
-      showToast(`âœ¨ Code ${extractedCode} copied! Use it at checkout ðŸ’–`);
+      showToast(`œ¨ Code ${extractedCode} copied! Use it at checkout ðŸ’–`);
       closeOffer();
     };
   } catch (err) {
@@ -679,7 +679,7 @@ async function loadOfferSystem() {
 }
 
 
-  // âœ¨ Popup Close + Toast Message
+  // œ¨ Popup Close + Toast Message
   function closeOffer() {
     const popup = document.getElementById("welcome-offer");
     popup.style.display = "none";

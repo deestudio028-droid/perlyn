@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perlyn â€” Order Placed</title>
+  <title>Perlyn "” Order Placed</title>
 
   <!-- ðŸŒ¸ Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Gilda+Display&display=swap" rel="stylesheet">
@@ -100,7 +100,7 @@
       transform: scale(0.97);
     }
 
-    /* âœ¨ Reward Popup */
+    /* œ¨ Reward Popup */
     .reward-popup {
       position: fixed;
       bottom: 25px;
@@ -153,15 +153,15 @@
       <h2>ðŸŽ‰ Order Placed Successfully!</h2>
       <p>Thank you for shopping with <strong>Perlyn Beauty</strong>.</p>
       <p>Your order has been confirmed and will be <b>dispatched within 3 days</b> of confirmation.</p>
-      <p>It will be <b>delivered within 5â€“7 days</b> after dispatch.</p>
-      <p>Order ID: <span id="order">â€”</span></p>
+      <p>It will be <b>delivered within 5"“7 days</b> after dispatch.</p>
+      <p>Order ID: <span id="order">"”</span></p>
       <button class="continue-btn" onclick="window.location.href='index.html'">Continue Shopping</button>
     </div>
   </div>
 
   <!-- ðŸŽ Reward Notification -->
   <div id="reward-popup" class="reward-popup">
-    ðŸŽ‰ Youâ€™ve earned reward points! Added to your account ðŸ’
+    ðŸŽ‰ You"™ve earned reward points! Added to your account ðŸ’
   </div>
 
   <script>
@@ -185,7 +185,7 @@
         .maybeSingle();
 
       if (rewardData?.total_points) {
-        popup.innerHTML = `âœ¨ Your total reward balance: <b>${rewardData.total_points}</b> points ðŸ’`;
+        popup.innerHTML = `œ¨ Your total reward balance: <b>${rewardData.total_points}</b> points ðŸ’`;
         setTimeout(() => {
           popup.style.opacity = "1";
           popup.style.transform = "translateY(0)";
@@ -193,7 +193,7 @@
         setTimeout(() => (popup.style.opacity = "0"), 9000);
       }
     } catch (err) {
-      console.error("âš ï¸ Reward popup error:", err);
+      console.error("š ï¸ Reward popup error:", err);
     }
   }
 

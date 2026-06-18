@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn â€” Checkout & Shipping</title>
+  <title>Perlyn "” Checkout & Shipping</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
@@ -172,7 +172,7 @@ button:active {
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-   /* ðŸ’Œ Saved Customer Details Box â€” Refined Perlyn Theme */
+   /* ðŸ’Œ Saved Customer Details Box "” Refined Perlyn Theme */
 .saved-details-box {
   background: #fff6f0;
   border: 1px solid #e8d3c6;
@@ -192,7 +192,7 @@ button:active {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
 }
 
-/* âœ¨ Summary text (left section) */
+/* œ¨ Summary text (left section) */
 .saved-summary {
   font-size: 15.5px;
   color: #4b3b32;
@@ -240,7 +240,7 @@ button:active {
   opacity: 0.9;
 }
 
-/* ðŸ“± Mobile view â€” stacks neatly */
+/* ðŸ“± Mobile view "” stacks neatly */
 @media (max-width: 600px) {
   .saved-details-box {
     flex-direction: column;
@@ -287,7 +287,7 @@ button:active {
 }
 
 .save-details input[type="checkbox"]:checked::after {
-  content: "âœ”";
+  content: "œ”";
   color: #fff;
   font-size: 12px;
   position: absolute;
@@ -306,7 +306,7 @@ button:active {
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Checkbox â€” Perlyn accent tone */
+/* Checkbox "” Perlyn accent tone */
 .save-details input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -326,7 +326,7 @@ button:active {
 }
 
 .save-details input[type="checkbox"]:checked::after {
-  content: "âœ”";
+  content: "œ”";
   color: #fff;
   font-size: 12px;
   position: absolute;
@@ -424,8 +424,8 @@ button:active {
       <label>Personalized Message (optional)</label>
       <textarea id="message" rows="2" maxlength="150" placeholder="Eg: Happy Birthday! Have a great year ahead."></textarea>
 <div id="msgActions" style="display:none; text-align:right; margin-top:6px;">
-  <button type="button" id="changeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">âœï¸ Change</button>
-  <button type="button" id="removeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">âŒ Remove</button>
+  <button type="button" id="changeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">œï¸ Change</button>
+  <button type="button" id="removeMsgBtn" style="background:none;border:none;color:#b98474;cursor:pointer;font-family:'Cormorant Garamond',serif;">Œ Remove</button>
 </div>
 
       <div style="text-align:right;font-size:14px;color:#7b5b4a;">
@@ -484,15 +484,15 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
       if (detectedState) stateEl.value = detectedState;
       if (detectedCity) cityEl.value = detectedCity;
 
-      status.textContent = "âœ… Location auto-filled successfully!";
+      status.textContent = "œ… Location auto-filled successfully!";
       status.style.color = "#3a814e";
     } else {
-      status.textContent = "âš ï¸ Could not detect location for this pincode.";
+      status.textContent = "š ï¸ Could not detect location for this pincode.";
       status.style.color = "#b84c4c";
     }
   } catch (err) {
     console.error("ðŸ“¦ Pincode lookup failed:", err);
-    status.textContent = "âŒ Unable to detect location. Please type manually.";
+    status.textContent = "Œ Unable to detect location. Please type manually.";
     status.style.color = "#b84c4c";
     stateEl.removeAttribute("readonly");
     cityEl.removeAttribute("readonly");
@@ -519,8 +519,8 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
   </div>
 
   <div id="successMsg" class="success-message">
-    âœ… ORDER PLACED SUCCESSFULLY!<br><br>
-    Will dispatch within 3 days and deliver within 5â€“7 days.<br><br>
+    œ… ORDER PLACED SUCCESSFULLY!<br><br>
+    Will dispatch within 3 days and deliver within 5"“7 days.<br><br>
     <button class="btn" onclick="window.location.href='index.html'">Continue Shopping</button>
   </div>
 
@@ -592,7 +592,7 @@ window.addEventListener("load", () => {
     });
 
 
-// ðŸŸ¢ Improved loadCart() â€” handles auth restoration + guest cart
+// ðŸŸ¢ Improved loadCart() "” handles auth restoration + guest cart
 async function loadCart() {
   console.log("ðŸ›’ Fetching cart...");
 
@@ -662,7 +662,7 @@ shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
 // ðŸ’° fallback calculation only if session data missing
 total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
 
-// ðŸ’Œ Add â‚¹30 message charge (if personalized message exists)
+// ðŸ’Œ Add ‚¹30 message charge (if personalized message exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
@@ -692,15 +692,15 @@ if (subtotal >= 999) {
 
 
   total = subtotal - discount + shipping;
-  // ðŸ’Œ Add â‚¹30 personalized message charge if message exists
+  // ðŸ’Œ Add ‚¹30 personalized message charge if message exists
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-  console.log(`ðŸ§¾ Cart Loaded: ${cartItems.length} items, Total â‚¹${total}`);
+  console.log(`ðŸ§¾ Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
 }
 
-// âœ… Attach to form submit â€” with safe fallback if loadCart fails
+// œ… Attach to form submit "” with safe fallback if loadCart fails
 document.getElementById("shippingForm").addEventListener("submit", async e => {
   e.preventDefault();
   try {
@@ -727,25 +727,25 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
 
       const itemsHTML = cartItems.map(p => `
         <div class="order-item">
-          <div>${p.name} (${p.shade || "â€”"}) Ã— ${p.qty}</div>
-          <div>â‚¹${p.price * p.qty}</div>
+          <div>${p.name} (${p.shade || ""”"}) Ã— ${p.qty}</div>
+          <div>‚¹${p.price * p.qty}</div>
         </div>`).join("");
 
       document.getElementById("orderSummary").innerHTML = `
         <div class="summary-section"><h3>Products</h3>${itemsHTML}</div>
         <div class="summary-section"><h3>Order Summary</h3>
-          <p>Subtotal: â‚¹${subtotal}</p>
-          <p>Discount: â‚¹${discount}</p>
+          <p>Subtotal: ‚¹${subtotal}</p>
+          <p>Discount: ‚¹${discount}</p>
           ${sessionStorage.getItem("cartDiscount") > 0 && localStorage.getItem("appliedCoupon")
   ? `<p style="color:#3a814e;">Coupon applied: <b>${JSON.parse(localStorage.getItem("appliedCoupon")).code}</b></p>`
   : ""}
 
-          <p>Shipping: â‚¹${shipping}</p>
+          <p>Shipping: ‚¹${shipping}</p>
 
 
-<p>Personalized Message Fee: â‚¹${message ? 30 : 0}</p>
+<p>Personalized Message Fee: ‚¹${message ? 30 : 0}</p>
 
-          <p><b>Total: â‚¹${total}</b></p>
+          <p><b>Total: ‚¹${total}</b></p>
           <p style="color:#7b5b4a;">Prepaid (via PhonePe / GPay)</p>
         </div>
         <div class="summary-section"><h3>Customer Details</h3>
@@ -756,7 +756,7 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
         </div>`;
     }
 
-   // âœ… Step 4: Confirm & Pay â€” full safe payment + redirect logic (Updated & Fixed)
+   // œ… Step 4: Confirm & Pay "” full safe payment + redirect logic (Updated & Fixed)
   document.getElementById("confirmPayBtn").addEventListener("click", async () => {
     const btn = document.getElementById("confirmPayBtn");
     const originalText = btn.textContent;
@@ -771,7 +771,7 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     try {
       console.log("ðŸ’° Confirm & Pay clicked!");
 
-    // âœ… Capture current form values
+    // œ… Capture current form values
     const customerPayload = {
       name: nameEl.value.trim(),
       phone: phoneEl.value.trim(),
@@ -831,14 +831,14 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     if (data.success && data.redirectUrl) {
       console.log("ðŸ§¾ Order processed successfully via backend:", orderId);
 
-// âœ… Generate PDF first, then redirect
+// œ… Generate PDF first, then redirect
 console.log("ðŸ§¾ Generating invoice PDF...");
 await new Promise((resolve) => {
   try {
     generatePDFs();
     setTimeout(resolve, 1800);
   } catch (pdfErr) {
-    console.warn("âš ï¸ PDF generation skipped:", pdfErr.message);
+    console.warn("š ï¸ PDF generation skipped:", pdfErr.message);
     resolve();
   }
 });
@@ -1027,7 +1027,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
   pdf.setFont("helvetica", "normal");
   pdf.setTextColor(...text);
 
-  // âœ¨ Wrap long message neatly across lines (max width 170mm)
+  // œ¨ Wrap long message neatly across lines (max width 170mm)
   const wrappedMsg = pdf.splitTextToSize(`"${messageEl.value.trim()}"`, 170);
   pdf.text(wrappedMsg, 15, y);
   y += wrappedMsg.length * 6; // adjust vertical space based on line count
@@ -1045,7 +1045,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
 }
 
 
-// âœ… Helper to convert number to words (basic)
+// œ… Helper to convert number to words (basic)
 function convertToWords(num) {
   const a = [
     "", "One", "Two", "Three", "Four", "Five", "Six",
@@ -1069,20 +1069,20 @@ function convertToWords(num) {
 
 // ðŸ§© Prevent accidental double-login mismatch
 // ===========================================================
-// ðŸ§  PERLYN â€” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
+// ðŸ§  PERLYN "” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
 // ===========================================================
 // ===========================================================
-// ðŸ§  PERLYN â€” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
+// ðŸ§  PERLYN "” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
 // ===========================================================
 
-// âœ… Step 1: Check for saved customer details when page loads
+// œ… Step 1: Check for saved customer details when page loads
 window.addEventListener("load", async () => {
   const session = await getActiveSession();
   if (!session) return;
   await showSavedCustomerDetails(session.user.id);
 });
 
-// âœ… Step 2: Fetch & display saved customer details box
+// œ… Step 2: Fetch & display saved customer details box
 async function showSavedCustomerDetails(userId) {
   const { data, error } = await supabaseClient
     .from("customer_details")
@@ -1091,7 +1091,7 @@ async function showSavedCustomerDetails(userId) {
     .maybeSingle();
 
   if (error) {
-    console.error("âš ï¸ Fetch saved customer details failed:", error);
+    console.error("š ï¸ Fetch saved customer details failed:", error);
     return;
   }
 
@@ -1111,7 +1111,7 @@ async function showSavedCustomerDetails(userId) {
     `;
     container.insertBefore(box, document.getElementById("shippingForm"));
 
-    // âœ… Apply â†’ auto-fill inputs
+    // œ… Apply †’ auto-fill inputs
     box.querySelector(".apply-btn").addEventListener("click", () => {
       nameEl.value = data.name || "";
       phoneEl.value = data.phone || "";
@@ -1120,11 +1120,11 @@ async function showSavedCustomerDetails(userId) {
       stateEl.value = data.state || "";
       pincodeEl.value = data.pincode || "";
 
-      box.querySelector(".apply-btn").textContent = "Applied âœ…";
+      box.querySelector(".apply-btn").textContent = "Applied œ…";
       box.querySelector(".apply-btn").disabled = true;
     });
 
-    // ðŸ§¹ Change â†’ remove box & allow editing
+    // ðŸ§¹ Change †’ remove box & allow editing
     box.querySelector(".change-btn").addEventListener("click", () => {
       box.remove();
       alert("You can now edit your address details.");
@@ -1132,7 +1132,7 @@ async function showSavedCustomerDetails(userId) {
   }
 }
 
-// âœ… Step 3: Save details if checkbox is checked
+// œ… Step 3: Save details if checkbox is checked
 async function saveCustomerDetailsIfChecked() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   if (!session) return;
@@ -1154,8 +1154,8 @@ async function saveCustomerDetailsIfChecked() {
     .from("customer_details")
     .upsert(payload, { onConflict: "user_id" });
 
-  if (error) console.error("âš ï¸ Save customer details failed:", error);
-  else console.log("âœ… Customer details saved/updated successfully");
+  if (error) console.error("š ï¸ Save customer details failed:", error);
+  else console.log("œ… Customer details saved/updated successfully");
 }
 
 
@@ -1182,11 +1182,11 @@ const validStates = [
   "Maharashtra", "Delhi", "West Bengal", "Uttar Pradesh"
 ];
 
-// âœ… Validate on blur (after typing)
+// œ… Validate on blur (after typing)
 document.getElementById("city").addEventListener("blur", (e) => {
   const val = e.target.value.trim();
   if (val && !validCities.some(c => c.toLowerCase() === val.toLowerCase())) {
-    alert("âŒ Please enter a valid Indian city name.");
+    alert("Œ Please enter a valid Indian city name.");
     e.target.focus();
   }
 });
@@ -1194,7 +1194,7 @@ document.getElementById("city").addEventListener("blur", (e) => {
 document.getElementById("state").addEventListener("blur", (e) => {
   const val = e.target.value.trim();
   if (val && !validStates.some(s => s.toLowerCase() === val.toLowerCase())) {
-    alert("âŒ Please enter a valid Indian state name.");
+    alert("Œ Please enter a valid Indian state name.");
     e.target.focus();
   }
 });

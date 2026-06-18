@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn â€” Shop</title>
+  <title>Perlyn "” Shop</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
@@ -40,7 +40,7 @@
       margin-top: 30px;
     }
 
-    /* âœ¨ Product Card Design */
+    /* œ¨ Product Card Design */
     .product-card {
       position: relative;
       background: #fff;
@@ -79,7 +79,7 @@
       margin-top: 4px;
     }
 
- /* ðŸ›’ Add to Cart Button â€” Match "All Categories" Font */
+ /* ðŸ›’ Add to Cart Button "” Match "All Categories" Font */
 .btn-secondary {
   background: #b98474;
   color: #fff;
@@ -401,8 +401,8 @@
       transform: translateY(0);
     }
 
-    /* ðŸ–¥ï¸ Desktop Optimization â€” Smaller Card, Perfect Alignment */
-    /* ðŸ–¥ï¸ Desktop Layout â€” Horizontal Rectangle Card Style */
+    /* ðŸ–¥ï¸ Desktop Optimization "” Smaller Card, Perfect Alignment */
+    /* ðŸ–¥ï¸ Desktop Layout "” Horizontal Rectangle Card Style */
     @media (min-width: 1025px) {
       .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -759,8 +759,8 @@
 
         <select id="priceSort">
           <option value="">Sort</option>
-          <option value="low">Low â†’ High</option>
-          <option value="high">High â†’ Low</option>
+          <option value="low">Low †’ High</option>
+          <option value="high">High †’ Low</option>
         </select>
       </div>
     </div>
@@ -777,7 +777,7 @@
       <div class="footer-col">
         <h3>Perlyn</h3>
         <p>Gloss that loves. Tints that stay. Oils that care.</p>
-        <p>Imported Formulas â€¢ Clean â€¢ Vegan â€¢ Cruelty-Free</p>
+        <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
         <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
         <div class="social-icons" style="margin-top:10px;">
           <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
@@ -820,7 +820,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>Â© 2025 Perlyn. All Rights Reserved.</p>
+      <p>© 2025 Perlyn. All Rights Reserved.</p>
       <p><a href="https://www.deestudio.it.com" target="_blank" class="dee-credit">Made By DeeStudio</a></p>
     </div>
   </footer>
@@ -841,7 +841,7 @@
 ================================ */
 function getSupabase() {
   if (!window.supabaseClient) {
-    console.warn("â³ Supabase not ready yet, retrying...");
+    console.warn("³ Supabase not ready yet, retrying...");
   }
   return window.supabaseClient;
 }
@@ -870,7 +870,7 @@ async function loadProducts() {
   
     if (error) {
       document.getElementById("product-list").innerHTML =
-        "<p>âŒ Error loading products.</p>";
+        "<p>Œ Error loading products.</p>";
       return;
     }
   
@@ -985,7 +985,7 @@ function renderProducts() {
       ${product.newly_launched ? `<span class="badge new">New!</span>` : ""}
       <img src="${(product.image_url && product.image_url !== 'null') ? product.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" class="product-img" loading="lazy" />
       <div class="product-info">
-        <span class="price">â‚¹${product.price}</span>
+        <span class="price">‚¹${product.price}</span>
         <h3>${product.name}</h3>
         <p>${product.card_description || ""}</p>
         ${stockText}
@@ -1019,7 +1019,7 @@ function showToast(msg) {
 }
 
 /* ================================
-   âš¡ REALTIME UPDATES
+   š¡ REALTIME UPDATES
 ================================ */
 function setupRealtime() {
   const supa = getSupabase();
