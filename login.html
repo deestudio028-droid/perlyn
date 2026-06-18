@@ -146,7 +146,7 @@
       color: red;
     }
 
-    /* œ… Success glow animation for OTP auto-fill */
+    /* ✅ Success glow animation for OTP auto-fill */
     @keyframes otpGlow {
       0% { box-shadow: 0 0 0 #9ad9a2; }
       50% { box-shadow: 0 0 12px #9ad9a2; }
@@ -292,7 +292,7 @@
     return saved && !saved.includes("login.html") ? saved : "account.html";
   }
 
-  // ðŸ“± Detect In-App Browser
+  // 📱 Detect In-App Browser
   (function detectInAppBrowser() {
     const ua = navigator.userAgent || navigator.vendor || window.opera;
     const isInstagram = (ua.indexOf('Instagram') > -1);
@@ -316,7 +316,7 @@
     }
   })();
 
-  // œ… 1. Send OTP
+  // ✅ 1. Send OTP
   sendOtpBtn.addEventListener("click", async () => {
     const email = emailInput.value.trim();
     if (!email) return showMessage("Please enter your email.", "error");
@@ -347,7 +347,7 @@
     }
   });
 
-  // œ… 2. Verify OTP & Redirect
+  // ✅ 2. Verify OTP & Redirect
   verifyOtpBtn.addEventListener("click", async () => {
     const email = emailInput.value.trim();
     const otp = otpInput.value.trim();
@@ -388,7 +388,7 @@
     }
   });
 
-  // œ… 3. Google Login (preserves redirect)
+  // ✅ 3. Google Login (preserves redirect)
   document.getElementById("googleLogin").addEventListener("click", async () => {
     const redirectTarget = getRedirectTarget();
     const finalRedirectUrl = new URL(redirectTarget, window.location.origin).href;
@@ -405,7 +405,7 @@
     if (error) showMessage(error.message, "error");
   });
 
-  // œ… 4. Auto redirect if already logged in & Load Saved Accounts
+  // ✅ 4. Auto redirect if already logged in & Load Saved Accounts
   (async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {

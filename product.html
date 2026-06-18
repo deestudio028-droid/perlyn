@@ -37,7 +37,7 @@
       font-family: 'Cormorant Garamond', serif !important;
     }
 
-    /* œ… Price - Global (for desktop) */
+    /* ✅ Price - Global (for desktop) */
     .price {
       font-family: 'Gilda Display', serif !important;
       font-size: 26px;
@@ -181,8 +181,8 @@
       font-style: italic;
     }
 
-    /* œ… Price Row - Clean Center Alignment */
-/* œ… Price Row */
+    /* ✅ Price Row - Clean Center Alignment */
+/* ✅ Price Row */
 .price-row {
   display: flex;
   flex-direction: column;
@@ -205,7 +205,7 @@
   transform: translateY(2px);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
-/* œ… Ensure Flat Share Icon Always Visible */
+/* ✅ Ensure Flat Share Icon Always Visible */
 .price-row {
   position: relative;
   z-index: 20; /* stays above other UI layers */
@@ -382,7 +382,7 @@
       transform: translateY(0);
     }
 
-    /* œ… Responsive Mobile Fix */
+    /* ✅ Responsive Mobile Fix */
     @media (max-width: 768px) {
       .product-detail {
         display: flex;
@@ -472,14 +472,14 @@
       }
     }
 
-    /* ðŸ›’ Cart link emoji style */
+    /* 🛒 Cart link emoji style */
     #cartLink {
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* œ… Add this below it */
+    /* ✅ Add this below it */
     #cartLink:hover {
       color: #b98474;
       transform: scale(1.05);
@@ -637,7 +637,7 @@
       color: #ddd;
       transition: color 0.2s ease, transform 0.15s ease;
       -webkit-tap-highlight-color: transparent;
-      /* ðŸ”¥ Removes blue flash */
+      /* 🔥 Removes blue flash */
       outline: none;
       border: none;
     }
@@ -800,7 +800,7 @@ body {
   font-weight: 600;
 }
 
-/* ðŸ“± Mobile optimization */
+/* 📱 Mobile optimization */
 @media (max-width: 768px) {
   .fixed-action-bar {
     padding: 10px;
@@ -837,7 +837,7 @@ body {
 body {
   padding-bottom: 90px; /* space for fixed bar */
 }
-/* ðŸ”’ Out-of-stock Button Style */
+/* 🔒 Out-of-stock Button Style */
 .out-of-stock-btn {
   background: #d8c1b9 !important;
   color: #fff !important;
@@ -1146,7 +1146,7 @@ body {
         <h3>Perlyn</h3>
         <p>Gloss that loves. Tints that stay. Oils that care.</p>
         <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
-        <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
+        <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
         <div class="social-icons" style="margin-top:10px;">
           <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
             target="_blank">
@@ -1197,7 +1197,7 @@ body {
 
   
   <script>
-  // œ… Wait for Supabase client from navbar.js "” guaranteed ready
+  // ✅ Wait for Supabase client from navbar.js "” guaranteed ready
 (async () => {
   let supabase;
 
@@ -1397,7 +1397,7 @@ initGallery(validImages.length ? validImages : [product.image_url].filter(Boolea
 
 }
 
-// œ… Optimized & Safe Add-to-Cart Function (Perlyn Final)
+// ✅ Optimized & Safe Add-to-Cart Function (Perlyn Final)
 async function addToCart(supabase, productId) {
   try {
     // œ¨ Ensure Supabase client and session exist
@@ -1442,7 +1442,7 @@ async function addToCart(supabase, productId) {
       console.warn("š ï¸ Cart lookup error:", existingError.message);
     }
 
-    // ðŸ›’ Update or Insert logic
+    // 🛒 Update or Insert logic
     if (existing) {
       const { error: updateError } = await supabase
         .from("cart")
@@ -1468,7 +1468,7 @@ async function addToCart(supabase, productId) {
       console.log("ðŸŸ¢ New product added to cart");
     }
 
-    // œ… Refresh UI count and toast
+    // ✅ Refresh UI count and toast
     showToast("Added to Cart");
     updateCartCount(supabase);
 
@@ -1533,7 +1533,7 @@ function initGallery(images = [], videoUrls = []) {
     return;
   }
 
-  let currentIndex = 0; // œ… declare only once
+  let currentIndex = 0; // ✅ declare only once
 
   // ðŸŽžï¸ Render each media item (image/video)
   gallery.innerHTML = media
@@ -1559,7 +1559,7 @@ function initGallery(images = [], videoUrls = []) {
     .map((_, i) => `<div class="dot ${i === 0 ? "active" : ""}"></div>`)
     .join("");
 
-  // œ… Select all media
+  // ✅ Select all media
   const allMedia = gallery.querySelectorAll("img, video");
   const allDots = dots.querySelectorAll(".dot");
 
@@ -1574,7 +1574,7 @@ function initGallery(images = [], videoUrls = []) {
       m.playsInline = true;
       m.preload = "auto";
 
-      // ðŸš€ Try to play immediately (handles Chrome/Safari autoplay rules)
+      // 🚀 Try to play immediately (handles Chrome/Safari autoplay rules)
       const playVideo = async () => {
         try {
           await m.play();
@@ -1693,14 +1693,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const productName = document.getElementById("product-name")?.innerText || "Perlyn Beauty";
     const shareData = {
       title: productName,
-      text: "Check out this product from Perlyn Beauty ðŸ’„œ¨",
+      text: "Check out this product from Perlyn Beauty 💄œ¨",
       url: currentUrl
     };
 
     try {
       if (navigator.share) {
         await navigator.share(shareData);
-        console.log("œ… Shared successfully!");
+        console.log("✅ Shared successfully!");
       } else {
         // fallback for desktop
         navigator.clipboard.writeText(currentUrl);

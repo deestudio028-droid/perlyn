@@ -295,7 +295,7 @@
       <h3>Perlyn</h3>
       <p>Gloss that loves. Tints that stay. Oils that care.</p>
       <p>Imported Formulas • Clean • Vegan • Cruelty-Free</p>
-      <p>Pan-India Shipping ðŸ‡®ðŸ‡³ | Glow Without Limits</p>
+      <p>Pan-India Shipping 🇮🇳 | Glow Without Limits</p>
       <div class="social-icons" style="margin-top:10px;">
         <a href="https://www.instagram.com/invites/contact/?utm_source=ig_contact_invite&utm_medium=copy_link&utm_content=z8v0z4q"
           target="_blank">
@@ -374,14 +374,14 @@
       const { data: { session } } = await supabase.auth.getSession();
 
       if (!session) {
-        // ðŸ”’ Remember current page (for redirect after login)
+        // 🔒 Remember current page (for redirect after login)
         localStorage.setItem("lastVisitedPage", window.location.href);
         showToast("Please login to view your account");
         setTimeout(() => (window.location.href = "login.html"), 1000);
         return;
       }
 
-      // œ… Display Email
+      // ✅ Display Email
       userEmail.innerText = session.user.email;
       logoutBtn.style.display = "inline";
 
@@ -441,7 +441,7 @@
     }
   });
 
-  // ðŸš€ Auto Load Account Details
+  // 🚀 Auto Load Account Details
   loadAccount();
 </script>
 

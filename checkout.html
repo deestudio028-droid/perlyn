@@ -154,9 +154,9 @@
     </form>
 
     <div class="confirmation" id="confirmation">
-      <h3>ðŸŽ‰ Order Placed Successfully!</h3>
+      <h3>🎉 Order Placed Successfully!</h3>
       <p>Your order will be dispatched within 3"“5 working days.</p>
-      <p>Thank you for shopping with <b>Perlyn Beauty</b> ðŸ’–</p>
+      <p>Thank you for shopping with <b>Perlyn Beauty</b> 💖</p>
     </div>
   </div>
 
@@ -249,7 +249,7 @@
         return;
       }
 
-      // ðŸš€ Trigger payment
+      // 🚀 Trigger payment
       try {
         const apiUrl = window.ENV.SUPABASE_URL + "/functions/v1/create-payment";
         const res = await fetch(apiUrl, {
@@ -274,7 +274,7 @@
       }
     });
 
-// œ… Handle redirect from PhonePe success (fixed)
+// ✅ Handle redirect from PhonePe success (fixed)
 (async () => {
   if (window.location.search.includes("success=true")) {
     document.querySelector("form").style.display = "none";

@@ -240,7 +240,7 @@ button:active {
   opacity: 0.9;
 }
 
-/* ðŸ“± Mobile view "” stacks neatly */
+/* 📱 Mobile view "” stacks neatly */
 @media (max-width: 600px) {
   .saved-details-box {
     flex-direction: column;
@@ -484,14 +484,14 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
       if (detectedState) stateEl.value = detectedState;
       if (detectedCity) cityEl.value = detectedCity;
 
-      status.textContent = "œ… Location auto-filled successfully!";
+      status.textContent = "✅ Location auto-filled successfully!";
       status.style.color = "#3a814e";
     } else {
       status.textContent = "š ï¸ Could not detect location for this pincode.";
       status.style.color = "#b84c4c";
     }
   } catch (err) {
-    console.error("ðŸ“¦ Pincode lookup failed:", err);
+    console.error("📦 Pincode lookup failed:", err);
     status.textContent = "Œ Unable to detect location. Please type manually.";
     status.style.color = "#b84c4c";
     stateEl.removeAttribute("readonly");
@@ -519,7 +519,7 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
   </div>
 
   <div id="successMsg" class="success-message">
-    œ… ORDER PLACED SUCCESSFULLY!<br><br>
+    ✅ ORDER PLACED SUCCESSFULLY!<br><br>
     Will dispatch within 3 days and deliver within 5"“7 days.<br><br>
     <button class="btn" onclick="window.location.href='index.html'">Continue Shopping</button>
   </div>
@@ -594,7 +594,7 @@ window.addEventListener("load", () => {
 
 // ðŸŸ¢ Improved loadCart() "” handles auth restoration + guest cart
 async function loadCart() {
-  console.log("ðŸ›’ Fetching cart...");
+  console.log("🛒 Fetching cart...");
 
   // Try to get session
   const { data } = await supabaseClient.auth.getSession();
@@ -628,7 +628,7 @@ async function loadCart() {
       }).filter(i => i !== null);
     }
   } else {
-    // ðŸ›’ Fetch cart with product details for logged in user
+    // 🛒 Fetch cart with product details for logged in user
     const { data: userCart, error } = await supabaseClient
       .from("cart")
       .select(`quantity, products(name, price, shade)`)
@@ -659,7 +659,7 @@ const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
 discount = storedDiscount > 0 ? storedDiscount : (subtotal >= 1499 ? 150 : 0);
 shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
 
-// ðŸ’° fallback calculation only if session data missing
+// 💰 fallback calculation only if session data missing
 total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
 
 // ðŸ’Œ Add ‚¹30 message charge (if personalized message exists)
@@ -700,7 +700,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
   console.log(`ðŸ§¾ Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
 }
 
-// œ… Attach to form submit "” with safe fallback if loadCart fails
+// ✅ Attach to form submit "” with safe fallback if loadCart fails
 document.getElementById("shippingForm").addEventListener("submit", async e => {
   e.preventDefault();
   try {
@@ -756,7 +756,7 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
         </div>`;
     }
 
-   // œ… Step 4: Confirm & Pay "” full safe payment + redirect logic (Updated & Fixed)
+   // ✅ Step 4: Confirm & Pay "” full safe payment + redirect logic (Updated & Fixed)
   document.getElementById("confirmPayBtn").addEventListener("click", async () => {
     const btn = document.getElementById("confirmPayBtn");
     const originalText = btn.textContent;
@@ -769,9 +769,9 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     document.head.appendChild(style);
 
     try {
-      console.log("ðŸ’° Confirm & Pay clicked!");
+      console.log("💰 Confirm & Pay clicked!");
 
-    // œ… Capture current form values
+    // ✅ Capture current form values
     const customerPayload = {
       name: nameEl.value.trim(),
       phone: phoneEl.value.trim(),
@@ -783,12 +783,12 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
       email: emailEl.value.trim()
     };
 
-    console.log("ðŸ“¦ Customer Payload:", customerPayload);
+    console.log("📦 Customer Payload:", customerPayload);
 
     // ðŸ’¾ Save customer info if checkbox checked
     await saveCustomerDetailsIfChecked();
 
-    // ðŸš€ Start backend phonepe gateway session
+    // 🚀 Start backend phonepe gateway session
     const { data: { session } } = await supabaseClient.auth.getSession();
     const appliedCoupon = localStorage.getItem("appliedCoupon") ? JSON.parse(localStorage.getItem("appliedCoupon")).code : null;
 
@@ -826,12 +826,12 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     });
 
     const data = await res.json();
-    console.log("ðŸ’³ Payment Response:", data);
+    console.log("💳 Payment Response:", data);
 
     if (data.success && data.redirectUrl) {
       console.log("ðŸ§¾ Order processed successfully via backend:", orderId);
 
-// œ… Generate PDF first, then redirect
+// ✅ Generate PDF first, then redirect
 console.log("ðŸ§¾ Generating invoice PDF...");
 await new Promise((resolve) => {
   try {
@@ -1045,7 +1045,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
 }
 
 
-// œ… Helper to convert number to words (basic)
+// ✅ Helper to convert number to words (basic)
 function convertToWords(num) {
   const a = [
     "", "One", "Two", "Three", "Four", "Five", "Six",
@@ -1075,14 +1075,14 @@ function convertToWords(num) {
 // ðŸ§  PERLYN "” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
 // ===========================================================
 
-// œ… Step 1: Check for saved customer details when page loads
+// ✅ Step 1: Check for saved customer details when page loads
 window.addEventListener("load", async () => {
   const session = await getActiveSession();
   if (!session) return;
   await showSavedCustomerDetails(session.user.id);
 });
 
-// œ… Step 2: Fetch & display saved customer details box
+// ✅ Step 2: Fetch & display saved customer details box
 async function showSavedCustomerDetails(userId) {
   const { data, error } = await supabaseClient
     .from("customer_details")
@@ -1111,7 +1111,7 @@ async function showSavedCustomerDetails(userId) {
     `;
     container.insertBefore(box, document.getElementById("shippingForm"));
 
-    // œ… Apply †’ auto-fill inputs
+    // ✅ Apply †’ auto-fill inputs
     box.querySelector(".apply-btn").addEventListener("click", () => {
       nameEl.value = data.name || "";
       phoneEl.value = data.phone || "";
@@ -1120,7 +1120,7 @@ async function showSavedCustomerDetails(userId) {
       stateEl.value = data.state || "";
       pincodeEl.value = data.pincode || "";
 
-      box.querySelector(".apply-btn").textContent = "Applied œ…";
+      box.querySelector(".apply-btn").textContent = "Applied ✅";
       box.querySelector(".apply-btn").disabled = true;
     });
 
@@ -1132,7 +1132,7 @@ async function showSavedCustomerDetails(userId) {
   }
 }
 
-// œ… Step 3: Save details if checkbox is checked
+// ✅ Step 3: Save details if checkbox is checked
 async function saveCustomerDetailsIfChecked() {
   const { data: { session } } = await supabaseClient.auth.getSession();
   if (!session) return;
@@ -1155,7 +1155,7 @@ async function saveCustomerDetailsIfChecked() {
     .upsert(payload, { onConflict: "user_id" });
 
   if (error) console.error("š ï¸ Save customer details failed:", error);
-  else console.log("œ… Customer details saved/updated successfully");
+  else console.log("✅ Customer details saved/updated successfully");
 }
 
 
@@ -1182,7 +1182,7 @@ const validStates = [
   "Maharashtra", "Delhi", "West Bengal", "Uttar Pradesh"
 ];
 
-// œ… Validate on blur (after typing)
+// ✅ Validate on blur (after typing)
 document.getElementById("city").addEventListener("blur", (e) => {
   const val = e.target.value.trim();
   if (val && !validCities.some(c => c.toLowerCase() === val.toLowerCase())) {
