@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const navMenu = document.getElementById("nav-menu");
     hamburger?.addEventListener("click", () => {
       navMenu.classList.toggle("show");
-      hamburger.textContent = navMenu.classList.contains("show") ? "✕" : "☰";
+      hamburger.textContent = navMenu.classList.contains("show") ? "✖" : "☰";
     });
 
     document.querySelectorAll("#nav-menu a").forEach(link => {
