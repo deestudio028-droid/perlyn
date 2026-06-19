@@ -936,7 +936,7 @@ div.className = "cart-item";
 div.innerHTML = `
   <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}">
  <div class="qty-top">
-  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">ˆ’</button>
+  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">-</button>
   <input 
     type="number" 
     id="qty-input-${item.id}" 
