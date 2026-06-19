@@ -256,7 +256,7 @@
       <button id="admin-pass-submit" class="lock-btn">Unlock</button>
       <button id="admin-pass-cancel" class="lock-btn" style="background:#eee;color:#4b3b32;">Close Tab</button>
     </div>
-    <div id="admin-lock-err" class="err">Incorrect password "” try again.</div>
+    <div id="admin-lock-err" class="err">Incorrect password — try again.</div>
     <div class="help">Session will end when you close the browser tab.</div>
   </div>
 </div>
@@ -310,7 +310,7 @@
       if (e.key === "Enter") unlock();
     });
 
-    // Cancel "” encourage closing tab
+    // Cancel — encourage closing tab
     cancelBtn.addEventListener("click", () => {
       // Attempt to close tab (only works in some browsers if opened by script)
       try { window.close(); } catch (e) {}
@@ -691,8 +691,8 @@ categorySelect.innerHTML = [
         <td>‚¹${p.price}</td>
         <td>${p.stock}</td>
         <td>${p.category}</td>
-        <td>${p.bestseller ? "🔥" : ""”"}</td>
-        <td>${p.newly_launched ? "🆕" : ""”"}</td>
+        <td>${p.bestseller ? "🔥" : "—"}</td>
+        <td>${p.newly_launched ? "🆕" : "—"}</td>
         <td>
           <button onclick="editProduct(${p.id})" class="edit-btn" style="background:#b8905a;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">œï¸</button>
           <button onclick="deleteProduct(${p.id})" class="delete-btn" style="margin-left:6px;">🗑️</button>
@@ -738,7 +738,7 @@ loadHomeDisplay();
     document.getElementById("bestseller").value = data.bestseller ? "true" : "false";
     document.getElementById("newly_launched").value = data.newly_launched ? "true" : "false";
 
-    document.getElementById("status").innerText = "œï¸ Edit mode "” make changes and click Save Product.";
+    document.getElementById("status").innerText = "œï¸ Edit mode — make changes and click Save Product.";
 // 🖼️ Show existing image previews
 const imgPreview = document.getElementById("imagePreview");
 imgPreview.innerHTML = "";
@@ -842,7 +842,7 @@ if (files.length > 0) {
   }
 }
 
-// 🧠 Keep existing images that weren"™t removed
+// 🧠 Keep existing images that weren’t removed
 let oldImages = Array.from(document.querySelectorAll("#imagePreview img"))
   .filter(img => img.dataset.removed !== "true") // skip removed ones
   .map(img => img.src);
@@ -877,7 +877,7 @@ if (videoFiles.length > 0) {
     videoUrls.push(videoData.publicUrl);
   }
 }
-// 🧠 Keep existing videos that weren"™t removed
+// 🧠 Keep existing videos that weren’t removed
 let oldVideos = Array.from(document.querySelectorAll("#videoPreview video"))
   .filter(vid => vid.dataset.removed !== "true") // skip removed
   .map(vid => vid.src);
@@ -886,7 +886,7 @@ let oldVideos = Array.from(document.querySelectorAll("#videoPreview video"))
 const finalVideoUrls = [...oldVideos, ...videoUrls];
 
 
-// 🧠 Keep old images/videos if user didn"™t upload new ones
+// 🧠 Keep old images/videos if user didn’t upload new ones
 
 const newData = {
   name, shade, price, card_description, description,
@@ -936,7 +936,7 @@ const newData = {
         <td>${c.description || '-'}</td>
         <td>${c.discount_percent}%</td>
         <td>‚¹${c.min_purchase}</td>
-        <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : ""”"}</td>
+        <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : "—"}</td>
         <td><button class="delete-btn" onclick="deleteCoupon(${c.id})">🗑️</button></td>
       </tr>
     `).join("");
@@ -1036,7 +1036,7 @@ async function loadReviews() {
       <tr>
         <td>${r.id}</td>
         <td>${r.product_id}</td>
-        <td>${r.user_name || ""”"}</td>
+        <td>${r.user_name || "—"}</td>
         <td>­ ${r.rating}</td>
         <td style="max-width:300px;word-break:break-word;">${r.comment}</td>
         <td>${new Date(r.created_at).toLocaleString()}</td>
@@ -1139,11 +1139,11 @@ async function loadOrders() {
   table.innerHTML = data.map(o => `
     <tr>
       <td>${o.order_id}</td>
-      <td>${o.name || ""”"}</td>
+      <td>${o.name || "—"}</td>
 
-      <td>${o.phone || ""”"}</td>
-      <td>${o.city || ""”"}</td>
-      <td>${o.state || ""”"}</td>
+      <td>${o.phone || "—"}</td>
+      <td>${o.city || "—"}</td>
+      <td>${o.state || "—"}</td>
       <td>‚¹${o.total || 0}</td>
       <td>${o.status || "Pending"}</td>
       <td>${new Date(o.created_at).toLocaleDateString()}</td>
@@ -1371,7 +1371,7 @@ function convertToWords(num) {
 
 
 // 📦 CLIENT SHIPPING SLIP
-// 📦 FINAL SHIPPING SLIP "” "From" just below "To" block
+// 📦 FINAL SHIPPING SLIP — "From" just below "To" block
 async function viewShippingSlip(orderId) {
   const { data: order } = await supabase
     .from("orders")
@@ -1412,7 +1412,7 @@ const wrappedAddress = pdf.splitTextToSize(addressText, 170); // 170mm width
 pdf.text(wrappedAddress, 15, y);
 y += wrappedAddress.length * 6; // adjust spacing dynamically
 
-  pdf.text(`${order.city || ""}, ${order.state || ""} "“ ${order.pincode || ""}`, 15, y);
+  pdf.text(`${order.city || ""}, ${order.state || ""} – ${order.pincode || ""}`, 15, y);
   y += 8;
   pdf.text(order.phone || "", 15, y);
 
@@ -1471,7 +1471,7 @@ async function deleteOrder(orderId) {
   alert(`✅ Order ${orderId} deleted successfully!`);
   loadOrders(); // refresh the table
 }
-// œ¨ Enable Drag-and-Drop Reordering for Product Images
+// ✨ Enable Drag-and-Drop Reordering for Product Images
 (function enableImageReorder() {
   const preview = document.getElementById("imagePreview");
   if (!preview) return;
@@ -1505,7 +1505,7 @@ async function deleteOrder(orderId) {
     }
   });
 })();
-// œ¨ Enable Drag-and-Drop Reordering for Product Videos
+// ✨ Enable Drag-and-Drop Reordering for Product Videos
 (function enableVideoReorder() {
   const preview = document.getElementById("videoPreview");
   if (!preview) return;

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn "” Checkout & Shipping</title>
+  <title>Perlyn — Checkout & Shipping</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Gilda+Display&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.min.js"></script>
@@ -172,7 +172,7 @@ button:active {
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-   /* 💌 Saved Customer Details Box "” Refined Perlyn Theme */
+   /* 💌 Saved Customer Details Box — Refined Perlyn Theme */
 .saved-details-box {
   background: #fff6f0;
   border: 1px solid #e8d3c6;
@@ -192,7 +192,7 @@ button:active {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
 }
 
-/* œ¨ Summary text (left section) */
+/* ✨ Summary text (left section) */
 .saved-summary {
   font-size: 15.5px;
   color: #4b3b32;
@@ -240,7 +240,7 @@ button:active {
   opacity: 0.9;
 }
 
-/* 📱 Mobile view "” stacks neatly */
+/* 📱 Mobile view — stacks neatly */
 @media (max-width: 600px) {
   .saved-details-box {
     flex-direction: column;
@@ -306,7 +306,7 @@ button:active {
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Checkbox "” Perlyn accent tone */
+/* Checkbox — Perlyn accent tone */
 .save-details input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -520,7 +520,7 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
 
   <div id="successMsg" class="success-message">
     ✅ ORDER PLACED SUCCESSFULLY!<br><br>
-    Will dispatch within 3 days and deliver within 5"“7 days.<br><br>
+    Will dispatch within 3 days and deliver within 5–7 days.<br><br>
     <button class="btn" onclick="window.location.href='index.html'">Continue Shopping</button>
   </div>
 
@@ -592,7 +592,7 @@ window.addEventListener("load", () => {
     });
 
 
-// 🟢 Improved loadCart() "” handles auth restoration + guest cart
+// 🟢 Improved loadCart() — handles auth restoration + guest cart
 async function loadCart() {
   console.log("🛒 Fetching cart...");
 
@@ -700,7 +700,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
   console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
 }
 
-// ✅ Attach to form submit "” with safe fallback if loadCart fails
+// ✅ Attach to form submit — with safe fallback if loadCart fails
 document.getElementById("shippingForm").addEventListener("submit", async e => {
   e.preventDefault();
   try {
@@ -727,7 +727,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
 
       const itemsHTML = cartItems.map(p => `
         <div class="order-item">
-          <div>${p.name} (${p.shade || ""”"}) × ${p.qty}</div>
+          <div>${p.name} (${p.shade || "—"}) × ${p.qty}</div>
           <div>‚¹${p.price * p.qty}</div>
         </div>`).join("");
 
@@ -756,7 +756,7 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
         </div>`;
     }
 
-   // ✅ Step 4: Confirm & Pay "” full safe payment + redirect logic (Updated & Fixed)
+   // ✅ Step 4: Confirm & Pay — full safe payment + redirect logic (Updated & Fixed)
   document.getElementById("confirmPayBtn").addEventListener("click", async () => {
     const btn = document.getElementById("confirmPayBtn");
     const originalText = btn.textContent;
@@ -1027,7 +1027,7 @@ if (messageEl.value && messageEl.value.trim() !== "") {
   pdf.setFont("helvetica", "normal");
   pdf.setTextColor(...text);
 
-  // œ¨ Wrap long message neatly across lines (max width 170mm)
+  // ✨ Wrap long message neatly across lines (max width 170mm)
   const wrappedMsg = pdf.splitTextToSize(`"${messageEl.value.trim()}"`, 170);
   pdf.text(wrappedMsg, 15, y);
   y += wrappedMsg.length * 6; // adjust vertical space based on line count
@@ -1069,10 +1069,10 @@ function convertToWords(num) {
 
 // 🧩 Prevent accidental double-login mismatch
 // ===========================================================
-// 🧠 PERLYN "” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
+// 🧠 PERLYN — CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
 // ===========================================================
 // ===========================================================
-// 🧠 PERLYN "” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
+// 🧠 PERLYN — CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
 // ===========================================================
 
 // ✅ Step 1: Check for saved customer details when page loads

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perlyn "” Cart</title>
+  <title>Perlyn — Cart</title>
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
@@ -576,7 +576,7 @@
   background: #f1dad0;
   transform: translateY(-1px);
 }
-/* 🎀 Offers & Discounts Section "” Refined Perlyn Style */
+/* 🎀 Offers & Discounts Section — Refined Perlyn Style */
 .offers-box {
   background: #fff6f0;
   border-radius: 16px;
@@ -699,7 +699,7 @@
   <div id="offers-list" style="display:none;"></div>
 </div>
 
-<!-- 💌 Coupon Section "” moved above footer -->
+<!-- 💌 Coupon Section — moved above footer -->
 <div class="coupon-box" style="position: sticky; bottom: 100px; background: #fff6f0; z-index: 90; padding: 8px 0; box-shadow: 0 -1px 6px rgba(0,0,0,0.05);">
   <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
 
@@ -723,7 +723,7 @@
 </div>
 
 <style>
-    /* 🩵 Fixed Cart Action Bar "” Centered + Floating Refined Look */
+    /* 🩵 Fixed Cart Action Bar — Centered + Floating Refined Look */
 .fixed-cart-bar {
   position: fixed;
   bottom: 10px; /* 🔹 lifted slightly for floating feel */
@@ -782,7 +782,7 @@
   color: #4b3b32;
 }
 
-/* œ¨ Slim & Elegant Buy Now Button */
+/* ✨ Slim & Elegant Buy Now Button */
 .btn-buy-now {
   border: none;
   background: #b98474;
@@ -813,7 +813,7 @@
   opacity: 0.9;
 }
 
-/* 📱 Mobile optimization "” balanced & full width */
+/* 📱 Mobile optimization — balanced & full width */
 @media (max-width: 768px) {
   .fixed-cart-bar {
     bottom: 6px;
@@ -841,7 +841,7 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* œ¨ Offer item hover smoothness */
+/* ✨ Offer item hover smoothness */
 .offer-item {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -965,7 +965,7 @@ div.innerHTML = `
   <div class="item-info">
     <span class="item-name">${p.name}</span>
     <p class="category">${p.category || "Lip Tint"}</p>
-    <p class="shade">${p.shade || ""”"}</p>
+    <p class="shade">${p.shade || "—"}</p>
     <span class="item-price">‚¹${p.price}</span>
     <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
   </div>
@@ -1024,14 +1024,14 @@ cartBox.appendChild(div);
       await supabase.from("cart").update({ quantity: newQty }).eq("id", cartId);
     }
 
-    // œ¨ Update subtotal of this item directly
+    // ✨ Update subtotal of this item directly
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
     const price = parseFloat(priceEl.textContent.replace(/[‚¹,]/g, ""));
     subtotalEl.textContent = "‚¹" + (price * newQty).toLocaleString("en-IN");
 
     vibrate(); // feedback
-    await updateCartTotal(); // œ¨ only recalc totals, not reload full cart
+    await updateCartTotal(); // ✨ only recalc totals, not reload full cart
   }
 
   // œï¸ Handle Manual Typing
@@ -1058,7 +1058,7 @@ cartBox.appendChild(div);
       await supabase.from("cart").update({ quantity: qty }).eq("id", cartId);
     }
 
-    // œ¨ Update subtotal instantly
+    // ✨ Update subtotal instantly
     const qtyInput = document.getElementById(`qty-input-${cartId}`);
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
@@ -1066,7 +1066,7 @@ cartBox.appendChild(div);
     subtotalEl.textContent = "‚¹" + (price * qty).toLocaleString("en-IN");
 
     vibrate();
-    await updateCartTotal(); // œ¨ recalc bottom summary only
+    await updateCartTotal(); // ✨ recalc bottom summary only
   }
 
 // 📳 Vibration Feedback
@@ -1235,7 +1235,7 @@ removeBtn.style.display = "inline-block";
 // 🔁 Update totals and UI immediately
 updateCartTotal();
 
-// 🧠 Save locally "” usage will be recorded after payment success
+// 🧠 Save locally — usage will be recorded after payment success
 saveCoupon();
 
 
@@ -1326,7 +1326,7 @@ sessionStorage.setItem("finalTotal", total);
     totalEl.innerHTML = `Total: ‚¹${total.toLocaleString("en-IN")}`;
   }
 
-  // 🩷 Free shipping message "” Lip Gloss font style
+  // 🩷 Free shipping message — Lip Gloss font style
   const diff = 999 - subtotal;
   freeMsg.style.fontFamily = "'Cormorant Garamond', serif";
   freeMsg.style.fontStyle = "italic";
@@ -1365,7 +1365,7 @@ const savings = discountAmount + (shipping === 0 ? 99 : 0);
 if (total > 0 && savings > 0) {
   totalEl.innerHTML += `
     <div style="font-size:16px;color:#3a814e;font-weight:600;margin-top:4px;">
-      💝 You"™ve saved ‚¹${savings.toFixed(0)} on this order!
+      💝 You’ve saved ‚¹${savings.toFixed(0)} on this order!
     </div>`;
 }
 
@@ -1377,10 +1377,10 @@ async function updateRewardPoints(total) {
   const rewardMsg = document.getElementById("reward-msg");
   if (!rewardMsg) return;
   const points = Math.floor(total / 10);
-  rewardMsg.textContent = `You"™ll earn 🎁 ${points} reward points on this order!`;
+  rewardMsg.textContent = `You’ll earn 🎁 ${points} reward points on this order!`;
 }
 // =================================================
-// 🌟 PERLYN "” LIVE REWARD POINTS SYSTEM (Supabase)
+// 🌟 PERLYN — LIVE REWARD POINTS SYSTEM (Supabase)
 // =================================================
 async function loadRewardPoints() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -1420,9 +1420,9 @@ async function loadRewardPoints() {
   const nextMilestone = 100;
   if (currentPoints < nextMilestone) {
     const needed = nextMilestone - currentPoints;
-    rewardMsg.innerHTML += ` "” Collect <b>${needed}</b> more for a surprise free gift 🎁`;
+    rewardMsg.innerHTML += ` — Collect <b>${needed}</b> more for a surprise free gift 🎁`;
   } else {
-    rewardMsg.innerHTML += ` "” 🎉 <b>You"™ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
+    rewardMsg.innerHTML += ` — 🎉 <b>You’ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
   }
 }
 
@@ -1440,7 +1440,7 @@ async function checkRewardGift() {
 
   if (reward && reward.total_points >= 100) {
     const msg = document.getElementById("coupon-msg");
-    msg.innerHTML = `🎉 You"™ve unlocked a <b>surprise free gift!</b> Use code <b>GIFT100</b>`;
+    msg.innerHTML = `🎉 You’ve unlocked a <b>surprise free gift!</b> Use code <b>GIFT100</b>`;
     msg.style.color = "#3a814e";
   }
 }
@@ -1522,10 +1522,10 @@ if (!couponError && coupons && coupons.length > 0) {
   }
 }
 
-// œ¨ View All Offers Popup
+// ✨ View All Offers Popup
 function showAllOffers(offers) {
   const text = offers
-    .map(o => `• ${o.title}${o.description ? " "” " + o.description : ""}`)
+    .map(o => `• ${o.title}${o.description ? " — " + o.description : ""}`)
     .join("\n");
   alert("Available Offers:\n\n" + text);
 }
@@ -1534,7 +1534,7 @@ function showAllOffers(offers) {
 // 🎁 OFFERS BUTTON FUNCTION
 // ================================
 function showOffers() {
-  alert("Available Offers:\n• AURA10 "“ 10% off above ‚¹599\n• FREESHIP "“ Free shipping above ‚¹999");
+  alert("Available Offers:\n• AURA10 – 10% off above ‚¹599\n• FREESHIP – Free shipping above ‚¹999");
 }
 window.addEventListener("load", async () => {
   await initCartSystem();  // 🛒 Loads cart + totals + offers
