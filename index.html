@@ -643,18 +643,18 @@ async function loadOfferSystem() {
       return;
     }
 
-    // Å"Ã¢â‚¬¦ Update banner text from Supabase
-    banner.innerHTML = `<span>Å"Ã‚¨ ${data.title} Å"Ã‚¨</span>`;
+    // ✨ Update banner text from Supabase
+    banner.innerHTML = `<span>✨ ${data.title} ✨</span>`;
 
     // Extract coupon code dynamically from the title
     const extractedCode = data.title.match(/code\s+(\w+)/i)?.[1] || "AURA10";
 
-    // Å"Ã¢â‚¬¦ Fill popup dynamically
-    document.getElementById("offer-title").textContent = `Ãƒ°Ã…¸Ã…½Ã‚ ${data.title}`;
+    // 🎁 Fill popup dynamically
+    document.getElementById("offer-title").textContent = `🎁 ${data.title}`;
     document.getElementById("offer-code").textContent = extractedCode;
-    document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer Ãƒ°Ã…¸Ã¢â‚¬â„¢Ã¢â‚¬"";
+    document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer 💖";
 
-    // Ãƒ°Ã…¸Ã…½Ã‚ Show popup only once per session
+    // Show popup only once per session
     if (!sessionStorage.getItem("welcomeShown")) {
       setTimeout(() => {
         const popup = document.getElementById("welcome-offer");
