@@ -280,13 +280,13 @@
   const verifyOtpBtn = document.getElementById("verifyOtpBtn");
   const messageBox = document.getElementById("messageBox");
 
-  // ðŸŒ Helper to show message
+  // 🌐 Helper to show message
   function showMessage(msg, type = "success") {
     messageBox.textContent = msg;
     messageBox.className = `message ${type}`;
   }
 
-  // ðŸ§­ Unified redirect target getter (linked with navbar.js)
+  // 🧭 Unified redirect target getter (linked with navbar.js)
   function getRedirectTarget() {
     const saved = localStorage.getItem("lastVisitedPage");
     return saved && !saved.includes("login.html") ? saved : "account.html";
@@ -299,7 +299,7 @@
     const isFacebook = (ua.indexOf('FBAN') > -1) || (ua.indexOf('FBAV') > -1);
 
     if (isInstagram || isFacebook) {
-      console.log("ðŸ“Š Analytics: In-App Browser Detected", { ua, isInstagram, isFacebook });
+      console.log("📊 Analytics: In-App Browser Detected", { ua, isInstagram, isFacebook });
       const banner = document.getElementById("inAppBanner");
       const btn = document.getElementById("openSystemBrowserBtn");
       
@@ -381,7 +381,7 @@
       otpInput.classList.add("otp-verified");
       showMessage("Login successful! Redirecting...", "success");
 
-      // ðŸ§  Redirect to last visited page (from navbar.js)
+      // 🧠 Redirect to last visited page (from navbar.js)
       const redirectTarget = getRedirectTarget();
       localStorage.removeItem("lastVisitedPage");
       setTimeout(() => (window.location.href = redirectTarget), 1000);

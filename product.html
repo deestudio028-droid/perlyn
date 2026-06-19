@@ -67,7 +67,7 @@
       border-radius: var(--radius);
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
-/* ðŸŒ¸ Floating Share Button (Perfect Size + Inner Zoomed Icon) */
+/* 🌸 Floating Share Button (Perfect Size + Inner Zoomed Icon) */
 .share-btn {
   position: absolute;
   top: 14px;
@@ -87,7 +87,7 @@
   outline: none;
 }
 
-/* ðŸ§  The inner image (icon inside the bubble) */
+/* 🧠 The inner image (icon inside the bubble) */
 .share-btn img {
   width: 18px; /* zoom icon slightly */
   height: 18px;
@@ -96,7 +96,7 @@
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* ðŸ” Hover / tap animation */
+/* 🔍 Hover / tap animation */
 .share-btn:hover img {
   transform: scale(1.15);
   opacity: 0.95;
@@ -192,8 +192,8 @@
   text-align: center;
 }
 
-/* ðŸ©¶ Flat Share Icon "” Perlyn Theme */
-/* ðŸ©¶ Flat Share Icon "” Perlyn Theme (Visible Fix) */
+/* 🩶 Flat Share Icon "” Perlyn Theme */
+/* 🩶 Flat Share Icon "” Perlyn Theme (Visible Fix) */
 .flat-share {
   width: 28px;
   height: 28px;
@@ -311,7 +311,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
     }
-/* ðŸŒ¸ Floating Share Icon for Related Products */
+/* 🌸 Floating Share Icon for Related Products */
 .related-card {
   position: relative;
   overflow: hidden;
@@ -338,7 +338,7 @@
   background: #fff;
 }
 
-/* ðŸŒ¸ Floating Share Icon "” For Product Cards & Related Cards */
+/* 🌸 Floating Share Icon "” For Product Cards & Related Cards */
 .related-card {
   position: relative; /* ensure the share icon sits inside */
   overflow: hidden;
@@ -572,7 +572,7 @@
       background: #a56d5c;
       opacity: 0.9;
     }
-/* ðŸ©µ Verified Buyer Badge (Perlyn Theme) */
+/* 🩵 Verified Buyer Badge (Perlyn Theme) */
 .verified-badge {
   display: inline-flex;
   align-items: center;
@@ -594,7 +594,7 @@
   filter: invert(40%) sepia(20%) saturate(500%) hue-rotate(340deg);
 }
 
-/* ðŸ’… Fix: Remove mobile blue tap / selection highlight from stars */
+/* 💅 Fix: Remove mobile blue tap / selection highlight from stars */
 .star-rating {
   -webkit-tap-highlight-color: transparent; /* removes tap highlight */
   -webkit-user-select: none; /* stops blue selection flash */
@@ -622,7 +622,7 @@
   box-shadow: none !important;
 }
 
-    /* ðŸŒŸ Star Rating (Perlyn Theme) */
+    /* 🌟 Star Rating (Perlyn Theme) */
     .star-rating {
       display: flex;
       gap: 8px;
@@ -702,7 +702,7 @@
   }
 }
 
-/* ðŸ§­ Always Visible Navbar (Fixed like Action Bar) */
+/* 🧭 Always Visible Navbar (Fixed like Action Bar) */
 #navbar {
   position: fixed;
   top: 0;
@@ -716,7 +716,7 @@
   transition: all 0.3s ease-in-out;
 }
 
-/* ðŸ©· Adjust page layout so content doesn"™t hide behind navbar */
+/* 🩷 Adjust page layout so content doesn"™t hide behind navbar */
 body {
   padding-top: 70px; /* matches navbar height */
   padding-bottom: 90px; /* already there for fixed bottom bar */
@@ -773,7 +773,7 @@ body {
   overflow: hidden;
 }
 
-/* ðŸ©µ Sticky Action Bar (works on all screens) */
+/* 🩵 Sticky Action Bar (works on all screens) */
 .fixed-action-bar {
   position: fixed;
   bottom: 0;
@@ -818,7 +818,7 @@ body {
     padding: 12px 0;
   }
 }
-/* ðŸ§  Container holds both gallery and share icon */
+/* 🧠 Container holds both gallery and share icon */
 .product-gallery-container {
   position: relative;
   width: 100%;
@@ -833,7 +833,7 @@ body {
   overflow: hidden;
 }
 
-/* ðŸ§­ Prevent overlap with footer on small screens */
+/* 🧭 Prevent overlap with footer on small screens */
 body {
   padding-bottom: 90px; /* space for fixed bar */
 }
@@ -980,7 +980,7 @@ body {
   <div id="navbar"></div>
 </header>
 <script>
-  // ðŸ§© Proper Navbar + Supabase Loader (with hamburger fix)
+  // 🧩 Proper Navbar + Supabase Loader (with hamburger fix)
   async function loadNavbarAndSupabase() {
     try {
       // 1ï¸ƒ£ Load navbar.html dynamically
@@ -997,7 +997,7 @@ body {
         document.body.appendChild(script);
       });
 
-      console.log("ðŸŸ¢ Navbar + Supabase client initialized successfully");
+      console.log("🟢 Navbar + Supabase client initialized successfully");
 
       // 3ï¸ƒ£ Force re-attach hamburger toggle AFTER navbar is in DOM
       setTimeout(() => {
@@ -1021,7 +1021,7 @@ body {
             });
           });
 
-          console.log("ðŸ” Hamburger menu reattached and active!");
+          console.log("🍔 Hamburger menu reattached and active!");
         } else {
           console.warn("š ï¸ Hamburger elements not found in DOM yet!");
         }
@@ -1029,7 +1029,7 @@ body {
 
       // 4ï¸ƒ£ Supabase client is centralized
       if (!window.supabaseClient) {
-        console.error("ðŸ”´ Supabase client missing! Ensure env.js and supabaseClient.js are loaded.");
+        console.error("🔴 Supabase client missing! Ensure env.js and supabaseClient.js are loaded.");
       }
 
       window.supabaseReady = true;
@@ -1053,7 +1053,7 @@ body {
 <div class="product-gallery-container">
   <div class="product-gallery">
    
-    <!-- ðŸŒ¸ Share Icon (Top-right of image card) -->
+    <!-- 🌸 Share Icon (Top-right of image card) -->
 <img src="assets/share.png" alt="Share" class="share-btn" id="shareIcon" title="Share Product">
 
     <div class="gallery-media" id="gallery-media"></div>
@@ -1209,7 +1209,7 @@ body {
 }
 
   supabase = window.supabaseClient;
-  console.log("ðŸŸ¢ Supabase client ready in product.html");
+  console.log("🟢 Supabase client ready in product.html");
 
 
 
@@ -1217,7 +1217,7 @@ body {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
 
-    // ðŸŒ¸ Load page sections
+    // 🌸 Load page sections
     await loadProduct(supabase);
     await updateCartCount(supabase);
     await loadReviews(supabase);
@@ -1225,7 +1225,7 @@ body {
 
 
     // ===============================
-    // ðŸŒ¸ PERLYN BEAUTY REVIEW SYSTEM
+    // 🌸 PERLYN BEAUTY REVIEW SYSTEM
     // ===============================
     async function loadReviews(supabase) {
       const container = document.getElementById("reviews-container");
@@ -1253,7 +1253,7 @@ body {
 
      container.innerHTML = await Promise.all(
   data.map(async r => {
-    // ðŸ§© Check if the reviewer purchased the product
+    // 🧩 Check if the reviewer purchased the product
     const { data: orderCheck } = await supabase
       .from("orders")
       .select("order_id")
@@ -1318,7 +1318,7 @@ body {
       loadReviews(supabase);
     };
 
-    // ðŸ—‘ï¸ Delete Review
+    // 🗑️ Delete Review
     window.deleteReview = async function (id) {
       if (!confirm("Are you sure you want to delete this review?")) return;
       const { data: { session } } = await supabase.auth.getSession();
@@ -1329,7 +1329,7 @@ body {
       loadReviews(supabase);
     };
 
-    // ðŸ–Šï¸ Edit Review
+    // 🖊️ Edit Review
     window.editReview = async function (id, oldComment) {
       const newComment = prompt("Edit your review:", oldComment);
       if (!newComment) return;
@@ -1340,7 +1340,7 @@ body {
     };
 
     // ===============================
-    // ðŸ›ï¸ Product Loader
+    // 🛍️ Product Loader
     // ===============================
   async function loadProduct(supabase) {
   const { data: product, error } = await supabase
@@ -1354,7 +1354,7 @@ body {
     return;
   }
 
-// ðŸ§  Filter out null or "null" entries
+// 🧠 Filter out null or "null" entries
 const validImages = (product.image_urls || [])
   .filter(url => url && url !== "null" && url.trim() !== "");
 
@@ -1363,7 +1363,7 @@ const validVideos = (product.video_urls || [])
 
 initGallery(validImages.length ? validImages : [product.image_url].filter(Boolean), validVideos);
 
-  // ðŸ§  Update Product Info
+  // 🧠 Update Product Info
   document.getElementById("product-name").innerText = product.name;
   document.getElementById("product-shade").innerText = product.shade || "";
   document.getElementById("product-price").innerText = "‚¹" + product.price;
@@ -1376,7 +1376,7 @@ initGallery(validImages.length ? validImages : [product.image_url].filter(Boolea
   const addBtn = document.getElementById("addToCartBtn");
   const buyBtn = document.getElementById("buyNowBtn");
 
-  // ðŸ§© Stock Logic "” Disable buttons if out of stock
+  // 🧩 Stock Logic "” Disable buttons if out of stock
   if (product.stock === 0) {
     addBtn.disabled = true;
     buyBtn.disabled = true;
@@ -1409,7 +1409,7 @@ async function addToCart(supabase, productId) {
     const { data: { session } } = await supabase.auth.getSession();
     const pid = parseInt(productId, 10); // œ¨ convert to integer for Supabase
     
-    // ðŸ§  GUEST CART LOGIC
+    // 🧠 GUEST CART LOGIC
     if (!session) {
       let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
       const existingItem = guestCart.find(item => item.product_id === pid);
@@ -1430,7 +1430,7 @@ async function addToCart(supabase, productId) {
 
     const userId = session.user.id;
 
-    // ðŸ§© Try to find existing cart item for this user & product
+    // 🧩 Try to find existing cart item for this user & product
     let { data: existing, error: existingError } = await supabase
       .from("cart")
       .select("id, quantity")
@@ -1454,7 +1454,7 @@ async function addToCart(supabase, productId) {
         showToast("Error updating cart");
         return;
       }
-      console.log(`ðŸŸ¢ Cart updated: ${existing.quantity + 1} items`);
+      console.log(`🟢 Cart updated: ${existing.quantity + 1} items`);
     } else {
       const { error: insertError } = await supabase
         .from("cart")
@@ -1465,7 +1465,7 @@ async function addToCart(supabase, productId) {
         showToast("Error adding item to cart");
         return;
       }
-      console.log("ðŸŸ¢ New product added to cart");
+      console.log("🟢 New product added to cart");
     }
 
     // ✅ Refresh UI count and toast
@@ -1498,7 +1498,7 @@ async function addToCart(supabase, productId) {
     const card = document.createElement("div");
     card.classList.add("related-card");
 
-    // ðŸ©µ Build the product card with share icon
+    // 🩵 Build the product card with share icon
     card.innerHTML = `
       <img src="assets/share.png" alt="Share" class="share-btn" 
         onclick="shareProduct('${prod.name}', '${window.location.origin}/product.html?id=${prod.id}')">
@@ -1523,7 +1523,7 @@ function initGallery(images = [], videoUrls = []) {
   const gallery = document.getElementById("gallery-media");
   const dots = document.getElementById("gallery-dots");
 
-  // ðŸ§  Clean + merge all valid media URLs
+  // 🧠 Clean + merge all valid media URLs
   const allImages = Array.isArray(images) ? images.filter(Boolean) : images ? [images] : [];
   const allVideos = Array.isArray(videoUrls) ? videoUrls.filter(Boolean) : videoUrls ? [videoUrls] : [];
   const media = [...allImages, ...allVideos];
@@ -1535,7 +1535,7 @@ function initGallery(images = [], videoUrls = []) {
 
   let currentIndex = 0; // ✅ declare only once
 
-  // ðŸŽžï¸ Render each media item (image/video)
+  // 🎞️ Render each media item (image/video)
   gallery.innerHTML = media
     .map((url, i) => {
       const isVideo = typeof url === "string" && url.match(/\.(mp4|webm|mov)$/i);
@@ -1563,10 +1563,10 @@ function initGallery(images = [], videoUrls = []) {
   const allMedia = gallery.querySelectorAll("img, video");
   const allDots = dots.querySelectorAll(".dot");
 
-  // ðŸŽ¬ Polished autoplay logic with sound toggle (cross-browser)
+  // 🎬 Polished autoplay logic with sound toggle (cross-browser)
   allMedia.forEach((m, index) => {
     if (m.tagName === "VIDEO") {
-      // ðŸ§  Chrome-safe autoplay setup
+      // 🧠 Chrome-safe autoplay setup
       m.muted = true;
       m.controls = false;
       m.autoplay = true;
@@ -1586,9 +1586,9 @@ function initGallery(images = [], videoUrls = []) {
       };
       playVideo();
 
-      // ðŸŽ§ Create unmute button overlay
+      // 🎧 Create unmute button overlay
       const unmuteBtn = document.createElement("button");
-      unmuteBtn.innerHTML = "ðŸ”Š";
+      unmuteBtn.innerHTML = "🔊";
       unmuteBtn.className = "unmute-btn";
       unmuteBtn.title = "Tap to enable sound";
 
@@ -1596,7 +1596,7 @@ function initGallery(images = [], videoUrls = []) {
         m.muted = false;
         m.volume = 1;
         m.play();
-        // ðŸ”„ Fade out & remove after click
+        // 🔄 Fade out & remove after click
         unmuteBtn.classList.add("fade-out");
         setTimeout(() => unmuteBtn.remove(), 600);
       };
@@ -1604,7 +1604,7 @@ function initGallery(images = [], videoUrls = []) {
       // Show only on first visible video
       if (index === 0) {
         gallery.appendChild(unmuteBtn);
-        // ðŸ•’ Auto-hide after 3s if user doesn"™t click
+        // 🕒 Auto-hide after 3s if user doesn"™t click
         setTimeout(() => {
           if (document.body.contains(unmuteBtn)) {
             unmuteBtn.classList.add("fade-out");
@@ -1615,7 +1615,7 @@ function initGallery(images = [], videoUrls = []) {
     }
   });
 
-  // ðŸŽ¨ Add swipe + dot navigation
+  // 🎨 Add swipe + dot navigation
   function showSlide(index) {
     currentIndex = (index + media.length) % media.length;
 
@@ -1635,12 +1635,12 @@ function initGallery(images = [], videoUrls = []) {
     allDots.forEach((d, i) => d.classList.toggle("active", i === currentIndex));
   }
 
-  // ðŸ”˜ Dot click navigation
+  // 🔘 Dot click navigation
   allDots.forEach((dot, i) => {
     dot.addEventListener("click", () => showSlide(i));
   });
 
-  // ðŸ‘† Swipe navigation
+  // 👆 Swipe navigation
   let startX = 0, endX = 0;
   const handleSwipe = () => {
     const diff = startX - endX;
@@ -1659,7 +1659,7 @@ function initGallery(images = [], videoUrls = []) {
     handleSwipe();
   });
 
-  console.log("ðŸŽ¬ Multi-video gallery initialized safely with autoplay + fade-out sound toggle!");
+  console.log("🎬 Multi-video gallery initialized safely with autoplay + fade-out sound toggle!");
 }
 
 
@@ -1683,7 +1683,7 @@ function initGallery(images = [], videoUrls = []) {
     }
   })();
 
-// ðŸŒ¸ SHARE FEATURE "” Works for all products dynamically
+// 🌸 SHARE FEATURE "” Works for all products dynamically
 document.addEventListener("DOMContentLoaded", () => {
   const shareIcon = document.getElementById("shareIcon");
   if (!shareIcon) return;
@@ -1704,7 +1704,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         // fallback for desktop
         navigator.clipboard.writeText(currentUrl);
-        alert("ðŸ”— Link copied to clipboard!");
+        alert("🔗 Link copied to clipboard!");
       }
     } catch (err) {
       console.error("Share failed:", err);
@@ -1712,7 +1712,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// ðŸ”— Universal Share Function (used by both main product + related cards)
+// 🔗 Universal Share Function (used by both main product + related cards)
 function shareProduct(productName, productUrl) {
   const shareData = {
     title: productName,
@@ -1724,7 +1724,7 @@ function shareProduct(productName, productUrl) {
     navigator.share(shareData).catch(err => console.error("Share cancelled:", err));
   } else {
     navigator.clipboard.writeText(productUrl);
-    alert("ðŸ”— Product link copied to clipboard!");
+    alert("🔗 Product link copied to clipboard!");
   }
 }
 

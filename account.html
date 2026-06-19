@@ -353,22 +353,22 @@
   const ordersList = document.getElementById("ordersList");
   const toast = document.getElementById("toast");
 
-  // ðŸ” Mobile Navbar Toggle
+  // 🍔 Mobile Navbar Toggle
   hamburger?.addEventListener("click", () => {
     navMenu.classList.toggle("show");
   });
 
-  // ðŸ§© Initialize Supabase Client
+  // 🧩 Initialize Supabase Client
   var supabase = window.supabaseClient;
 
-  // ðŸ§ Toast Helper
+  // 🧁 Toast Helper
   function showToast(message) {
     toast.innerText = message;
     toast.classList.add("show");
     setTimeout(() => toast.classList.remove("show"), 2000);
   }
 
-  // ðŸ§  Load Account + Orders
+  // 🧠 Load Account + Orders
   async function loadAccount() {
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -385,7 +385,7 @@
       userEmail.innerText = session.user.email;
       logoutBtn.style.display = "inline";
 
-      // ðŸ§¾ Fetch Orders for this user
+      // 🧾 Fetch Orders for this user
       const { data: orders, error } = await supabase
         .from("orders")
         .select("order_id, total, status, created_at")
@@ -403,7 +403,7 @@
         return;
       }
 
-      // ðŸ§© Render each order card
+      // 🧩 Render each order card
       ordersList.innerHTML = orders.map(o => `
         <div class="order-card">
           <div><strong>Order ID:</strong> ${o.order_id}</div>
@@ -419,7 +419,7 @@
     }
   }
 
-  // ðŸšª Logout Handler
+  // 🚪 Logout Handler
   logoutBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     try {
@@ -432,7 +432,7 @@
 
       showToast("Logged out successfully");
 
-      // ðŸ§¹ Clear redirect and send to login
+      // 🧹 Clear redirect and send to login
       localStorage.setItem("lastVisitedPage", "account.html");
       setTimeout(() => (window.location.href = "login.html"), 1500);
     } catch (err) {

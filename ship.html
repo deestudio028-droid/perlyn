@@ -14,7 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
-    /* ðŸ©¶ Disable blue highlight glow on tap (Android browsers) */
+    /* 🩶 Disable blue highlight glow on tap (Android browsers) */
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -172,7 +172,7 @@ button:active {
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-   /* ðŸ’Œ Saved Customer Details Box "” Refined Perlyn Theme */
+   /* 💌 Saved Customer Details Box "” Refined Perlyn Theme */
 .saved-details-box {
   background: #fff6f0;
   border: 1px solid #e8d3c6;
@@ -207,7 +207,7 @@ button:active {
   font-weight: 600;
 }
 
-/* ðŸŽ€ Action buttons (right section) */
+/* 🎀 Action buttons (right section) */
 .saved-actions {
   display: flex;
   align-items: center;
@@ -257,7 +257,7 @@ button:active {
     align-self: flex-end;
   }
 }
-/* ðŸŒ¸ Themed Checkbox (Perlyn Style) */
+/* 🌸 Themed Checkbox (Perlyn Style) */
 .save-details {
   display: flex;
   align-items: center;
@@ -294,7 +294,7 @@ button:active {
   top: 0.5px;
   left: 3.5px;
 }
-/* ðŸŒ¸ Centered Save Details Section (Perlyn Style) */
+/* 🌸 Centered Save Details Section (Perlyn Style) */
 .save-details {
   display: flex;
   align-items: center;
@@ -437,13 +437,13 @@ button:active {
   <input type="checkbox" id="saveDetails">
   <label for="saveDetails">Save details for next time</label>
 </div>
-<!-- ðŸŽ Personalized Message Box -->
+<!-- 🎁 Personalized Message Box -->
 
 
 <script>
 
 
-// ðŸ“¬ Auto-detect City & State from Pincode (India)
+// 📬 Auto-detect City & State from Pincode (India)
 document.getElementById("pincode").addEventListener("input", async (e) => {
   const pincode = e.target.value.trim();
   const status = document.getElementById("pincodeStatus");
@@ -508,7 +508,7 @@ document.getElementById("pincode").addEventListener("input", async (e) => {
 
   <div id="confirmationModal" class="modal">
     <div class="modal-content">
-      <button class="close-btn" onclick="closeModal()">Ã—</button>
+      <button class="close-btn" onclick="closeModal()">×</button>
       <h2 style="text-align:center;color:var(--accent);font-family:'Gilda Display',serif;">Order Confirmation</h2>
       <div id="orderSummary"></div>
       <div class="final-btns">
@@ -539,7 +539,7 @@ document.getElementById("removeMsgBtn").addEventListener("click", () => {
   document.getElementById("msgActions").style.display = "none";
 });
 
-// ðŸ§  Ensure session restored before any queries
+// 🧠 Ensure session restored before any queries
 async function getActiveSession() {
   for (let i = 0; i < 8; i++) {
     const { data } = await supabaseClient.auth.getSession();
@@ -552,7 +552,7 @@ async function getActiveSession() {
     let cartItems = [];
     let subtotal = 0, discount = 0, shipping = 0, total = 0;
     const orderId = "PERLYN" + Date.now();
-// ðŸŒ Define South Indian states globally (used for shipping logic)
+// 🌍 Define South Indian states globally (used for shipping logic)
 const southStates = [
   "Tamil Nadu",
   "Kerala",
@@ -560,7 +560,7 @@ const southStates = [
   "Telangana",
   "Andhra Pradesh"
 ];
-// ðŸ§¾ Default fallback rates (in case Supabase fetch fails)
+// 🧾 Default fallback rates (in case Supabase fetch fails)
 let southRate = 40;
 let restRate = 70;
 
@@ -573,7 +573,7 @@ let restRate = 70;
     const messageEl = document.getElementById("message");
     const emailEl = document.getElementById("guestEmail");
 
-// ðŸª„ Restore message from localStorage (if typed in cart)
+// 🪄 Restore message from localStorage (if typed in cart)
 window.addEventListener("load", () => {
   const savedMsg = localStorage.getItem("personalMessage");
   if (savedMsg) {
@@ -592,7 +592,7 @@ window.addEventListener("load", () => {
     });
 
 
-// ðŸŸ¢ Improved loadCart() "” handles auth restoration + guest cart
+// 🟢 Improved loadCart() "” handles auth restoration + guest cart
 async function loadCart() {
   console.log("🛒 Fetching cart...");
 
@@ -609,7 +609,7 @@ async function loadCart() {
   }
 
   if (!session) {
-    // ðŸ§  GUEST CART LOGIC
+    // 🧠 GUEST CART LOGIC
     const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
     if (guestCart.length === 0) {
       alert("Your cart is empty. Please add items first.");
@@ -651,7 +651,7 @@ async function loadCart() {
 
   subtotal = cartItems.reduce((sum, p) => sum + p.price * p.qty, 0);
 
-// ðŸ§  Load stored discount + shipping from cart page if available
+// 🧠 Load stored discount + shipping from cart page if available
 const storedDiscount = parseFloat(sessionStorage.getItem("cartDiscount")) || 0;
 const storedShipping = parseFloat(sessionStorage.getItem("cartShipping")) || 0;
 const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
@@ -662,12 +662,12 @@ shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
 // 💰 fallback calculation only if session data missing
 total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
 
-// ðŸ’Œ Add ‚¹30 message charge (if personalized message exists)
+// 💌 Add ‚¹30 message charge (if personalized message exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-// ðŸ§  Dynamic shipping logic from Supabase
+// 🧠 Dynamic shipping logic from Supabase
 const southStates = [
   "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
 ];
@@ -692,12 +692,12 @@ if (subtotal >= 999) {
 
 
   total = subtotal - discount + shipping;
-  // ðŸ’Œ Add ‚¹30 personalized message charge if message exists
+  // 💌 Add ‚¹30 personalized message charge if message exists
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-  console.log(`ðŸ§¾ Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
+  console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
 }
 
 // ✅ Attach to form submit "” with safe fallback if loadCart fails
@@ -710,7 +710,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
       document.getElementById("confirmationModal").style.display = "flex";
     }
   } catch (err) {
-    console.error("ðŸš¨ Unexpected error during checkout:", err);
+    console.error("🚨 Unexpected error during checkout:", err);
     alert("Something went wrong. Please refresh the page and try again.");
   }
 });
@@ -727,7 +727,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
 
       const itemsHTML = cartItems.map(p => `
         <div class="order-item">
-          <div>${p.name} (${p.shade || ""”"}) Ã— ${p.qty}</div>
+          <div>${p.name} (${p.shade || ""”"}) × ${p.qty}</div>
           <div>‚¹${p.price * p.qty}</div>
         </div>`).join("");
 
@@ -750,7 +750,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
         </div>
         <div class="summary-section"><h3>Customer Details</h3>
           <p>Email: ${guestEmail}</p>
-          <p>${name}</p><p>${address}</p><p>${city}, ${state} - ${pin}</p><p>ðŸ“ž ${phone}</p>
+          <p>${name}</p><p>${address}</p><p>${city}, ${state} - ${pin}</p><p>📞 ${phone}</p>
 ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button onclick="copyMessage('${message}')">Copy</button></p>` : ""}
 
         </div>`;
@@ -785,7 +785,7 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
 
     console.log("📦 Customer Payload:", customerPayload);
 
-    // ðŸ’¾ Save customer info if checkbox checked
+    // 💾 Save customer info if checkbox checked
     await saveCustomerDetailsIfChecked();
 
     // 🚀 Start backend phonepe gateway session
@@ -829,10 +829,10 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     console.log("💳 Payment Response:", data);
 
     if (data.success && data.redirectUrl) {
-      console.log("ðŸ§¾ Order processed successfully via backend:", orderId);
+      console.log("🧾 Order processed successfully via backend:", orderId);
 
 // ✅ Generate PDF first, then redirect
-console.log("ðŸ§¾ Generating invoice PDF...");
+console.log("🧾 Generating invoice PDF...");
 await new Promise((resolve) => {
   try {
     generatePDFs();
@@ -849,7 +849,7 @@ window.location.href = data.redirectUrl;
         throw new Error(data.message || "Failed to initialize payment");
       }
     } catch (err) {
-      console.error("ðŸš¨ Confirm & Pay Error:", err);
+      console.error("🚨 Confirm & Pay Error:", err);
       alert("Payment Error: " + err.message);
       btn.textContent = originalText;
       btn.disabled = false;
@@ -874,7 +874,7 @@ function generatePDFs() {
   const { jsPDF } = window.jspdf;
   const pdf = new jsPDF("p", "mm", "a4");
 
-  // ðŸŽ¨ THEME COLORS (Perlyn)
+  // 🎨 THEME COLORS (Perlyn)
   const accent = [185, 132, 116]; // Rose coffee
   const text = [75, 59, 50]; // Deep mocha
   const softBlush = [243, 225, 218]; // Light beige-pink background tone
@@ -885,7 +885,7 @@ function generatePDFs() {
   pdf.setTextColor(...accent);
   pdf.text("PERLYN BEAUTY", 15, 18);
 
-  // ðŸ•’ Proper formatted date and time (12-hour)
+  // 🕒 Proper formatted date and time (12-hour)
   const now = new Date();
   const formattedDate = now.toLocaleDateString("en-IN", {
     day: "2-digit",
@@ -946,7 +946,7 @@ function generatePDFs() {
   cartItems.forEach((item, i) => {
     const amt = item.price * item.qty;
 
-    // ðŸ©° Soft blush background (shifted down slightly to avoid cutting)
+    // 🩰 Soft blush background (shifted down slightly to avoid cutting)
     pdf.setFillColor(...softBlush);
     pdf.rect(15, y - 4.2, 180, 9.2, "F");
 
@@ -980,7 +980,7 @@ function generatePDFs() {
   pdf.setFont("helvetica", "normal");
   pdf.text(`${discount}`, xRight, y, { align: "right" });
 
-// ðŸ’š Show Coupon Code (if applied)
+// 💚 Show Coupon Code (if applied)
 if (discount > 0 && localStorage.getItem("appliedCoupon")) {
   const coupon = JSON.parse(localStorage.getItem("appliedCoupon"));
   y += 6;
@@ -1016,7 +1016,7 @@ pdf.setTextColor(...text);
 const amountWords = convertToWords(total);
 pdf.text(`INVOICE AMOUNT IN WORDS : ${amountWords} only`, 15, y);
 
-// ðŸ’Œ Personalized Message (only if exists)
+// 💌 Personalized Message (only if exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   y += 10;
   pdf.setFont("helvetica", "bold");
@@ -1067,12 +1067,12 @@ function convertToWords(num) {
   return str.trim();
 }
 
-// ðŸ§© Prevent accidental double-login mismatch
+// 🧩 Prevent accidental double-login mismatch
 // ===========================================================
-// ðŸ§  PERLYN "” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
+// 🧠 PERLYN "” CUSTOMER DETAILS SAVE & AUTO-FILL SYSTEM
 // ===========================================================
 // ===========================================================
-// ðŸ§  PERLYN "” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
+// 🧠 PERLYN "” CUSTOMER DETAILS SAVE, VALIDATION & PAYMENT HANDLER
 // ===========================================================
 
 // ✅ Step 1: Check for saved customer details when page loads
@@ -1124,7 +1124,7 @@ async function showSavedCustomerDetails(userId) {
       box.querySelector(".apply-btn").disabled = true;
     });
 
-    // ðŸ§¹ Change †’ remove box & allow editing
+    // 🧹 Change †’ remove box & allow editing
     box.querySelector(".change-btn").addEventListener("click", () => {
       box.remove();
       alert("You can now edit your address details.");
@@ -1161,7 +1161,7 @@ async function saveCustomerDetailsIfChecked() {
 
     
 
-// ðŸ™ï¸ City/State input restriction (alphabets & spaces only)
+// 🏙️ City/State input restriction (alphabets & spaces only)
 document.getElementById("city").addEventListener("input", (e) => {
   e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
 });
@@ -1170,7 +1170,7 @@ document.getElementById("state").addEventListener("input", (e) => {
   e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
 });
 
-// ðŸ“‹ Valid Indian cities/states for light validation
+// 📋 Valid Indian cities/states for light validation
 const validCities = [
   "Chennai", "Coimbatore", "Madurai", "Salem", "Erode", "Tiruchirappalli",
   "Bengaluru", "Mysuru", "Kochi", "Hyderabad", "Vijayawada", "Visakhapatnam",

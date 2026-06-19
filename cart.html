@@ -143,7 +143,7 @@
       border-radius: 10px;
       flex-shrink: 0;
       margin-top: -16px;
-      /* ðŸ”¼ lifted more upward */
+      /* 🔼 lifted more upward */
     }
 
     .item-info {
@@ -152,7 +152,7 @@
       flex-direction: column;
       justify-content: flex-start;
       margin-top: -14px;
-      /* ðŸ”¼ lifted text block more */
+      /* 🔼 lifted text block more */
       padding-right: 100px;
     }
 
@@ -386,7 +386,7 @@
       background: var(--light);
       border-radius: 14px;
       padding: 12px 18px 18px;
-      /* ðŸ”¼ top padding reduced to bring everything up */
+      /* 🔼 top padding reduced to bring everything up */
       margin-bottom: 18px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
       transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -468,7 +468,7 @@
 .qty-top {
   display: flex;
   align-items: center;
-  gap: 6px; /* ðŸ”¹ tighter spacing */
+  gap: 6px; /* 🔹 tighter spacing */
 }
 
 .qty-top button {
@@ -540,12 +540,12 @@
       gap: 8px;
       margin-bottom: 6px;
       margin-top: -8px;
-      /* ðŸ‘ˆ lifts quantity up a little */
+      /* 👈 lifts quantity up a little */
     }
 
     .subtotal div:last-child {
       margin-top: 10px;
-      /* ðŸ‘Œ adds soft space between qty and ‚¹total */
+      /* 👌 adds soft space between qty and ‚¹total */
     }
     .coupon-summary {
   font-family: 'Cormorant Garamond', serif;
@@ -576,7 +576,7 @@
   background: #f1dad0;
   transform: translateY(-1px);
 }
-/* ðŸŽ€ Offers & Discounts Section "” Refined Perlyn Style */
+/* 🎀 Offers & Discounts Section "” Refined Perlyn Style */
 .offers-box {
   background: #fff6f0;
   border-radius: 16px;
@@ -699,7 +699,7 @@
   <div id="offers-list" style="display:none;"></div>
 </div>
 
-<!-- ðŸ’Œ Coupon Section "” moved above footer -->
+<!-- 💌 Coupon Section "” moved above footer -->
 <div class="coupon-box" style="position: sticky; bottom: 100px; background: #fff6f0; z-index: 90; padding: 8px 0; box-shadow: 0 -1px 6px rgba(0,0,0,0.05);">
   <input type="text" id="couponCode" class="coupon-input" placeholder="Enter coupon code">
 
@@ -723,10 +723,10 @@
 </div>
 
 <style>
-    /* ðŸ©µ Fixed Cart Action Bar "” Centered + Floating Refined Look */
+    /* 🩵 Fixed Cart Action Bar "” Centered + Floating Refined Look */
 .fixed-cart-bar {
   position: fixed;
-  bottom: 10px; /* ðŸ”¹ lifted slightly for floating feel */
+  bottom: 10px; /* 🔹 lifted slightly for floating feel */
   left: 50%;
   transform: translateX(-50%);
   width: 94%;
@@ -835,7 +835,7 @@
   }
 }
 
-/* ðŸ§­ Prevent overlap with the floating footer */
+/* 🧭 Prevent overlap with the floating footer */
 body {
   padding-bottom: 115px; /* slightly more for spacing above bottom navs */
   -webkit-tap-highlight-color: transparent;
@@ -973,7 +973,7 @@ div.innerHTML = `
   <div class="subtotal">‚¹${subtotal}</div>
 `;
 
-// ðŸ›ï¸ Make entire product card clickable (except buttons)
+// 🛍️ Make entire product card clickable (except buttons)
 div.addEventListener("click", (e) => {
   // avoid redirect if buttons or inputs were clicked
   if (e.target.closest("button") || e.target.tagName === "INPUT") return;
@@ -998,7 +998,7 @@ cartBox.appendChild(div);
 
 
 
-  // ðŸ‘† Handle +/- Button Changes
+  // 👆 Handle +/- Button Changes
   async function changeQty(cartId, delta, stock) {
     const qtyInput = document.getElementById(`qty-input-${cartId}`);
     let newQty = parseInt(qtyInput.value) + delta;
@@ -1069,7 +1069,7 @@ cartBox.appendChild(div);
     await updateCartTotal(); // œ¨ recalc bottom summary only
   }
 
-// ðŸ“³ Vibration Feedback
+// 📳 Vibration Feedback
 function vibrate(ms = 50) {
   if (navigator.vibrate) navigator.vibrate(ms);
 }
@@ -1120,12 +1120,12 @@ async function initCartSystem() {
 }
 
 
-// ðŸŽ Refresh offers visibility based on subtotal
+// 🎁 Refresh offers visibility based on subtotal
 async function refreshOffersBox() {
   const subtotal = await getCartSubtotal();
   const unlockMsg = document.getElementById("unlock-msg");
 
-  // ðŸ›¡ï¸ Prevent null errors
+  // 🛡️ Prevent null errors
   if (!unlockMsg) {
     console.warn("š ï¸ unlock-msg element not found yet, skipping refreshOffersBox()");
     return;
@@ -1136,13 +1136,13 @@ async function refreshOffersBox() {
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>AURA10</b> for 10% off`;
   } else {
-    unlockMsg.innerHTML = `ðŸŽ Coupons + Free shipping unlocked!`;
+    unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
   }
 }
 
 
 
-  // ðŸ—‘ï¸ Fix - re-run offers after remove
+  // 🗑️ Fix - re-run offers after remove
   async function removeItem(cartId) {
     if (typeof cartId === 'string' && cartId.startsWith('guest_')) {
       const productId = parseInt(cartId.split('_')[1]);
@@ -1157,13 +1157,13 @@ async function refreshOffersBox() {
   }
 
     // =======================================
-    // ðŸ’¸ COUPON SYSTEM FOR PERLYN CART
+    // 💸 COUPON SYSTEM FOR PERLYN CART
     // =======================================
 
     let appliedCoupon = null;
     let discountAmount = 0;
 
-    // ðŸ§¾ Apply Coupon
+    // 🧾 Apply Coupon
     async function applyCoupon() {
       const input = document.getElementById("couponCode");
       const msg = document.getElementById("coupon-msg");
@@ -1181,7 +1181,7 @@ async function refreshOffersBox() {
         return;
       }
 
-      // ðŸ”¹ Check if coupon exists
+      // 🔹 Check if coupon exists
       const { data: coupon, error } = await supabase
         .from("coupons")
         .select("*")
@@ -1193,14 +1193,14 @@ async function refreshOffersBox() {
         return;
       }
 
- // ðŸ”¹ Check expiry
+ // 🔹 Check expiry
 const now = new Date();
 if (coupon.expires_at && new Date(coupon.expires_at) < now) {
   msg.innerText = "This coupon has expired.";
   return;
 }
 
-// ðŸ”¹ Check if user already used it
+// 🔹 Check if user already used it
 const { data: used } = await supabase
   .from("coupon_usage")
   .select("id")
@@ -1210,12 +1210,12 @@ const { data: used } = await supabase
 
 if (used) {
   msg.innerText = "This coupon has already been used.";
-  msg.style.color = "#a04c4c"; // ðŸ”¸ red tone for clarity
+  msg.style.color = "#a04c4c"; // 🔸 red tone for clarity
   return;
 }
 
 
-      // ðŸ”¹ Check minimum purchase
+      // 🔹 Check minimum purchase
       const subtotal = await getCartSubtotal();
       if (subtotal < coupon.min_purchase) {
         msg.innerText = `Add ‚¹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
@@ -1225,17 +1225,17 @@ if (used) {
 // ✅ Apply coupon
 appliedCoupon = coupon;
 
-// ðŸ§® Calculate rounded discount
+// 🧮 Calculate rounded discount
 discountAmount = Math.round(subtotal * (coupon.discount_percent / 100));
 
-// ðŸ’¬ Show success message
+// 💬 Show success message
 msg.innerText = `Coupon ${code} applied! You saved ‚¹${discountAmount.toFixed(0)}.`;
 removeBtn.style.display = "inline-block";
 
-// ðŸ” Update totals and UI immediately
+// 🔁 Update totals and UI immediately
 updateCartTotal();
 
-// ðŸ§  Save locally "” usage will be recorded after payment success
+// 🧠 Save locally "” usage will be recorded after payment success
 saveCoupon();
 
 
@@ -1264,8 +1264,8 @@ saveCoupon();
       });
       return subtotal;
     }
-// ðŸ§® Update Total + Free Shipping + Offers UI
-// ðŸ§® Update Total + Free Shipping + Offers UI
+// 🧮 Update Total + Free Shipping + Offers UI
+// 🧮 Update Total + Free Shipping + Offers UI
 async function updateCartTotal() {
   const totalEl = document.getElementById("cart-total");
   const freeMsg = document.getElementById("free-ship-msg");
@@ -1274,7 +1274,7 @@ async function updateCartTotal() {
 
 let shipping = 0;
 if (subtotal > 0 && subtotal < 999) {
-  // ðŸŒ Fetch region-based shipping rates
+  // 🌍 Fetch region-based shipping rates
   let southRate = 40, restRate = 70;
   try {
     const { data: rates } = await supabase.from("shipping_rates").select("*");
@@ -1288,7 +1288,7 @@ if (subtotal > 0 && subtotal < 999) {
     console.warn("š ï¸ Failed to fetch rates, using fallback 40/70:", err.message);
   }
 
-  // ðŸ“ Try to detect user's saved shipping state (if logged in)
+  // 📍 Try to detect user's saved shipping state (if logged in)
   let userState = "";
   try {
     const { data: { session } } = await supabase.auth.getSession();
@@ -1315,7 +1315,7 @@ sessionStorage.setItem("finalTotal", total);
 
 
 
-  // ðŸ’¸ Show total + applied coupon details
+  // 💸 Show total + applied coupon details
   if (discountAmount > 0 && appliedCoupon) {
     totalEl.innerHTML = `
       Total: ‚¹${total.toLocaleString("en-IN")}
@@ -1326,7 +1326,7 @@ sessionStorage.setItem("finalTotal", total);
     totalEl.innerHTML = `Total: ‚¹${total.toLocaleString("en-IN")}`;
   }
 
-  // ðŸ©· Free shipping message "” Lip Gloss font style
+  // 🩷 Free shipping message "” Lip Gloss font style
   const diff = 999 - subtotal;
   freeMsg.style.fontFamily = "'Cormorant Garamond', serif";
   freeMsg.style.fontStyle = "italic";
@@ -1342,34 +1342,34 @@ sessionStorage.setItem("finalTotal", total);
     freeMsg.classList.add("unlocked");
   }
 
-// ðŸŽ Dynamic Offers Unlock Message (linked to live coupon min_purchase)
+// 🎁 Dynamic Offers Unlock Message (linked to live coupon min_purchase)
 if (unlockMsg) {
   if (subtotal < minCouponPurchase) {
     unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
   } else {
-    unlockMsg.innerHTML = `ðŸŽ Coupons + Free shipping unlocked!`;
+    unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
   }
 }
 
 
-  // ðŸ’ Reward Points Update
+  // 💝 Reward Points Update
   updateRewardPoints(total);
 
-  // ðŸ’š Show Total Savings (Coupons + Free Shipping)
-// ðŸ’š Show Total Savings (Coupons + Free Shipping)
+  // 💚 Show Total Savings (Coupons + Free Shipping)
+// 💚 Show Total Savings (Coupons + Free Shipping)
 const savings = discountAmount + (shipping === 0 ? 99 : 0);
 
 // Only show savings if total > 0
 if (total > 0 && savings > 0) {
   totalEl.innerHTML += `
     <div style="font-size:16px;color:#3a814e;font-weight:600;margin-top:4px;">
-      ðŸ’ You"™ve saved ‚¹${savings.toFixed(0)} on this order!
+      💝 You"™ve saved ‚¹${savings.toFixed(0)} on this order!
     </div>`;
 }
 
-loadOffers(); // ðŸ”„ Refresh offers when subtotal changes
+loadOffers(); // 🔄 Refresh offers when subtotal changes
 
 }
 
@@ -1377,10 +1377,10 @@ async function updateRewardPoints(total) {
   const rewardMsg = document.getElementById("reward-msg");
   if (!rewardMsg) return;
   const points = Math.floor(total / 10);
-  rewardMsg.textContent = `You"™ll earn ðŸŽ ${points} reward points on this order!`;
+  rewardMsg.textContent = `You"™ll earn 🎁 ${points} reward points on this order!`;
 }
 // =================================================
-// ðŸŒŸ PERLYN "” LIVE REWARD POINTS SYSTEM (Supabase)
+// 🌟 PERLYN "” LIVE REWARD POINTS SYSTEM (Supabase)
 // =================================================
 async function loadRewardPoints() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -1393,7 +1393,7 @@ async function loadRewardPoints() {
 
   const userId = session.user.id;
 
-  // ðŸ§¾ Fetch or initialize points record
+  // 🧾 Fetch or initialize points record
   let { data: reward, error } = await supabase
     .from("reward_points")
     .select("total_points")
@@ -1414,19 +1414,19 @@ async function loadRewardPoints() {
   }
 
   const currentPoints = reward.total_points;
-  rewardMsg.innerHTML = `ðŸŒŸ You currently have <b>${currentPoints}</b> reward points!`;
+  rewardMsg.innerHTML = `🌟 You currently have <b>${currentPoints}</b> reward points!`;
 
-  // ðŸŽ¯ Progress message
+  // 🎯 Progress message
   const nextMilestone = 100;
   if (currentPoints < nextMilestone) {
     const needed = nextMilestone - currentPoints;
-    rewardMsg.innerHTML += ` "” Collect <b>${needed}</b> more for a surprise free gift ðŸŽ`;
+    rewardMsg.innerHTML += ` "” Collect <b>${needed}</b> more for a surprise free gift 🎁`;
   } else {
     rewardMsg.innerHTML += ` "” 🎉 <b>You"™ve unlocked a free gift!</b> Use code <b>GIFT100</b>`;
   }
 }
 
-// ðŸŽ Check for Free Gift Unlock
+// 🎁 Check for Free Gift Unlock
 async function checkRewardGift() {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) return;
@@ -1447,7 +1447,7 @@ async function checkRewardGift() {
 
 
 
-    // ðŸ’¾ Save coupon after applying
+    // 💾 Save coupon after applying
     function saveCoupon() {
       if (appliedCoupon) {
         localStorage.setItem("appliedCoupon", JSON.stringify(appliedCoupon));
@@ -1465,7 +1465,7 @@ async function loadOffers() {
   const unlockMsg = document.getElementById("unlock-msg");
 
   try {
-    // ðŸ§¾ Fetch active offers
+    // 🧾 Fetch active offers
     const { data: offers, error } = await supabase
       .from("offers")
       .select("*")
@@ -1480,7 +1480,7 @@ async function loadOffers() {
       return !end || end >= now;
     });
 
-    // ðŸŽ Show only the unlock message, hide the offers list
+    // 🎁 Show only the unlock message, hide the offers list
     offersBox.innerHTML = "";
 
     // 🎉 "View All" button toggle
@@ -1491,7 +1491,7 @@ async function loadOffers() {
       viewAllBtn.style.display = "none";
     }
 
-    // ðŸ’¸ Fetch coupon threshold dynamically
+    // 💸 Fetch coupon threshold dynamically
     const { data: coupons, error: couponError } = await supabase
       .from("coupons")
       .select("min_purchase, active")
@@ -1506,14 +1506,14 @@ if (!couponError && coupons && coupons.length > 0) {
 }
 
 
-    // ðŸ§® Update Unlock Message dynamically
+    // 🧮 Update Unlock Message dynamically
     const subtotal = await getCartSubtotal();
     if (subtotal < minCouponPurchase) {
       unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
     } else if (subtotal < 999) {
       unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
     } else {
-      unlockMsg.innerHTML = `ðŸŽ Coupons + Free shipping unlocked!`;
+      unlockMsg.innerHTML = `🎁 Coupons + Free shipping unlocked!`;
     }
 
   } catch (err) {
@@ -1531,14 +1531,14 @@ function showAllOffers(offers) {
 }
 
 // ================================
-// ðŸŽ OFFERS BUTTON FUNCTION
+// 🎁 OFFERS BUTTON FUNCTION
 // ================================
 function showOffers() {
   alert("Available Offers:\n• AURA10 "“ 10% off above ‚¹599\n• FREESHIP "“ Free shipping above ‚¹999");
 }
 window.addEventListener("load", async () => {
   await initCartSystem();  // 🛒 Loads cart + totals + offers
-  await loadOffers();      // ðŸŽ Refreshes offers dynamically
+  await loadOffers();      // 🎁 Refreshes offers dynamically
 
   // ™»ï¸ Restore saved coupon if any
   const saved = localStorage.getItem("appliedCoupon");

@@ -31,7 +31,7 @@
       padding: 0 16px;
     }
 
-    /* ðŸ›ï¸ Product Grid */
+    /* 🛍️ Product Grid */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -124,12 +124,12 @@
     .badge.new {
       background: #a36c5c;
       top: 38px;
-      /* ðŸ‘ˆ pushes below Bestseller */
+      /* 👈 pushes below Bestseller */
       right: 10px;
     }
 
 
-    /* ðŸ–¥ï¸ Reduce product image size only for desktop screens */
+    /* 🖥️ Reduce product image size only for desktop screens */
     @media (min-width: 1025px) {
       .product-card img {
         height: 180px;
@@ -138,7 +138,7 @@
       }
     }
 
-    /* ðŸ§­ Shop Controls */
+    /* 🧭 Shop Controls */
     .shop-controls {
       display: flex;
       flex-wrap: wrap;
@@ -201,7 +201,7 @@
 }
 
 
-    /* ðŸ” Hamburger Menu */
+    /* 🍔 Hamburger Menu */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -256,7 +256,7 @@
         gap: 10px;
         align-items: stretch;
       }
-/* ðŸŒ¸ Popular Search Dropdown (like Google) */
+/* 🌸 Popular Search Dropdown (like Google) */
 .suggestion-box {
   position: absolute;
   background: #fff;
@@ -340,7 +340,7 @@
       font-weight: bold;
     }
 
-    /* ðŸ¦¶ Footer Layout */
+    /* 🦶 Footer Layout */
     .footer-container {
       display: flex;
       justify-content: space-between;
@@ -401,8 +401,8 @@
       transform: translateY(0);
     }
 
-    /* ðŸ–¥ï¸ Desktop Optimization "” Smaller Card, Perfect Alignment */
-    /* ðŸ–¥ï¸ Desktop Layout "” Horizontal Rectangle Card Style */
+    /* 🖥️ Desktop Optimization "” Smaller Card, Perfect Alignment */
+    /* 🖥️ Desktop Layout "” Horizontal Rectangle Card Style */
     @media (min-width: 1025px) {
       .product-grid {
         grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
@@ -538,7 +538,7 @@
   opacity: 0.85;
 }
 
-/* ðŸ” Hamburger */
+/* 🍔 Hamburger */
 .hamburger {
   display: none;
   background: none;
@@ -569,7 +569,7 @@
     display: block;
   }
 }
-/* ðŸŽ¯ Force custom font & style for "All Categories" dropdown */
+/* 🎯 Force custom font & style for "All Categories" dropdown */
 #categoryFilter {
   font-family: 'Cormorant Garamond', serif !important;
   font-weight: 600 !important;
@@ -605,7 +605,7 @@
   outline: none;
   box-shadow: 0 0 6px rgba(185, 132, 116, 0.3);
 }
-/* ðŸŒ¸ Popular Search Tags */
+/* 🌸 Popular Search Tags */
 .popular-searches {
   display: flex;
   flex-wrap: wrap;
@@ -650,7 +650,7 @@
     padding: 6px 12px;
   }
 }
-/* ðŸŒ¸ Trending Search Box (Google-style) */
+/* 🌸 Trending Search Box (Google-style) */
 .trending-box {
   display: flex;
   flex-direction: column;
@@ -837,7 +837,7 @@
 
 <script>
 /* ================================
-   ðŸ§  SUPABASE HANDLE (GLOBAL)
+   🧠 SUPABASE HANDLE (GLOBAL)
 ================================ */
 function getSupabase() {
   if (!window.supabaseClient) {
@@ -852,10 +852,10 @@ function getSupabase() {
 let productsData = [];
 
 /* ================================
-   ðŸ›ï¸ LOAD PRODUCTS
+   🛍️ LOAD PRODUCTS
 ================================ */
 async function loadProducts() {
-    // ðŸ§  Check Session Storage Cache
+    // 🧠 Check Session Storage Cache
     const cached = sessionStorage.getItem("perlyn_products");
     if (cached) {
       productsData = JSON.parse(cached);
@@ -888,7 +888,7 @@ async function loadProducts() {
 
     const { data: { session } } = await supa.auth.getSession();
     
-    // ðŸ§  GUEST CART LOGIC
+    // 🧠 GUEST CART LOGIC
     if (!session) {
       let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
       const existingItem = guestCart.find(item => item.product_id === productId);
@@ -905,7 +905,7 @@ async function loadProducts() {
       // Show toast
       const toast = document.getElementById("toast");
       if (toast) {
-        toast.innerText = "ðŸ›ï¸ Added to Cart!";
+        toast.innerText = "🛍️ Added to Cart!";
         toast.className = "toast show";
         setTimeout(() => toast.className = toast.className.replace("show", ""), 3000);
       }
@@ -937,7 +937,7 @@ async function loadProducts() {
 }
 
 /* ================================
-   ðŸŽ¨ RENDER PRODUCTS
+   🎨 RENDER PRODUCTS
 ================================ */
 function renderProducts() {
   const searchValue = document.getElementById("search").value.toLowerCase();
@@ -1037,7 +1037,7 @@ function setupRealtime() {
    🚀 INIT (SAFE)
 ================================ */
 document.addEventListener("DOMContentLoaded", () => {
-  // ðŸ§  Check URL for pre-selected category
+  // 🧠 Check URL for pre-selected category
   const urlParams = new URLSearchParams(window.location.search);
   const categoryParam = urlParams.get('category');
   

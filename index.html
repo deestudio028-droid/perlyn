@@ -177,7 +177,7 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    /* Ã…"Ã‚¨ Remove blue outline & add smooth blink effect when clicking cards */
+    /* Å"Ã‚¨ Remove blue outline & add smooth blink effect when clicking cards */
     .product-card {
       cursor: pointer;
       transition: transform 0.2s ease, opacity 0.15s ease;
@@ -207,7 +207,7 @@
       padding: 0 8px;
     }
 
-    /* Ã…"Ã‚¨ Product Card Responsive Style */
+    /* Å"Ã‚¨ Product Card Responsive Style */
     .product-card {
       background: #fff6f0;
       border-radius: 12px;
@@ -323,7 +323,7 @@
   }
 }
 
-/* Ã…"Ã‚¨ Navbar seamless background blend */
+/* Å"Ã‚¨ Navbar seamless background blend */
 .header {
   background: #f3e4db;
   border: none;
@@ -494,7 +494,7 @@ body {
 </div>
 
 <style>
-  /* Ã…"Ã‚¨ Popup Overlay */
+  /* Å"Ã‚¨ Popup Overlay */
   .welcome-offer {
     position: fixed;
     inset: 0;
@@ -643,13 +643,13 @@ async function loadOfferSystem() {
       return;
     }
 
-    // Ã…"Ã¢â‚¬¦ Update banner text from Supabase
-    banner.innerHTML = `<span>Ã…"Ã‚¨ ${data.title} Ã…"Ã‚¨</span>`;
+    // Å"Ã¢â‚¬¦ Update banner text from Supabase
+    banner.innerHTML = `<span>Å"Ã‚¨ ${data.title} Å"Ã‚¨</span>`;
 
     // Extract coupon code dynamically from the title
     const extractedCode = data.title.match(/code\s+(\w+)/i)?.[1] || "AURA10";
 
-    // Ã…"Ã¢â‚¬¦ Fill popup dynamically
+    // Å"Ã¢â‚¬¦ Fill popup dynamically
     document.getElementById("offer-title").textContent = `Ãƒ°Ã…¸Ã…½Ã‚ ${data.title}`;
     document.getElementById("offer-code").textContent = extractedCode;
     document.getElementById("offer-desc").innerHTML = "Enjoy our latest exclusive offer Ãƒ°Ã…¸Ã¢â‚¬â„¢Ã¢â‚¬"";
@@ -670,7 +670,7 @@ async function loadOfferSystem() {
     // Ãƒ°Ã…¸Ã¢â‚¬Å“Ã¢â‚¬¹ Copy button logic
     document.getElementById("copyOfferBtn").onclick = () => {
       navigator.clipboard.writeText(extractedCode);
-      showToast(`Ã…"Ã‚¨ Code ${extractedCode} copied! Use it at checkout Ãƒ°Ã…¸Ã¢â‚¬â„¢Ã¢â‚¬"`);
+      showToast(`Å"Ã‚¨ Code ${extractedCode} copied! Use it at checkout Ãƒ°Ã…¸Ã¢â‚¬â„¢Ã¢â‚¬"`);
       closeOffer();
     };
   } catch (err) {
@@ -679,7 +679,7 @@ async function loadOfferSystem() {
 }
 
 
-  // Ã…"Ã‚¨ Popup Close + Toast Message
+  // Å"Ã‚¨ Popup Close + Toast Message
   function closeOffer() {
     const popup = document.getElementById("welcome-offer");
     popup.style.display = "none";

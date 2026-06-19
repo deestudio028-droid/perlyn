@@ -150,7 +150,7 @@
       </div>
 
       <button type="submit" class="pay-btn">Pay with PhonePe</button>
-      <div class="reward-note" id="reward-note">You'll earn ðŸŽ reward points for this order!</div>
+      <div class="reward-note" id="reward-note">You'll earn 🎁 reward points for this order!</div>
     </form>
 
     <div class="confirmation" id="confirmation">
@@ -209,7 +209,7 @@
       document.getElementById("grandTotal").textContent = `‚¹${grandTotal.toFixed(0)}`;
 
       const points = Math.floor(grandTotal / 100) * 10;
-      document.getElementById("reward-note").textContent = `You'll earn ðŸŽ ${points} reward points for this order!`;
+      document.getElementById("reward-note").textContent = `You'll earn 🎁 ${points} reward points for this order!`;
     }
 
     document.getElementById("checkoutForm").addEventListener("submit", async (e) => {
@@ -282,7 +282,7 @@
 
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
-      // ðŸ”¹ Get the latest order for this user
+      // 🔹 Get the latest order for this user
       const { data: latestOrder, error: fetchErr } = await supabase
         .from("orders")
         .select("id")
@@ -292,7 +292,7 @@
         .single();
 
       if (!fetchErr && latestOrder) {
-        // ðŸ”¹ Update its status
+        // 🔹 Update its status
         const { error: updateErr } = await supabase
           .from("orders")
           .update({ status: "paid" })
