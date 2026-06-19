@@ -1120,11 +1120,11 @@ body {
       <h3>Write a Review</h3>
       <input type="text" id="reviewerName" placeholder="Your name" class="review-input">
       <div class="star-rating" id="starRating">
-        <span data-value="1">˜…</span>
-        <span data-value="2">˜…</span>
-        <span data-value="3">˜…</span>
-        <span data-value="4">˜…</span>
-        <span data-value="5">˜…</span>
+        <span data-value="1">★</span>
+        <span data-value="2">★</span>
+        <span data-value="3">★</span>
+        <span data-value="4">★</span>
+        <span data-value="5">★</span>
       </div>
 
       <textarea id="reviewText" placeholder="Write your review..." class="review-text"></textarea>
@@ -1271,7 +1271,7 @@ body {
             <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="verified"> 
             Verified Buyer
           </span>` : ""}
-        <div style="margin-top:5px;">­${r.rating}</div>
+        <div style="margin-top:5px;">★ ${r.rating}</div>
         <p id="comment-${r.id}">${r.comment}</p>
         ${r.user_id === userId ? `
           <div class="review-actions">
