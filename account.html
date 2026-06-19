@@ -251,27 +251,7 @@
 
 <body>
   <!-- HEADER -->
-  <header class="header">
-    <div class="container nav-container">
-      <div class="logo">
-        <img src="assets/logo.png" width="45" height="45" alt="Perlyn Logo" />
-        <span class="brand-text">Perlyn Beauty</span>
-      </div>
-
-      <button class="hamburger" id="hamburger">☰</button>
-
-     <nav class="nav" id="nav-menu">
-  <a href="index.html">Home</a>
-  <a href="shop.html">Shop</a>
-  <a href="cart.html">Cart</a>
-  <a href="account.html" id="accountLink">My Account</a>
-  <a href="faq.html">FAQ</a>
-  <a href="aboutus.html">About Us</a>
-  <button id="logoutBtn" class="logout-btn" style="display:none;">Logout</button>
-</nav>
-
-    </div>
-  </header>
+  
 
   <!-- ACCOUNT SECTION -->
   <main class="account-box">
@@ -345,17 +325,7 @@
   <div id="toast" class="toast">Logged out successfully</div>
 
 <script>
-  const hamburger = document.getElementById("hamburger");
-  const navMenu = document.getElementById("nav-menu");
-  const logoutBtn = document.getElementById("logoutBtn");
-  const userEmail = document.getElementById("userEmail");
-  const ordersList = document.getElementById("ordersList");
-  const toast = document.getElementById("toast");
-
-  // 🍔 Mobile Navbar Toggle
-  hamburger?.addEventListener("click", () => {
-    navMenu.classList.toggle("show");
-  });
+  
 
   // 🧩 Initialize Supabase Client
   var supabase = window.supabaseClient;
@@ -445,6 +415,7 @@
 </script>
 
 
+  <script src="components/navbar.js"></script>
 </body>
 
 </html>
