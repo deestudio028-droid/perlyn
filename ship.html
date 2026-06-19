@@ -662,7 +662,7 @@ shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
 // 💰 fallback calculation only if session data missing
 total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
 
-// 💌 Add ‚¹30 message charge (if personalized message exists)
+// 💌 Add ₹30 message charge (if personalized message exists)
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
@@ -692,12 +692,12 @@ if (subtotal >= 999) {
 
 
   total = subtotal - discount + shipping;
-  // 💌 Add ‚¹30 personalized message charge if message exists
+  // 💌 Add ₹30 personalized message charge if message exists
 if (messageEl.value && messageEl.value.trim() !== "") {
   total += 30;
 }
 
-  console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ‚¹${total}`);
+  console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ₹${total}`);
 }
 
 // ✅ Attach to form submit — with safe fallback if loadCart fails
@@ -728,24 +728,24 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
       const itemsHTML = cartItems.map(p => `
         <div class="order-item">
           <div>${p.name} (${p.shade || "—"}) × ${p.qty}</div>
-          <div>‚¹${p.price * p.qty}</div>
+          <div>₹${p.price * p.qty}</div>
         </div>`).join("");
 
       document.getElementById("orderSummary").innerHTML = `
         <div class="summary-section"><h3>Products</h3>${itemsHTML}</div>
         <div class="summary-section"><h3>Order Summary</h3>
-          <p>Subtotal: ‚¹${subtotal}</p>
-          <p>Discount: ‚¹${discount}</p>
+          <p>Subtotal: ₹${subtotal}</p>
+          <p>Discount: ₹${discount}</p>
           ${sessionStorage.getItem("cartDiscount") > 0 && localStorage.getItem("appliedCoupon")
   ? `<p style="color:#3a814e;">Coupon applied: <b>${JSON.parse(localStorage.getItem("appliedCoupon")).code}</b></p>`
   : ""}
 
-          <p>Shipping: ‚¹${shipping}</p>
+          <p>Shipping: ₹${shipping}</p>
 
 
-<p>Personalized Message Fee: ‚¹${message ? 30 : 0}</p>
+<p>Personalized Message Fee: ₹${message ? 30 : 0}</p>
 
-          <p><b>Total: ‚¹${total}</b></p>
+          <p><b>Total: ₹${total}</b></p>
           <p style="color:#7b5b4a;">Prepaid (via PhonePe / GPay)</p>
         </div>
         <div class="summary-section"><h3>Customer Details</h3>

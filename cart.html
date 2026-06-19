@@ -545,7 +545,7 @@
 
     .subtotal div:last-child {
       margin-top: 10px;
-      /* 👌 adds soft space between qty and ‚¹total */
+      /* 👌 adds soft space between qty and ₹total */
     }
     .coupon-summary {
   font-family: 'Cormorant Garamond', serif;
@@ -616,7 +616,7 @@
   color: #a36c5c;
 }
 
-/* Unlock line (Add ‚¹___ more...) */
+/* Unlock line (Add ₹___ more...) */
 .unlock-msg {
   font-style: italic;
   color: #7b5b4a;
@@ -693,7 +693,7 @@
     <a href="#" id="view-all-offers" class="view-all" style="display:none;">View All †’</a>
   </div>
 
-  <p id="unlock-msg" class="unlock-msg">Add ‚¹599 more to unlock coupons</p>
+  <p id="unlock-msg" class="unlock-msg">Add ₹599 more to unlock coupons</p>
 
   <!-- Hidden list (no visible offers) -->
   <div id="offers-list" style="display:none;"></div>
@@ -716,7 +716,7 @@
   <div class="cart-bar-content">
     <div class="cart-summary">
       <div id="free-ship-msg" class="free-ship">Loading offer...</div>
-      <div id="cart-total" class="cart-total">Total: ‚¹0</div>
+      <div id="cart-total" class="cart-total">Total: ₹0</div>
     </div>
     <button id="buyNowBtn" class="btn-buy-now">Buy Now</button>
   </div>
@@ -877,7 +877,7 @@ function shopNow() {
           const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
           if (guestCart.length === 0) {
             cartBox.innerHTML = "<p>Your cart is empty.</p>";
-            totalEl.textContent = "Total: ‚¹0";
+            totalEl.textContent = "Total: ₹0";
             return;
           }
           
@@ -918,8 +918,8 @@ function shopNow() {
 
         if (!cartItems || !cartItems.length) {
           cartBox.innerHTML = "<p>Your cart is empty.</p>";
-          totalEl.textContent = "Total: ‚¹0";
-          freeMsg.innerHTML = `Add items worth <span>‚¹999</span> for free shipping.`;
+          totalEl.textContent = "Total: ₹0";
+          freeMsg.innerHTML = `Add items worth <span>₹999</span> for free shipping.`;
           freeMsg.classList.remove("unlocked");
           return;
         }
@@ -966,11 +966,11 @@ div.innerHTML = `
     <span class="item-name">${p.name}</span>
     <p class="category">${p.category || "Lip Tint"}</p>
     <p class="shade">${p.shade || "—"}</p>
-    <span class="item-price">‚¹${p.price}</span>
+    <span class="item-price">₹${p.price}</span>
     <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
   </div>
 
-  <div class="subtotal">‚¹${subtotal}</div>
+  <div class="subtotal">₹${subtotal}</div>
 `;
 
 // 🛍️ Make entire product card clickable (except buttons)
@@ -983,10 +983,10 @@ cartBox.appendChild(div);
 
       });
 
-      totalEl.innerHTML = "Total: ‚¹" + total.toLocaleString("en-IN");
+      totalEl.innerHTML = "Total: ₹" + total.toLocaleString("en-IN");
       const diff = 999 - total;
       if (diff > 0) {
-        freeMsg.innerHTML = `<span>‚¹${diff}</span> away from free shipping (<span>‚¹999+</span>)`;
+        freeMsg.innerHTML = `<span>₹${diff}</span> away from free shipping (<span>₹999+</span>)`;
         freeMsg.classList.remove("unlocked");
       } else {
         freeMsg.innerHTML = "✅ Free shipping unlocked!";
@@ -1027,8 +1027,8 @@ cartBox.appendChild(div);
     // ✨ Update subtotal of this item directly
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
-    const price = parseFloat(priceEl.textContent.replace(/[‚¹,]/g, ""));
-    subtotalEl.textContent = "‚¹" + (price * newQty).toLocaleString("en-IN");
+    const price = parseFloat(priceEl.textContent.replace(/[₹,]/g, ""));
+    subtotalEl.textContent = "₹" + (price * newQty).toLocaleString("en-IN");
 
     vibrate(); // feedback
     await updateCartTotal(); // ✨ only recalc totals, not reload full cart
@@ -1062,8 +1062,8 @@ cartBox.appendChild(div);
     const qtyInput = document.getElementById(`qty-input-${cartId}`);
     const priceEl = qtyInput.closest(".cart-item").querySelector(".item-price");
     const subtotalEl = qtyInput.closest(".cart-item").querySelector(".subtotal");
-    const price = parseFloat(priceEl.textContent.replace(/[‚¹,]/g, ""));
-    subtotalEl.textContent = "‚¹" + (price * qty).toLocaleString("en-IN");
+    const price = parseFloat(priceEl.textContent.replace(/[₹,]/g, ""));
+    subtotalEl.textContent = "₹" + (price * qty).toLocaleString("en-IN");
 
     vibrate();
     await updateCartTotal(); // ✨ recalc bottom summary only
@@ -1132,7 +1132,7 @@ async function refreshOffersBox() {
   }
 
   if (subtotal < 599) {
-    unlockMsg.innerHTML = `Add ‚¹${599 - subtotal} more to unlock coupons`;
+    unlockMsg.innerHTML = `Add ₹${599 - subtotal} more to unlock coupons`;
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>AURA10</b> for 10% off`;
   } else {
@@ -1218,7 +1218,7 @@ if (used) {
       // 🔹 Check minimum purchase
       const subtotal = await getCartSubtotal();
       if (subtotal < coupon.min_purchase) {
-        msg.innerText = `Add ‚¹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
+        msg.innerText = `Add ₹${(coupon.min_purchase - subtotal).toFixed(0)} more to use this coupon.`;
         return;
       }
 
@@ -1229,7 +1229,7 @@ appliedCoupon = coupon;
 discountAmount = Math.round(subtotal * (coupon.discount_percent / 100));
 
 // 💬 Show success message
-msg.innerText = `Coupon ${code} applied! You saved ‚¹${discountAmount.toFixed(0)}.`;
+msg.innerText = `Coupon ${code} applied! You saved ₹${discountAmount.toFixed(0)}.`;
 removeBtn.style.display = "inline-block";
 
 // 🔁 Update totals and UI immediately
@@ -1259,7 +1259,7 @@ saveCoupon();
 
       let subtotal = 0;
       container.forEach(el => {
-        const val = parseFloat(el.textContent.replace(/[‚¹,]/g, ""));
+        const val = parseFloat(el.textContent.replace(/[₹,]/g, ""));
         if (!isNaN(val)) subtotal += val;
       });
       return subtotal;
@@ -1318,12 +1318,12 @@ sessionStorage.setItem("finalTotal", total);
   // 💸 Show total + applied coupon details
   if (discountAmount > 0 && appliedCoupon) {
     totalEl.innerHTML = `
-      Total: ‚¹${total.toLocaleString("en-IN")}
+      Total: ₹${total.toLocaleString("en-IN")}
       <br><span style="font-size:15px;color:#3a814e;">
-        (Saved ‚¹${discountAmount.toFixed(0)} using ${appliedCoupon.code})
+        (Saved ₹${discountAmount.toFixed(0)} using ${appliedCoupon.code})
       </span>`;
   } else {
-    totalEl.innerHTML = `Total: ‚¹${total.toLocaleString("en-IN")}`;
+    totalEl.innerHTML = `Total: ₹${total.toLocaleString("en-IN")}`;
   }
 
   // 🩷 Free shipping message — Lip Gloss font style
@@ -1335,7 +1335,7 @@ sessionStorage.setItem("finalTotal", total);
   freeMsg.style.color = "#b98474";
 
   if (diff > 0) {
-    freeMsg.innerHTML = `‚¹${diff} away from free shipping (‚¹999+)`;
+    freeMsg.innerHTML = `₹${diff} away from free shipping (₹999+)`;
     freeMsg.classList.remove("unlocked");
   } else {
     freeMsg.innerHTML = "🎉 Free shipping unlocked!";
@@ -1345,7 +1345,7 @@ sessionStorage.setItem("finalTotal", total);
 // 🎁 Dynamic Offers Unlock Message (linked to live coupon min_purchase)
 if (unlockMsg) {
   if (subtotal < minCouponPurchase) {
-    unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+    unlockMsg.innerHTML = `Add ₹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
   } else if (subtotal < 999) {
     unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
   } else {
@@ -1365,7 +1365,7 @@ const savings = discountAmount + (shipping === 0 ? 99 : 0);
 if (total > 0 && savings > 0) {
   totalEl.innerHTML += `
     <div style="font-size:16px;color:#3a814e;font-weight:600;margin-top:4px;">
-      💝 You’ve saved ‚¹${savings.toFixed(0)} on this order!
+      💝 You’ve saved ₹${savings.toFixed(0)} on this order!
     </div>`;
 }
 
@@ -1509,7 +1509,7 @@ if (!couponError && coupons && coupons.length > 0) {
     // 🧮 Update Unlock Message dynamically
     const subtotal = await getCartSubtotal();
     if (subtotal < minCouponPurchase) {
-      unlockMsg.innerHTML = `Add ‚¹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
+      unlockMsg.innerHTML = `Add ₹${(minCouponPurchase - subtotal).toFixed(0)} more to unlock coupons`;
     } else if (subtotal < 999) {
       unlockMsg.innerHTML = `🎉 Coupons unlocked! Use <b>any active coupon</b> for savings`;
     } else {
@@ -1534,7 +1534,7 @@ function showAllOffers(offers) {
 // 🎁 OFFERS BUTTON FUNCTION
 // ================================
 function showOffers() {
-  alert("Available Offers:\n• AURA10 – 10% off above ‚¹599\n• FREESHIP – Free shipping above ‚¹999");
+  alert("Available Offers:\n• AURA10 – 10% off above ₹599\n• FREESHIP – Free shipping above ₹999");
 }
 window.addEventListener("load", async () => {
   await initCartSystem();  // 🛒 Loads cart + totals + offers

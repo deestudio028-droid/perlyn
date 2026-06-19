@@ -1066,7 +1066,7 @@ body {
       <p id="product-shade" class="product-shade"></p>
 
      <div class="price-row">
-  <span class="price" id="product-price">‚¹0</span>
+  <span class="price" id="product-price">₹0</span>
 
 
 </div>
@@ -1366,7 +1366,7 @@ initGallery(validImages.length ? validImages : [product.image_url].filter(Boolea
   // 🧠 Update Product Info
   document.getElementById("product-name").innerText = product.name;
   document.getElementById("product-shade").innerText = product.shade || "";
-  document.getElementById("product-price").innerText = "‚¹" + product.price;
+  document.getElementById("product-price").innerText = "₹" + product.price;
   document.getElementById("product-description").innerText = product.description || "No description available.";
   document.getElementById("product-ingredients").innerText = product.key_ingredients || "—";
   document.getElementById("product-features").innerText = product.key_features || "—";
@@ -1504,7 +1504,7 @@ async function addToCart(supabase, productId) {
         onclick="shareProduct('${prod.name}', '${window.location.origin}/product.html?id=${prod.id}')">
       <img src="${(prod.image_url && prod.image_url !== 'null') ? prod.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${prod.name}" class="product-img">
       <h3>${prod.name}</h3>
-      <span class="price">‚¹${prod.price}</span>
+      <span class="price">₹${prod.price}</span>
     `;
 
     // Clicking anywhere else on the card (not the share icon) opens product

@@ -138,15 +138,15 @@
       <input type="text" id="pincode" pattern="[0-9]{6}" required />
 
       <label>Personalized Message (Optional)</label>
-      <textarea id="message" maxlength="150" placeholder="Write your gift note (‚¹30 extra)"></textarea>
+      <textarea id="message" maxlength="150" placeholder="Write your gift note (₹30 extra)"></textarea>
       <small><span id="charCount">0</span>/150 characters</small>
 
       <div class="order-summary">
-        <div class="summary-item"><span>Subtotal:</span> <strong id="subtotal">‚¹0</strong></div>
-        <div class="summary-item"><span>Shipping:</span> <strong id="shipping">‚¹0</strong></div>
-        <div class="summary-item"><span>Message Fee:</span> <strong id="msgCost">‚¹0</strong></div>
-        <div class="summary-item"><span>Discount:</span> <strong id="discount">‚¹0</strong></div>
-        <div class="total-line">Total: <span id="grandTotal">‚¹0</span></div>
+        <div class="summary-item"><span>Subtotal:</span> <strong id="subtotal">₹0</strong></div>
+        <div class="summary-item"><span>Shipping:</span> <strong id="shipping">₹0</strong></div>
+        <div class="summary-item"><span>Message Fee:</span> <strong id="msgCost">₹0</strong></div>
+        <div class="summary-item"><span>Discount:</span> <strong id="discount">₹0</strong></div>
+        <div class="total-line">Total: <span id="grandTotal">₹0</span></div>
       </div>
 
       <button type="submit" class="pay-btn">Pay with PhonePe</button>
@@ -202,11 +202,11 @@
 
     function updateTotal() {
       grandTotal = subtotal - discount + shipping + messageCost;
-      document.getElementById("subtotal").textContent = `‚¹${subtotal}`;
-      document.getElementById("shipping").textContent = `‚¹${shipping}`;
-      document.getElementById("msgCost").textContent = `‚¹${messageCost}`;
-      document.getElementById("discount").textContent = `‚¹${discount.toFixed(0)}`;
-      document.getElementById("grandTotal").textContent = `‚¹${grandTotal.toFixed(0)}`;
+      document.getElementById("subtotal").textContent = `₹${subtotal}`;
+      document.getElementById("shipping").textContent = `₹${shipping}`;
+      document.getElementById("msgCost").textContent = `₹${messageCost}`;
+      document.getElementById("discount").textContent = `₹${discount.toFixed(0)}`;
+      document.getElementById("grandTotal").textContent = `₹${grandTotal.toFixed(0)}`;
 
       const points = Math.floor(grandTotal / 100) * 10;
       document.getElementById("reward-note").textContent = `You'll earn 🎁 ${points} reward points for this order!`;

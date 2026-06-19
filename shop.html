@@ -985,7 +985,7 @@ function renderProducts() {
       ${product.newly_launched ? `<span class="badge new">New!</span>` : ""}
       <img src="${(product.image_url && product.image_url !== 'null') ? product.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" class="product-img" loading="lazy" />
       <div class="product-info">
-        <span class="price">‚¹${product.price}</span>
+        <span class="price">₹${product.price}</span>
         <h3>${product.name}</h3>
         <p>${product.card_description || ""}</p>
         ${stockText}

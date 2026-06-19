@@ -395,7 +395,7 @@
       <label>Shade Description:</label>
       <input type="text" id="shade">
 
-      <label>Price (‚¹):</label>
+      <label>Price (₹):</label>
       <input type="number" id="price" step="0.01" required>
 
       <label>Card Description:</label>
@@ -454,12 +454,12 @@
       <input type="text" id="couponCode" placeholder="E.g. DIWALI5" required>
 
       <label>Description:</label>
-      <textarea id="couponDescription" placeholder="E.g. 5% off above ‚¹1499"></textarea>
+      <textarea id="couponDescription" placeholder="E.g. 5% off above ₹1499"></textarea>
 
       <label>Discount (%):</label>
       <input type="number" id="discountPercent" min="0" max="100" required>
 
-      <label>Minimum Purchase (‚¹):</label>
+      <label>Minimum Purchase (₹):</label>
       <input type="number" id="minPurchase" step="0.01">
 
       <label>Expiry Date:</label>
@@ -561,10 +561,10 @@
   <h2>🚚 Manage Shipping Charges</h2>
 
   <form id="shippingForm">
-    <label>South India Shipping (‚¹):</label>
+    <label>South India Shipping (₹):</label>
     <input type="number" id="southRate" placeholder="40" required>
 
-    <label>Rest of India Shipping (‚¹):</label>
+    <label>Rest of India Shipping (₹):</label>
     <input type="number" id="restRate" placeholder="70" required>
 
     <button type="submit">💾 Update Shipping Rates</button>
@@ -575,7 +575,7 @@
     <thead>
       <tr>
         <th>Region</th>
-        <th>Price (‚¹)</th>
+        <th>Price (₹)</th>
       </tr>
     </thead>
     <tbody id="shippingTable">
@@ -630,7 +630,7 @@ supabase
     // Show browser notification if permitted
     if ("Notification" in window && Notification.permission === "granted") {
       new Notification("📦 New Order Received!", {
-        body: `Order ${payload.new.order_id} placed for ‚¹${payload.new.total}`,
+        body: `Order ${payload.new.order_id} placed for ₹${payload.new.total}`,
       });
     }
     
@@ -688,7 +688,7 @@ categorySelect.innerHTML = [
         <td><img src="${p.image_url || ''}" alt=""></td>
         <td>${p.name}</td>
         <td>${p.shade || '-'}</td>
-        <td>‚¹${p.price}</td>
+        <td>₹${p.price}</td>
         <td>${p.stock}</td>
         <td>${p.category}</td>
         <td>${p.bestseller ? "🔥" : "—"}</td>
@@ -935,7 +935,7 @@ const newData = {
         <td>${c.code}</td>
         <td>${c.description || '-'}</td>
         <td>${c.discount_percent}%</td>
-        <td>‚¹${c.min_purchase}</td>
+        <td>₹${c.min_purchase}</td>
         <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : "—"}</td>
         <td><button class="delete-btn" onclick="deleteCoupon(${c.id})">🗑️</button></td>
       </tr>
@@ -1099,7 +1099,7 @@ async function loadShippingRates() {
     .map(r => `
       <tr>
         <td>${r.region}</td>
-        <td>‚¹${r.price}</td>
+        <td>₹${r.price}</td>
       </tr>
     `)
     .join("");
@@ -1144,7 +1144,7 @@ async function loadOrders() {
       <td>${o.phone || "—"}</td>
       <td>${o.city || "—"}</td>
       <td>${o.state || "—"}</td>
-      <td>‚¹${o.total || 0}</td>
+      <td>₹${o.total || 0}</td>
       <td>${o.status || "Pending"}</td>
       <td>${new Date(o.created_at).toLocaleDateString()}</td>
      <td>
