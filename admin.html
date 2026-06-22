@@ -605,14 +605,12 @@
       <tr><td colspan="9">Loading orders...</td></tr>
     </tbody>
   </table>
-</div>
-
 <script>
   // 🪄 TAB SWITCH
   function showTab(id) {
     document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
     document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
-    document.querySelector(`.tab[onclick="showTab('${id}')"]`).classList.add("active");
+    document.querySelector(`.tab[onclick*="showTab('${id}')"]`).classList.add("active");
     document.getElementById(id).classList.add("active");
   }
 
