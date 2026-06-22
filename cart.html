@@ -1276,17 +1276,17 @@ async function updateCartTotal() {
 let shipping = 0;
 if (subtotal > 0 && subtotal < 999) {
   // 🌍 Fetch region-based shipping rates
-  let southRate = 40, restRate = 70;
+  let southRate = 0, restRate = 0;
   try {
     const { data: rates } = await supabase.from("shipping_rates").select("*");
     if (rates && rates.length) {
       const south = rates.find(r => r.region === "South India");
       const rest = rates.find(r => r.region === "Rest of India");
-      southRate = south?.price || 40;
-      restRate = rest?.price || 70;
+      southRate = south?.price ?? 0;
+      restRate = rest?.price ?? 0;
     }
   } catch (err) {
-    console.warn("š ï¸ Failed to fetch rates, using fallback 40/70:", err.message);
+    console.warn("š ï¸  Failed to fetch rates, using fallback 0:", err.message);
   }
 
   // 📍 Try to detect user's saved shipping state (if logged in)
@@ -1313,6 +1313,14 @@ sessionStorage.setItem("cartSubtotal", subtotal);
 sessionStorage.setItem("cartDiscount", discountAmount);
 sessionStorage.setItem("cartShipping", shipping);
 sessionStorage.setItem("finalTotal", total);
+
+console.log("================================");
+console.log("🛒 CART PRICING DIAGNOSTICS");
+console.log("Product Subtotal:", subtotal);
+console.log("Shipping Value Loaded:", shipping);
+console.log("Discount Value:", discountAmount);
+console.log("Final Total:", total);
+console.log("================================");
 
 
 

@@ -673,13 +673,13 @@ async function loadCart() {
   const southStates = [
     "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
   ];
-  let southRate = 40, restRate = 70; // fallback defaults
+  let southRate = 0, restRate = 0; // fallback defaults
   const { data: rates } = await supabaseClient.from("shipping_rates").select("*");
   if (rates && rates.length) {
     const south = rates.find(r => r.region === "South India");
     const rest = rates.find(r => r.region === "Rest of India");
-    southRate = south?.price || 40;
-    restRate = rest?.price || 70;
+    southRate = south?.price ?? 0;
+    restRate = rest?.price ?? 0;
   }
 
   if (subtotal >= 999) {
