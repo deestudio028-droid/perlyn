@@ -807,7 +807,6 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
     const orderPayload = [{
       order_id: orderId,
       user_id: session?.user?.id || null,
-      email: customerPayload.email,
       name: customerPayload.name,
       phone: customerPayload.phone,
       address: customerPayload.address,
@@ -821,7 +820,6 @@ ${message ? `<p><strong>Personalized Message:</strong> "${message}" <button oncl
       status: "Pending",
       discount: discount,
       shipping: shipping,
-      coupon_code: appliedCoupon,
       created_at: new Date().toISOString()
     }];
 
