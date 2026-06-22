@@ -357,41 +357,50 @@ app.get("/verify/:id", async (req, res) => {
       try {
         const { data: orderData } = await supabase
           .from("orders")
-          .select("user_id, phone")
+          .select("user_id, phone, email, name")
           .eq("order_id", orderId)
           .maybeSingle();
 
-        if (orderData?.user_id) {
-          const { data: existing } = await supabase
-            .from("reward_history")
-            .select("id")
-            .eq("order_id", orderId)
-            .limit(1);
+        if (orderData) {
+          // 1. Reward Points (Only for registered users)
+          if (orderData.user_id) {
+            const { data: existing } = await supabase
+              .from("reward_history")
+              .select("id")
+              .eq("order_id", orderId)
+              .limit(1);
 
-          if (!existing?.length) {
-            const added = await addRewardPoints(orderData.user_id, amount, orderId);
-            console.log(`✅ Reward points (${added}) added for user ${orderData.user_id}`);
+            if (!existing?.length) {
+              const added = await addRewardPoints(orderData.user_id, amount, orderId);
+              console.log(`✅ Reward points (${added}) added for user ${orderData.user_id}`);
+            }
           }
 
-          console.log("================================");
-          console.log("FETCHING USER EMAIL FROM SUPABASE AUTH");
-          console.log("USER ID:", orderData.user_id);
-          
-          // Fetch exact email from core Auth system, fetch name from orders
-          const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(orderData.user_id);
-          const { data: orderInfo } = await supabase.from("orders").select("name").eq("order_id", orderId).maybeSingle();
-
-          if (authError) {
-            console.log("AUTH ADMIN ERROR OBJECT:", JSON.stringify(authError));
-          }
-          console.log("================================");
-
-          if (authUser?.user?.email) {
-            await sendOrderEmail(authUser.user.email, orderInfo?.name || "Customer", orderId, amount);
+          // 2. Fetch fallback email from Auth just in case
+          let authEmail = null;
+          if (orderData.user_id) {
+            console.log("================================");
+            console.log("FETCHING USER EMAIL FROM SUPABASE AUTH AS FALLBACK");
+            const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(orderData.user_id);
+            if (authError) {
+              console.log("AUTH ADMIN ERROR OBJECT:", JSON.stringify(authError));
+            }
+            authEmail = authUser?.user?.email;
+            console.log("================================");
           }
 
-          if (orderData.phone)
+          // 3. Send Order Email (Bulletproof logic)
+          const customerEmail = orderData.email || authEmail;
+          if (customerEmail) {
+            await sendOrderEmail(customerEmail, orderData.name || "Customer", orderId, amount);
+          } else {
+            console.warn(`⚠️ Could not send email for Order #${orderId} - No email found.`);
+          }
+
+          // 4. Send SMS
+          if (orderData.phone) {
             await sendSMS(orderData.phone, orderId);
+          }
         }
       } catch (err) {
         console.error("⚠️ Reward/email process error:", err.message);
