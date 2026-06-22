@@ -652,51 +652,62 @@ async function loadCart() {
 
   subtotal = cartItems.reduce((sum, p) => sum + p.price * p.qty, 0);
 
-// 🧠 Load stored discount + shipping from cart page if available
-const storedDiscount = parseFloat(sessionStorage.getItem("cartDiscount")) || 0;
-const storedShipping = parseFloat(sessionStorage.getItem("cartShipping")) || 0;
-const storedFinalTotal = parseFloat(sessionStorage.getItem("finalTotal")) || 0;
+  // 🧠 ERADICATE CACHED PRICING: Calculate everything dynamically from fresh subtotal
+  // 1. Dynamic Discount Calculation
+  discount = 0;
+  const appliedCouponStr = localStorage.getItem("appliedCoupon");
+  if (appliedCouponStr) {
+    try {
+      const coupon = JSON.parse(appliedCouponStr);
+      if (coupon.discount_percent) {
+        discount = Math.round(subtotal * (coupon.discount_percent / 100));
+      }
+    } catch (e) {
+      console.warn("Failed to parse appliedCoupon", e);
+    }
+  } else if (subtotal >= 1499) {
+    discount = 150; // Fallback offer
+  }
 
-discount = storedDiscount > 0 ? storedDiscount : (subtotal >= 1499 ? 150 : 0);
-shipping = storedShipping > 0 || storedShipping === 0 ? storedShipping : 70;
+  // 2. Dynamic Shipping Logic from Supabase
+  const southStates = [
+    "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
+  ];
+  let southRate = 40, restRate = 70; // fallback defaults
+  const { data: rates } = await supabaseClient.from("shipping_rates").select("*");
+  if (rates && rates.length) {
+    const south = rates.find(r => r.region === "South India");
+    const rest = rates.find(r => r.region === "Rest of India");
+    southRate = south?.price || 40;
+    restRate = rest?.price || 70;
+  }
 
-// 💰 fallback calculation only if session data missing
-total = storedFinalTotal > 0 ? storedFinalTotal : subtotal - discount + shipping;
+  if (subtotal >= 999) {
+    shipping = 0;
+  } else if (southStates.includes(stateEl.value.trim())) {
+    shipping = southRate;
+  } else {
+    shipping = restRate;
+  }
 
-// 💌 Add ₹30 message charge (if personalized message exists)
-if (messageEl.value && messageEl.value.trim() !== "") {
-  total += 30;
-}
+  // 3. Dynamic Message Charge
+  let messageCharge = 0;
+  if (messageEl.value && messageEl.value.trim() !== "") {
+    messageCharge = 30;
+  }
 
-// 🧠 Dynamic shipping logic from Supabase
-const southStates = [
-  "Tamil Nadu", "Kerala", "Karnataka", "Telangana", "Andhra Pradesh"
-];
+  // 4. Calculate Final Total Dynamically
+  total = subtotal - discount + shipping + messageCharge;
 
-let southRate = 40, restRate = 70; // fallback defaults
-
-const { data: rates } = await supabaseClient.from("shipping_rates").select("*");
-if (rates && rates.length) {
-  const south = rates.find(r => r.region === "South India");
-  const rest = rates.find(r => r.region === "Rest of India");
-  southRate = south?.price || 40;
-  restRate = rest?.price || 70;
-}
-
-if (subtotal >= 999) {
-  shipping = 0;
-} else if (southStates.includes(stateEl.value.trim())) {
-  shipping = southRate;
-} else {
-  shipping = restRate;
-}
-
-
-  total = subtotal - discount + shipping;
-  // 💌 Add ₹30 personalized message charge if message exists
-if (messageEl.value && messageEl.value.trim() !== "") {
-  total += 30;
-}
+  console.log("================================");
+  console.log("🛒 PRICING DIAGNOSTICS (FRESH)");
+  console.log("Products count:", cartItems.length);
+  console.log("Subtotal:", subtotal);
+  console.log("Discount:", discount);
+  console.log("Shipping:", shipping);
+  console.log("Message Charge:", messageCharge);
+  console.log("Final Total:", total);
+  console.log("================================");
 
   console.log(`🧾 Cart Loaded: ${cartItems.length} items, Total ₹${total}`);
 }
@@ -737,7 +748,7 @@ document.getElementById("shippingForm").addEventListener("submit", async e => {
         <div class="summary-section"><h3>Order Summary</h3>
           <p>Subtotal: ₹${subtotal}</p>
           <p>Discount: ₹${discount}</p>
-          ${sessionStorage.getItem("cartDiscount") > 0 && localStorage.getItem("appliedCoupon")
+          ${(discount > 0 && localStorage.getItem("appliedCoupon"))
   ? `<p style="color:#3a814e;">Coupon applied: <b>${JSON.parse(localStorage.getItem("appliedCoupon")).code}</b></p>`
   : ""}
 
