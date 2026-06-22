@@ -353,7 +353,7 @@
   <!-- 🧭 TABS -->
   <div class="tabs">
     <div class="tab active" onclick="showTab('products')">🛍️ Products</div>
-    <div class="tab" onclick="showTab('add')">ž• Add Product</div>
+    <div class="tab" onclick="showTab('add')">➕ Add Product</div>
     <div class="tab" onclick="showTab('coupons')">💰 Coupons</div>
     <div class="tab" onclick="showTab('home-display')">🏡 Homepage</div>
     <div class="tab" onclick="showTab('offers')">🎁 Offers</div>
@@ -695,7 +695,7 @@ categorySelect.innerHTML = [
         <td>${p.bestseller ? "🔥" : "—"}</td>
         <td>${p.newly_launched ? "🆕" : "—"}</td>
         <td>
-          <button onclick="editProduct(${p.id})" class="edit-btn" style="background:#b8905a;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">œï¸</button>
+          <button onclick="editProduct(${p.id})" class="edit-btn" style="background:#b8905a;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;">✏️</button>
           <button onclick="deleteProduct(${p.id})" class="delete-btn" style="margin-left:6px;">🗑️</button>
         </td>
       </tr>
