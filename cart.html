@@ -937,14 +937,14 @@ div.className = "cart-item";
 div.innerHTML = `
   <img src="${(p.image_url && p.image_url !== 'null') ? p.image_url : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.name}">
  <div class="qty-top">
-  <button class="qty-btn" onclick="changeQty(${item.id}, -1, ${p.stock})">-</button>
+  <button class="qty-btn" onclick="changeQty('${item.id}', -1, ${p.stock})">-</button>
   <input 
     type="number" 
     id="qty-input-${item.id}" 
     value="${item.quantity}" 
     min="1" 
     max="${p.stock}" 
-    onchange="manualQtyChange(${item.id}, this.value, ${p.stock})"
+    onchange="manualQtyChange('${item.id}', this.value, ${p.stock})"
     style="
       width:28px;
       height:26px;
@@ -959,7 +959,7 @@ div.innerHTML = `
       color:#4b3b32;
     "
   />
-  <button class="qty-btn" onclick="changeQty(${item.id}, 1, ${p.stock})">+</button>
+  <button class="qty-btn" onclick="changeQty('${item.id}', 1, ${p.stock})">+</button>
 </div>
 
 
@@ -968,7 +968,7 @@ div.innerHTML = `
     <p class="category">${p.category || "Lip Tint"}</p>
     <p class="shade">${p.shade || "—"}</p>
     <span class="item-price">₹${p.price}</span>
-    <button class="remove-btn" onclick="removeItem(${item.id})">Remove</button>
+    <button class="remove-btn" onclick="removeItem('${item.id}')">Remove</button>
   </div>
 
   <div class="subtotal">₹${subtotal}</div>
