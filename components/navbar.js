@@ -77,8 +77,9 @@ async function updateCartCount() {
 
     if (!session) {
       // Guest mode - fetch from localStorage
-      const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
-      total = guestCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      const guestCartStr = localStorage.getItem("guestCart");
+      const guestCart = (guestCartStr && guestCartStr !== "null") ? JSON.parse(guestCartStr) : [];
+      total = (guestCart || []).reduce((sum, item) => sum + parseInt(item.quantity || 1, 10), 0);
     } else {
       // Logged in - fetch from supabase
       const userId = session.user.id;

@@ -1083,8 +1083,9 @@ function vibrateError() {
       const { data: { session } } = await supabase.auth.getSession();
       let count = 0;
       if (!session) {
-        const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
-        count = guestCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const guestCartStr = localStorage.getItem("guestCart");
+        const guestCart = (guestCartStr && guestCartStr !== "null") ? JSON.parse(guestCartStr) : [];
+        count = (guestCart || []).reduce((sum, item) => sum + parseInt(item.quantity || 1, 10), 0);
       } else {
         const { count: dbCount } = await supabase
           .from("cart")
