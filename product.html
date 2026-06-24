@@ -1679,7 +1679,12 @@ function initGallery(images = [], videoUrls = []) {
           .eq("user_id", session.user.id);
         count = dbCount || 0;
       }
-      countEl.textContent = count > 0 ? count : "";
+      if (count > 0) {
+        countEl.textContent = count;
+        countEl.style.display = "flex";
+      } else {
+        countEl.style.display = "none";
+      }
     }
 
     function showToast(msg) {
