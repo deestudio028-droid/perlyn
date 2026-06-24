@@ -1667,11 +1667,17 @@ function initGallery(images = [], videoUrls = []) {
       const countEl = document.querySelector(".cart-count");
       if (!countEl) return;
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
-      const { count } = await supabase
-        .from("cart")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", session.user.id);
+      let count = 0;
+      if (!session) {
+        const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+        count = guestCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      } else {
+        const { count: dbCount } = await supabase
+          .from("cart")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", session.user.id);
+        count = dbCount || 0;
+      }
       countEl.textContent = count > 0 ? count : "";
     }
 

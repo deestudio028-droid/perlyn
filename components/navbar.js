@@ -73,23 +73,23 @@ async function updateCartCount() {
     const badge = document.querySelector(".cart-count");
     if (!badge) return;
 
-    // Hide if not logged in
+    let total = 0;
+
     if (!session) {
-      badge.style.display = "none";
-      return;
+      // Guest mode - fetch from localStorage
+      const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+      total = guestCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    } else {
+      // Logged in - fetch from supabase
+      const userId = session.user.id;
+      const { data: cartItems, error } = await supa
+        .from("cart")
+        .select("quantity")
+        .eq("user_id", userId);
+
+      if (error) throw error;
+      total = cartItems?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
     }
-
-    const userId = session.user.id;
-
-    // Fetch cart data
-    const { data: cartItems, error } = await supa
-      .from("cart")
-      .select("quantity")
-      .eq("user_id", userId);
-
-    if (error) throw error;
-
-    const total = cartItems?.reduce((sum, item) => sum + (item.quantity || 1), 0) || 0;
 
     if (total > 0) {
       badge.textContent = total;

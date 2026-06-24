@@ -1081,14 +1081,22 @@ function vibrateError() {
 
     async function updateCartCount() {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
+      let count = 0;
+      if (!session) {
+        const guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
+        count = guestCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+      } else {
+        const { count: dbCount } = await supabase
+          .from("cart")
+          .select("*", { count: "exact", head: true })
+          .eq("user_id", session.user.id);
+        count = dbCount || 0;
+      }
 
-      const { count } = await supabase
-        .from("cart")
-        .select("*", { count: "exact", head: true })
-        .eq("user_id", session.user.id);
-
-      document.getElementById("cartLink").innerHTML = `Cart (<span style="font-family:'Gilda Display',serif;">${count}</span>)`;
+      const cartLink = document.getElementById("cartLink");
+      if (cartLink) {
+        cartLink.innerHTML = `Cart (<span style="font-family:'Gilda Display',serif;">${count}</span>)`;
+      }
     }
 
 
