@@ -32,7 +32,7 @@
       font-weight: 500;
     }
 
-    input {
+    input.auth-input {
       width: 90%;
       max-width: 320px;
       padding: 10px;
@@ -44,13 +44,13 @@
       transition: box-shadow 0.3s;
     }
 
-    input:focus {
+    input.auth-input:focus {
       outline: none;
       border-color: #B98474;
       box-shadow: 0 0 4px #d6a190;
     }
 
-    button {
+    button.primary-btn {
       width: 90%;
       max-width: 320px;
       margin: 10px auto;
@@ -65,39 +65,15 @@
       transition: background 0.2s, transform 0.1s;
     }
 
-    button:hover {
+    button.primary-btn:hover {
       background: #a07060;
     }
-
-    button:active {
+    button.primary-btn:active {
       transform: scale(0.97);
     }
-
-    .google-btn {
-      background: #fff;
-      color: #444;
-      border: 1px solid #ddd;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 15px;
-    }
-
-    .google-btn img {
-      width: 20px;
-      height: 20px;
-    }
-
-    .link {
-      text-align: center;
-      margin-top: 10px;
-      color: #B98474;
-    }
-
-    .link a {
-      text-decoration: none;
-      color: #B98474;
+    button.primary-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
 
     .google-btn-primary {
@@ -128,6 +104,15 @@
       height: 24px;
     }
 
+    .link {
+      text-align: center;
+      margin-top: 10px;
+      color: #B98474;
+    }
+    .link a {
+      text-decoration: none;
+      color: #B98474;
+    }
     .link a:hover {
       text-decoration: underline;
     }
@@ -137,47 +122,8 @@
       margin-top: 15px;
       font-size: 14px;
     }
-
-    .success {
-      color: green;
-    }
-
-    .error {
-      color: red;
-    }
-
-    /* ✅ Success glow animation for OTP auto-fill */
-    @keyframes otpGlow {
-      0% { box-shadow: 0 0 0 #9ad9a2; }
-      50% { box-shadow: 0 0 12px #9ad9a2; }
-      100% { box-shadow: 0 0 0 #9ad9a2; }
-    }
-    .otp-verified {
-      animation: otpGlow 1.5s ease-in-out 2;
-      border-color: #57b56a !important;
-    }
-
-    /* Saved Accounts UI */
-    .saved-accounts {
-      margin-bottom: 15px;
-    }
-    .saved-account-btn {
-      background: #fdf5f1;
-      color: #B98474;
-      border: 1px solid #e0c7bb;
-      padding: 10px;
-      margin: 5px auto;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 90%;
-      max-width: 320px;
-      font-size: 15px;
-      transition: all 0.2s;
-    }
-    .saved-account-btn:hover {
-      background: #faebe2;
-      border-color: #B98474;
-    }
+    .success { color: green; }
+    .error { color: red; }
 
     /* In-App Browser Banner */
     .inapp-banner {
@@ -206,6 +152,48 @@
       font-weight: 600;
       font-size: 13px;
     }
+
+    /* OTP Boxes UI */
+    .otp-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .otp-box {
+      width: 40px;
+      height: 45px;
+      text-align: center;
+      font-size: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    .otp-box:focus {
+      outline: none;
+      border-color: #B98474;
+      box-shadow: 0 0 4px #d6a190;
+    }
+
+    /* Additional helpers */
+    .subtitle {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+    .action-link {
+      color: #B98474;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+    
+    #initialScreen, #otpScreen {
+      display: none;
+    }
   </style>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/favicon.png">
@@ -214,72 +202,93 @@
 </head>
 
 <body>
-  <!-- Global Loader to prevent flash -->
+  <!-- Global Loader -->
   <div id="pageLoader" style="position:fixed; top:0; left:0; right:0; bottom:0; background:#f3e4db; z-index:9999; display:flex; justify-content:center; align-items:center;">
     <div style="font-family:'Cormorant Garamond',serif; font-size:20px; color:#B98474;">Loading...</div>
   </div>
 
   <div class="account-container" id="accountContainer" style="display: none;">
-    <h2>Login</h2>
-
     <!-- In-App Browser Warning -->
     <div id="inAppBanner" class="inapp-banner">
-      <strong>š ï¸ In-App Browser Detected</strong>
+      <strong>š ï¸  In-App Browser Detected</strong>
       Google Login works best in a standard browser. Please tap the menu (‹® or ‹¯) and select <b>Open in System Browser</b>, or click the button below.
       <a href="#" id="openSystemBrowserBtn" class="open-browser-btn" target="_blank">Open in Chrome / Safari</a>
     </div>
 
-    <!-- Google Login Button (PRIMARY) -->
-    <button class="google-btn-primary" id="googleLogin">
-      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo" />
-      Continue with Google
-    </button>
-    <div style="font-size: 13px; color: #777; margin-bottom: 25px;">Secure 1-click login</div>
+    <!-- INITIAL SCREEN (Email / Phone) -->
+    <div id="initialScreen">
+      <h2>Login</h2>
 
-    <div style="text-align:center; margin:15px 0; color:#aaa; display:flex; align-items:center;">
-      <hr style="flex:1; border:none; border-top:1px solid #eee;">
-      <span style="padding:0 10px; font-size: 14px;">or use email</span>
-      <hr style="flex:1; border:none; border-top:1px solid #eee;">
+      <button class="google-btn-primary" id="googleLogin">
+        <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google Logo" />
+        Continue with Google
+      </button>
+      <div style="font-size: 13px; color: #777; margin-bottom: 25px;">Secure 1-click login</div>
+
+      <div style="text-align:center; margin:15px 0; color:#aaa; display:flex; align-items:center;">
+        <hr style="flex:1; border:none; border-top:1px solid #eee;">
+        <span style="padding:0 10px; font-size: 14px;">or use email or phone</span>
+        <hr style="flex:1; border:none; border-top:1px solid #eee;">
+      </div>
+
+      <label style="display:none;" for="authInput">Email Address or Phone Number</label>
+      <input type="text" id="authInput" class="auth-input" placeholder="Enter your email address or phone number" />
+
+      <button id="continueBtn" class="primary-btn">Continue / Send OTP</button>
+
+      <div class="link">
+        <a href="register.html">Don't have an account? Register</a>
+      </div>
     </div>
 
-    <!-- Saved Accounts Section -->
-    <div id="savedAccountsContainer" class="saved-accounts"></div>
+    <!-- OTP SCREEN (Email or Phone) -->
+    <div id="otpScreen">
+      <h2 id="otpHeading">Verify your login</h2>
+      <div id="otpSubtitle" class="subtitle">We've sent a 6-digit OTP to your account</div>
 
-    <!-- Email Field -->
-    <input type="email" id="email" placeholder="Enter your email" />
+      <div class="otp-container" id="otpContainer">
+        <!-- 6 OTP Boxes -->
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" data-index="0" />
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" data-index="1" />
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" data-index="2" />
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" data-index="3" />
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" data-index="4" />
+        <input type="text" class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" data-index="5" />
+      </div>
 
-    <!-- OTP Input + Buttons -->
-    <button id="sendOtpBtn">Send OTP</button>
+      <button id="verifyOtpBtn" class="primary-btn" disabled>Verify OTP & Login</button>
 
-    <input
-      type="text"
-      id="otp"
-      inputmode="numeric"
-      pattern="[0-9]*"
-      autocomplete="one-time-code"
-      placeholder="Enter OTP"
-      style="display:none;"
-      maxlength="6"
-    />
-
-    <button id="verifyOtpBtn" style="display:none;">Verify OTP & Login</button>
-
-    <!-- Register Link -->
-    <div class="link">
-      <a href="register.html">Don't have an account? Register</a>
+      <div style="margin-top: 15px;">
+        <button id="resendBtn" class="action-link" disabled>Resend OTP (30s)</button>
+        <span style="margin: 0 10px; color: #ccc;">|</span>
+        <button id="changeInputBtn" class="action-link">Change Number / Email</button>
+      </div>
     </div>
 
     <div id="messageBox" class="message"></div>
   </div>
 
-<script type = "module">
+<script type="module">
   var supabase = window.supabaseClient;
 
-  const emailInput = document.getElementById("email");
-  const otpInput = document.getElementById("otp");
-  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  // Elements
+  const initialScreen = document.getElementById("initialScreen");
+  const otpScreen = document.getElementById("otpScreen");
+  const authInput = document.getElementById("authInput");
+  const continueBtn = document.getElementById("continueBtn");
+  
+  const otpHeading = document.getElementById("otpHeading");
+  const otpSubtitle = document.getElementById("otpSubtitle");
+  const otpBoxes = document.querySelectorAll(".otp-box");
   const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const resendBtn = document.getElementById("resendBtn");
+  const changeInputBtn = document.getElementById("changeInputBtn");
   const messageBox = document.getElementById("messageBox");
+
+  let authType = null; // 'email' or 'phone'
+  let authValue = "";
+  let resendTimer = null;
+  let countdown = 30;
 
   // 🌐 Helper to show message
   function showMessage(msg, type = "success") {
@@ -287,7 +296,7 @@
     messageBox.className = `message ${type}`;
   }
 
-  // 🧭 Unified redirect target getter (linked with navbar.js)
+  // 🧭 Unified redirect target getter
   function getRedirectTarget() {
     const saved = localStorage.getItem("lastVisitedPage");
     return saved && !saved.includes("login.html") ? saved : "account.html";
@@ -303,9 +312,7 @@
       console.log("📊 Analytics: In-App Browser Detected", { ua, isInstagram, isFacebook });
       const banner = document.getElementById("inAppBanner");
       const btn = document.getElementById("openSystemBrowserBtn");
-      
       banner.style.display = "block";
-      
       const currentUrl = window.location.href;
       
       if (/android/i.test(ua)) {
@@ -317,79 +324,233 @@
     }
   })();
 
-  // ✅ 1. Send OTP
-  sendOtpBtn.addEventListener("click", async () => {
-    const email = emailInput.value.trim();
-    if (!email) return showMessage("Please enter your email.", "error");
+  // Navigate screens
+  function showScreen(screen) {
+    initialScreen.style.display = screen === 'initial' ? 'block' : 'none';
+    otpScreen.style.display = screen === 'otp' ? 'block' : 'none';
+    messageBox.textContent = "";
+  }
 
-    // Loading state
-    sendOtpBtn.disabled = true;
-    const originalText = sendOtpBtn.textContent;
-    sendOtpBtn.textContent = "Sending...";
-    sendOtpBtn.style.opacity = 0.6;
-
-    const { error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        shouldCreateUser: true
+  // Resend Timer logic
+  function startResendTimer() {
+    countdown = 30;
+    resendBtn.disabled = true;
+    clearInterval(resendTimer);
+    resendTimer = setInterval(() => {
+      countdown--;
+      resendBtn.textContent = `Resend OTP (${countdown}s)`;
+      if (countdown <= 0) {
+        clearInterval(resendTimer);
+        resendBtn.disabled = false;
+        resendBtn.textContent = "Resend OTP";
       }
+    }, 1000);
+  }
+
+  // WebOTP API implementation
+  function initWebOTP() {
+    if ('OTPCredential' in window) {
+      const abortController = new AbortController();
+      navigator.credentials.get({
+        otp: { transport: ['sms'] },
+        signal: abortController.signal
+      }).then(otp => {
+        const code = otp.code;
+        if (code && code.length === 6) {
+          // Fill boxes
+          for(let i = 0; i < 6; i++) {
+            otpBoxes[i].value = code[i];
+          }
+          verifyOtpBtn.disabled = false;
+          verifyOtpBtn.click(); // Auto submit
+        }
+      }).catch(err => {
+        console.log('WebOTP error or unsupported:', err);
+      });
+    }
+  }
+
+  // OTP Boxes Logic (Auto focus, move next)
+  otpBoxes.forEach((box, i) => {
+    box.addEventListener('input', (e) => {
+      // Allow pasting 6 digits
+      if (e.target.value.length > 1) {
+        const pasted = e.target.value.replace(/\D/g, '').slice(0, 6);
+        for(let j = 0; j < pasted.length; j++) {
+          if (otpBoxes[j]) otpBoxes[j].value = pasted[j];
+        }
+        if (pasted.length === 6) {
+          otpBoxes[5].focus();
+          verifyOtpBtn.disabled = false;
+          verifyOtpBtn.click();
+        }
+        return;
+      }
+
+      if (box.value && i < otpBoxes.length - 1) {
+        otpBoxes[i + 1].focus();
+      }
+      checkOtpComplete();
     });
 
-    if (error) {
-      showMessage(error.message, "error");
-      sendOtpBtn.disabled = false;
-      sendOtpBtn.textContent = originalText;
-      sendOtpBtn.style.opacity = 1;
-    } else {
-      showMessage("OTP sent to your email. Please check your inbox.", "success");
-      otpInput.style.display = "block";
-      verifyOtpBtn.style.display = "block";
-      sendOtpBtn.textContent = "OTP Sent";
-    }
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !box.value && i > 0) {
+        otpBoxes[i - 1].focus();
+      }
+    });
   });
+
+  function checkOtpComplete() {
+    let fullOtp = "";
+    otpBoxes.forEach(b => fullOtp += b.value);
+    verifyOtpBtn.disabled = fullOtp.length !== 6;
+    if (fullOtp.length === 6) {
+      verifyOtpBtn.click(); // Auto submit after 6 digits
+    }
+  }
+
+  function getOtpValue() {
+    let fullOtp = "";
+    otpBoxes.forEach(b => fullOtp += b.value);
+    return fullOtp;
+  }
+
+  // ✅ 1. Send OTP / Continue
+  async function triggerSendOtp() {
+    const inputVal = authInput.value.trim();
+    if (!inputVal) return showMessage("Please enter email or phone.", "error");
+
+    // Loading state
+    continueBtn.disabled = true;
+    resendBtn.disabled = true;
+    const originalText = continueBtn.textContent;
+    continueBtn.textContent = "Sending...";
+
+    try {
+      if (inputVal.includes('@')) {
+        authType = 'email';
+        authValue = inputVal;
+        
+        const { error } = await supabase.auth.signInWithOtp({
+          email: authValue,
+          options: { shouldCreateUser: true }
+        });
+        if (error) throw error;
+        
+        otpHeading.textContent = "Verify your email";
+        otpSubtitle.textContent = `We've sent a 6-digit OTP to ${authValue}`;
+
+      } else {
+        // Assume phone
+        const cleanPhone = inputVal.replace(/^\+?91/, '').replace(/\D/g, '');
+        if (cleanPhone.length !== 10) {
+          throw new Error("Please enter a valid 10-digit Indian phone number.");
+        }
+        authType = 'phone';
+        authValue = cleanPhone;
+
+        const { data, error } = await supabase.functions.invoke('msg91-auth', {
+          body: { action: 'send', phone: authValue }
+        });
+
+        if (error) throw error;
+        if (data && data.error) throw new Error(data.error);
+
+        otpHeading.textContent = "Verify your phone number";
+        otpSubtitle.textContent = `We've sent a 6-digit OTP to +91${authValue}`;
+      }
+
+      // Success
+      showMessage(`OTP sent to your ${authType}.`, "success");
+      
+      // Clear OTP boxes
+      otpBoxes.forEach(b => b.value = "");
+      verifyOtpBtn.disabled = true;
+
+      showScreen('otp');
+      startResendTimer();
+      initWebOTP();
+      
+      setTimeout(() => otpBoxes[0].focus(), 100);
+
+    } catch (error) {
+      showMessage(error.message, "error");
+    } finally {
+      continueBtn.disabled = false;
+      continueBtn.textContent = originalText;
+    }
+  }
+
+  continueBtn.addEventListener("click", triggerSendOtp);
+  resendBtn.addEventListener("click", triggerSendOtp);
 
   // ✅ 2. Verify OTP & Redirect
   verifyOtpBtn.addEventListener("click", async () => {
-    const email = emailInput.value.trim();
-    const otp = otpInput.value.trim();
-    if (!email || !otp) return showMessage("Please fill both fields.", "error");
+    const otp = getOtpValue();
+    if (otp.length !== 6) return showMessage("Please enter 6 digit OTP.", "error");
 
-    // Loading state
     verifyOtpBtn.disabled = true;
     const originalText = verifyOtpBtn.textContent;
     verifyOtpBtn.textContent = "Verifying...";
-    verifyOtpBtn.style.opacity = 0.6;
 
-    const { error } = await supabase.auth.verifyOtp({
-      email,
-      token: otp,
-      type: "email"
-    });
+    try {
+      if (authType === 'email') {
+        const { error } = await supabase.auth.verifyOtp({
+          email: authValue,
+          token: otp,
+          type: "email"
+        });
+        if (error) throw new Error("Invalid or expired OTP. Try again.");
+      } else {
+        // Phone verification via Edge Function
+        const { data, error } = await supabase.functions.invoke('msg91-auth', {
+          body: { action: 'verify', phone: authValue, otp: otp }
+        });
 
-    if (error) {
-      showMessage("Invalid or expired OTP. Try again.", "error");
-      verifyOtpBtn.disabled = false;
-      verifyOtpBtn.textContent = originalText;
-      verifyOtpBtn.style.opacity = 1;
-    } else {
-      // Save email to saved accounts
-      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
-      if (!saved.includes(email)) {
-        saved.push(email);
-        localStorage.setItem("savedAccounts", JSON.stringify(saved));
+        if (error) throw error;
+        if (data && data.error) throw new Error(data.error);
+
+        // Success: the function returns a Supabase session
+        if (data.session) {
+          const { error: sessionError } = await supabase.auth.setSession(data.session);
+          if (sessionError) throw sessionError;
+        } else {
+          throw new Error("Authentication failed.");
+        }
       }
 
-      otpInput.classList.add("otp-verified");
+      // Success logic
+      otpBoxes.forEach(b => b.style.borderColor = "#57b56a");
       showMessage("Login successful! Redirecting...", "success");
 
-      // 🧠 Redirect to last visited page (from navbar.js)
+      // Redirect
       const redirectTarget = getRedirectTarget();
       localStorage.removeItem("lastVisitedPage");
       setTimeout(() => (window.location.href = redirectTarget), 1000);
+
+    } catch (error) {
+      showMessage(error.message, "error");
+      otpBoxes.forEach(b => b.value = ""); // clear boxes on error
+      otpBoxes[0].focus();
+    } finally {
+      verifyOtpBtn.disabled = false;
+      verifyOtpBtn.textContent = originalText;
     }
   });
 
-  // ✅ 3. Google Login (preserves redirect)
+  // Change Number / Email
+  changeInputBtn.addEventListener("click", () => {
+    clearInterval(resendTimer);
+    showScreen('initial');
+    setTimeout(() => authInput.focus(), 100);
+  });
+
+  // Handle Enter key in initial screen
+  authInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") continueBtn.click();
+  });
+
+  // ✅ 3. Google Login
   document.getElementById("googleLogin").addEventListener("click", async () => {
     const redirectTarget = getRedirectTarget();
     const finalRedirectUrl = new URL(redirectTarget, window.location.origin).href;
@@ -398,15 +559,13 @@
       provider: "google",
       options: {
         redirectTo: finalRedirectUrl,
-        queryParams: {
-          prompt: 'select_account'
-        }
+        queryParams: { prompt: 'select_account' }
       }
     });
     if (error) showMessage(error.message, "error");
   });
 
-  // ✅ 4. Auto redirect if already logged in & Load Saved Accounts
+  // ✅ 4. Auto redirect if already logged in
   (async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
@@ -414,33 +573,11 @@
       localStorage.removeItem("lastVisitedPage");
       window.location.href = redirectTarget;
     } else {
-      // Hide global loader, show container
       document.getElementById("pageLoader").style.display = "none";
       document.getElementById("accountContainer").style.display = "block";
-
-      // Render saved accounts
-      const savedAccountsContainer = document.getElementById("savedAccountsContainer");
-      let saved = JSON.parse(localStorage.getItem("savedAccounts") || "[]");
-      if (saved.length > 0) {
-        savedAccountsContainer.innerHTML = '<div style="font-size: 14px; margin-bottom: 5px; color: #555;">Select an account to login:</div>';
-          saved.forEach(email => {
-          const btn = document.createElement("div");
-          btn.className = "saved-account-btn";
-          btn.textContent = email;
-          btn.onclick = () => {
-            emailInput.value = email;
-            sendOtpBtn.click(); // Auto-trigger OTP send
-          };
-          savedAccountsContainer.appendChild(btn);
-        });
-        savedAccountsContainer.insertAdjacentHTML('beforeend', '<div style="text-align:center; margin:10px 0; color:#777;">or use another email</div>');
-      }
+      showScreen('initial');
     }
   })();
-
-  
 </script>
-
-
 </body>
 </html>
