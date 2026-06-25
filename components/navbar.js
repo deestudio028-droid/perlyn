@@ -28,27 +28,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
               // 2. We have scrolled down a bit -> Add backdrop blur
               header.classList.add('header-scrolled');
-
-              // 3. Prevent flickering with a small scroll threshold (10px)
-              if (Math.abs(currentScrollY - lastScrollY) > 10) {
-                if (currentScrollY > lastScrollY && currentScrollY > 60) {
-                  // Scrolling DOWN and past threshold -> Hide
-                  header.classList.add('header-hidden');
-                  
-                  // Optional: Close mobile menu if it's open
-                  const navMenu = document.getElementById("nav-menu");
-                  const hamburger = document.getElementById("hamburger");
-                  if (navMenu && navMenu.classList.contains("show")) {
-                    navMenu.classList.remove("show");
-                    hamburger.textContent = "☰";
-                  }
-                } else if (currentScrollY < lastScrollY) {
-                  // Scrolling UP -> Show
-                  header.classList.remove('header-hidden');
-                }
-                // Only update lastScrollY when we pass the threshold to maintain intent detection
-                lastScrollY = currentScrollY;
-              }
+              
+              // We removed the 'header-hidden' logic so it is always visible when scrolling up or down.
             }
             ticking = false;
           });
