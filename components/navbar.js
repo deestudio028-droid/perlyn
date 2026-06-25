@@ -10,6 +10,53 @@ document.addEventListener("DOMContentLoaded", async () => {
     navbarWrapper.innerHTML = await response.text();
     document.body.insertAdjacentElement("afterbegin", navbarWrapper);
 
+    // 🌊 Smart Sticky Navbar Logic
+    const header = navbarWrapper.querySelector('.header');
+    if (header) {
+      let lastScrollY = window.scrollY;
+      let ticking = false;
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const currentScrollY = window.scrollY;
+            
+            // 1. At the very top (or bounced past top on Safari)
+            if (currentScrollY <= 0) {
+              header.classList.remove('header-hidden');
+              header.classList.remove('header-scrolled');
+            } else {
+              // 2. We have scrolled down a bit -> Add backdrop blur
+              header.classList.add('header-scrolled');
+
+              // 3. Prevent flickering with a small scroll threshold (10px)
+              if (Math.abs(currentScrollY - lastScrollY) > 10) {
+                if (currentScrollY > lastScrollY && currentScrollY > 60) {
+                  // Scrolling DOWN and past threshold -> Hide
+                  header.classList.add('header-hidden');
+                  
+                  // Optional: Close mobile menu if it's open
+                  const navMenu = document.getElementById("nav-menu");
+                  const hamburger = document.getElementById("hamburger");
+                  if (navMenu && navMenu.classList.contains("show")) {
+                    navMenu.classList.remove("show");
+                    hamburger.textContent = "☰";
+                  }
+                } else if (currentScrollY < lastScrollY) {
+                  // Scrolling UP -> Show
+                  header.classList.remove('header-hidden');
+                }
+                // Only update lastScrollY when we pass the threshold to maintain intent detection
+                lastScrollY = currentScrollY;
+              }
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    }
+
     // ✅ Supabase client is now centrally initialized via supabaseClient.js
     if (!window.supabaseClient) {
       console.error("🔴 Supabase client missing! Ensure env.js and supabaseClient.js are loaded.");
