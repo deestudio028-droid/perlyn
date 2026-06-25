@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const navbarWrapper = document.createElement("div");
     navbarWrapper.id = "navbar-wrapper";
+    // Ensure the wrapper itself is sticky so the inner header's sticky/scrolling behavior isn't restricted by the wrapper's height
+    navbarWrapper.style.position = "sticky";
+    navbarWrapper.style.top = "0";
+    navbarWrapper.style.zIndex = "1000";
+    
     navbarWrapper.innerHTML = await response.text();
     document.body.insertAdjacentElement("afterbegin", navbarWrapper);
 
