@@ -144,6 +144,14 @@ updateCartCount();
 // Make it globally callable
 window.updateCartCount = updateCartCount;
 
+// 🔄 Auto-sync cart globally
+window.addEventListener('cartUpdated', updateCartCount);
+window.addEventListener('storage', (e) => {
+  if (e.key === 'guestCart') {
+    updateCartCount();
+  }
+});
+
     // 🎯 Highlight active page
     const current = window.location.pathname.split("/").pop();
     document.querySelectorAll("#nav-menu a").forEach(a => {

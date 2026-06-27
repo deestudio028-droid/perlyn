@@ -1033,9 +1033,10 @@ cartBox.appendChild(div);
 
     vibrate(); // feedback
     await updateCartTotal(); // ✨ only recalc totals, not reload full cart
+    window.dispatchEvent(new Event('cartUpdated'));
   }
 
-  // œï¸ Handle Manual Typing
+  // œ ï¸  Handle Manual Typing
   async function manualQtyChange(cartId, newValue, stock) {
     let qty = parseInt(newValue);
     if (isNaN(qty) || qty < 1) qty = 1;
@@ -1068,6 +1069,7 @@ cartBox.appendChild(div);
 
     vibrate();
     await updateCartTotal(); // ✨ recalc bottom summary only
+    window.dispatchEvent(new Event('cartUpdated'));
   }
 
 // 📳 Vibration Feedback
@@ -1137,7 +1139,7 @@ async function refreshOffersBox() {
 
   // 🛡️ Prevent null errors
   if (!unlockMsg) {
-    console.warn("š ï¸ unlock-msg element not found yet, skipping refreshOffersBox()");
+    console.warn("š ï¸  unlock-msg element not found yet, skipping refreshOffersBox()");
     return;
   }
 
@@ -1159,11 +1161,13 @@ async function refreshOffersBox() {
       let guestCart = JSON.parse(localStorage.getItem("guestCart") || "[]");
       guestCart = guestCart.filter(item => item.product_id !== productId);
       localStorage.setItem("guestCart", JSON.stringify(guestCart));
+      window.dispatchEvent(new Event('cartUpdated'));
       if (typeof updateCartCount === 'function') updateCartCount();
     } else {
       await supabase.from("cart").delete().eq("id", cartId);
     }
     await initCartSystem();
+    window.dispatchEvent(new Event('cartUpdated'));
   }
 
     // =======================================

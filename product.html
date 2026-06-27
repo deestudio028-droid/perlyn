@@ -1420,7 +1420,7 @@ async function addToCart(supabase, productId) {
       }
       localStorage.setItem("guestCart", JSON.stringify(guestCart));
       
-      if (typeof updateCartCount === 'function') updateCartCount();
+      window.dispatchEvent(new Event('cartUpdated'));
       
       const toast = document.getElementById("toast");
       toast.className = "toast show";
@@ -1470,7 +1470,7 @@ async function addToCart(supabase, productId) {
 
     // ✅ Refresh UI count and toast
     showToast("Added to Cart");
-    updateCartCount(supabase);
+    window.dispatchEvent(new Event('cartUpdated'));
 
   } catch (err) {
     console.error("Œ addToCart crashed:", err);

@@ -900,7 +900,7 @@ async function loadProducts() {
       localStorage.setItem("guestCart", JSON.stringify(guestCart));
       
       // Update global navbar cart count safely
-      if (typeof updateCartCount === 'function') updateCartCount();
+      window.dispatchEvent(new Event('cartUpdated'));
       
       // Show toast
       const toast = document.getElementById("toast");
@@ -933,7 +933,7 @@ async function loadProducts() {
   }
 
   showToast("Added to Cart");
-  window.updateCartCount?.();
+  window.dispatchEvent(new Event('cartUpdated'));
 }
 
 /* ================================
